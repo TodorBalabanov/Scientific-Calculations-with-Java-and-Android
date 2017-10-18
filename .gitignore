@@ -1,3 +1,6 @@
+## Final PDF is not needed into the repository.
+*.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
