@@ -121,6 +121,24 @@
 \label{fig:pic0005}
 \end{figure}
 
+\section{Прогнозиране в разпределена среда}
+
+Гъвкавите възможности на \index{изкуствените невронни мрежи} да изграждат функционална зависимост между входни и изходни данни ги прави идеален кандидат за прогнозираща система. Ако се приеме, че измерените стойности във времевия ред са точки в двуизмерно пространство, то задачата за прогнозиране може да се представи като задача за прекарване на крива през N точки (curve fitting). Ако образно се оприличи изкуствената невронна мрежа на полином, то теглата й биха представлявали коефициенти в полинома. Стойностите които \index{изкуствената невронна мрежа} генерира на изхода си за бъдещи моменти от времето представляват своеобразна \index{екстраполация} според апроксимираната крива. Тъй като класическите многослойни невронни мрежи работят с входни сигнали между 0.0 и 1.0 или -1.0 и +1.0, то информацията от времевия ред трябва да бъде мащабирана в съответния работен интервал на мрежата. Стойностите на времевия ред условно се разделят на минали (зелените Фиг. \ref{fig:pic0003}) и бъдещи (червените Фиг. \ref{fig:pic0003}). Изходната (прогнозна) информация на изкуствената невронна мрежа след това се мащабира обратно към оригиналните интервали на времевия ред.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=1.0\linewidth]{./images/pic0006.png}
+  \caption{Продуктовата линия TradingSolutions използваща изкуствени невронни мрежи и генетични алгоритми за прогнозиране на Forex финансови инструменти.}
+\label{fig:pic0006}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[height=0.5\pdfpageheight]{./images/pic0007.png}
+  \caption{Системата MoneyBee за финансово прогнозиране в разпределена среда.}
+\label{fig:pic0007}
+\end{figure}
+
 \newpage
 \addcontentsline{toc}{chapter}{Заключение}
 \chapter*{Заключение}
@@ -135,7 +153,9 @@
 
 \bibitem{dcinfo} Distributed Computing Info , \\\texttt{http://www.distributedcomputing.info/}
 
-\bibitem{shuch} H. Paul Shuch. \textit{Searching for Extraterrestrial Intelligence}. Springer-Verlag Berlin Heidelberg, 2011.
+\bibitem{shuch} Paul Shuch, H. \textit{Searching for Extraterrestrial Intelligence}. Springer-Verlag Berlin Heidelberg, 2011.
+
+\bibitem{bohn} Bohn, A., Guting, T., Mansmann, T. \textit{MoneyBee: A new product to predict stock market developments using artificial intelligence and increased calculation capacitiy} German. et al. Wirtschaftsinf, vol. 45/3, 325--333, 2003.
 
 \end{thebibliography}
 
