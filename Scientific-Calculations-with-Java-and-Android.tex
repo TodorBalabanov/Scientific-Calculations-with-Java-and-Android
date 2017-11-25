@@ -8,10 +8,14 @@
 \usepackage{nopageno}
 \usepackage{shorttoc}
 \usepackage{graphicx}
+\usepackage{array}
 \usepackage{imakeidx}
 % Добавя възможност за сензитивни хипер-връзки в самия документ.
 % \usepackage{hyperref}
 \usepackage{placeins}
+
+% Нужно е за създаването на списък с фигурите.
+\graphicspath{ {figures/} }
 
 % Заглавие на книгата.
 \title{Научни изчисления с Java и Android}
@@ -744,6 +748,14 @@
 \bibitem{afwiki} Activation Function - Wikipedia, \\\texttt{https://en.wikipedia.org/wiki/Activation\_function}
 
 \end{thebibliography}
+
+% Списък с фигурите.
+\newpage
+\listoffigures
+
+% Списък с таблиците. 
+% \newpage
+% \listoftables
 
 % Азбучен указател на използваните термини.
 \newpage
