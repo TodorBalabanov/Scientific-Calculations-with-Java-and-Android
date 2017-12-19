@@ -8,6 +8,8 @@
 \usepackage{nopageno}
 \usepackage{shorttoc}
 \usepackage{graphicx}
+% Директория в която се намират изображенията.
+\graphicspath{{images/}}
 \usepackage{array}
 \usepackage{imakeidx}
 % Добавя възможност за сензитивни хипер-връзки в самия документ.
@@ -939,6 +941,138 @@
 \FloatBarrier
 
 Последната характеристика която потребителя има възможност да контролира е до каква степен мобилното му устройство да бъде натоварвано с фонови пресмятания (Фиг. \ref{fig:pic0077}).
+
+\subsection{Представяне на информацията върху локалното устройство}
+
+Ефективността от изчисленията значително се повишава, ако локалните изчислителни възли разполагат с възможност за локално съхранение на изходни данни и пресметнати резултати. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0078.png}
+  \caption{Константи за интервалите на времевия ред (0 до 15).}
+\label{fig:pic0078}
+\end{figure}
+\FloatBarrier
+
+За нуждите на това локално представяне се ползва помощен тип данни от изброен тип, който обозначава разстоянието между две отчитания във финансовите времеви редове (Фиг. \ref{fig:pic0078}, \ref{fig:pic0079}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0079.png}
+  \caption{Константи за интервалите на времевия ред (30 до 43200).}
+\label{fig:pic0079}
+\end{figure}
+\FloatBarrier
+
+Интервалите в използваните времеви редове се определят на база брой минути, като най-краткият интервал е една минута. Описването на интервалите става с две променливи - название и брой минути (Фиг. \ref{fig:pic0080}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0080.png}
+  \caption{Описание на времеви интервал.}
+\label{fig:pic0080}
+\end{figure}
+\FloatBarrier
+
+Използването на изброени константи в Java дава възможност за елегантно използване на статични фактори методи, които по зададено число (брой минути) да връщат съответстващата константа (Фиг. \ref{fig:pic0081}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0081.png}
+  \caption{Определяне на константа за интервал по брой минути.}
+\label{fig:pic0081}
+\end{figure}
+\FloatBarrier
+
+Аналогичен ефект може да се постигне и с използване на текстовото описание на константите (Фиг. \ref{fig:pic0082}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0082.png}
+  \caption{Определяне на константа за интервал по текстово описание.}
+\label{fig:pic0082}
+\end{figure}
+\FloatBarrier
+
+За да се възпрепятства създаването на константи извън изброения тип е прието конструкторът да бъде с частно ниво на достъп (Фиг. \ref{fig:pic0083}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0083.png}
+  \caption{Конструктор на изброения тип за интервал.}
+\label{fig:pic0083}
+\end{figure}
+\FloatBarrier
+
+Операционната система Android предоставя изключително полезни средства за съхраняване на информация, едно от които е релационната система за управление на бази от данни SQLite. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0084.png}
+  \caption{Структура на локалната таблица за котировките.}
+\label{fig:pic0084}
+\end{figure}
+\FloatBarrier
+
+Информацията за времевия ред може да се съхранява локално в таблица с подходяща структура, която да отразява наличието на четири стойности за всеки интервал, времето на интервала, търгувания обем, названието на валутната двойка и размерът на времевия интервал (Фиг. \ref{fig:pic0084}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0085.png}
+  \caption{Структура на локалната таблица за изкуствените невронни мрежи.}
+\label{fig:pic0085}
+\end{figure}
+\FloatBarrier
+
+Допълнителна таблица поема съхранението на информацията за изкуствените неврони мрежи, което включва названието на валутната двойка, времевия интервал, стойността на невроните, стойността на връзките между невроните и стойността на теглата между невроните (Фиг. \ref{fig:pic0085}). 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0086.png}
+  \caption{Име и версията на базата данни.}
+\label{fig:pic0086}
+\end{figure}
+\FloatBarrier
+
+Android управлява базите от данни под формата на DB ресурс и целочислена версия за структурата (Фиг. \ref{fig:pic0086}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0087.png}
+  \caption{Код за създаване на таблицата за котировки.}
+\label{fig:pic0087}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0088.png}
+  \caption{Код за създаване на таблицата за изкуствените невронни мрежи.}
+\label{fig:pic0088}
+\end{figure}
+\FloatBarrier
+
+Създаването на таблиците се управлява от параметризирани символни константи (Фиг. \ref{fig:pic0087}, \ref{fig:pic0088}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0089.png}
+  \caption{Код изтриване на таблиците.}
+\label{fig:pic0089}
+\end{figure}
+\FloatBarrier
+
+Изтриването на таблиците също става с параметризирани символни константи (Фиг. \ref{fig:pic0089}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{./images/pic0090.png}
+  \caption{Конструктор и виртуални методи на спомагателния клас за базата данни.}
+\label{fig:pic0090}
+\end{figure}
+\FloatBarrier
+
+Конструкторът на спомагателния клас за базата данни има единствена задача да извика конструкторът на родителския клас (Фиг. \ref{fig:pic0090}). Двете предефинирани виртуални функции имат за задача да извикат заявките за конструиране и обновяване на базата данни (Фиг. \ref{fig:pic0090}). 
 
 \newpage
 \addcontentsline{toc}{chapter}{Заключение}
