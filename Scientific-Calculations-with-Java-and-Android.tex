@@ -16,9 +16,6 @@
 % \usepackage{hyperref}
 \usepackage{placeins}
 
-% Нужно е за създаването на списък с фигурите.
-\graphicspath{ {figures/} }
-
 % Заглавие на книгата.
 \title{Научни изчисления с Java и Android}
 
@@ -59,11 +56,17 @@
 
 Глава 1 - \nameref{chapter01}: Дава кратко описание на идеята за научни изследвания и по какъв начин те могат да се впишат в ежедневния живот и използването на „умни“ мобилни устройства.
 
-Глава 2 - \nameref{chapter02}: Представят се някои от популярните евристични подходи за решаване на сложни изчислителни задачи. Обяснява се и разликата между точните числени методи и приближените изчисления.  
+Глава 2 - \nameref{chapter02}: Представят се някои от популярните евристични подходи за решаване на сложни изчислителни задачи. Обяснява се и разликата между точните числени методи и приближените изчисления. По-сериозно внимание се отделя за генетичните алгоритми и изкуствените невронни мрежи, тъй като те са в основата на разработваната система. 
 
-Глава 3 - \nameref{chapter03}: Излагат се различни аргументи за изготвянето на една софтуерна архитектура и се дават насоки за реалната разработка на един софтуерен проект. 
+Глава 3 - \nameref{chapter03}: Излагат се различни аргументи за изготвянето на една софтуерна архитектура и се дават насоки за реалната разработка на един софтуерен проект. Изборът за архитектура на системата е насочен към трислойните модели, както в контекста на клиент-сървър система, така и в контекста на локално мобилно приложение, което се състои от потребителски интерфейс, работна логика и локална база данни. 
 
-Глава 4 - \nameref{chapter04}: Детайлно се представя процеса по създаването на едно мобилно приложение което има за основна задача извършване на изчисления във фонов режим, чрез използване на възможностите които Android операционната система дава. 
+Глава 4 - \nameref{chapter04}: Детайлно се представя процеса по създаването на едно мобилно приложение което има за основна задача извършване на изчисления във фонов режим, чрез използване на възможностите които Android операционната система дава. Това включва приложение за активен тапет, екран за настройки и група класове за вътрешно представяне на информацията. 
+
+Глава 5 - \nameref{chapter05}: Показва реализацията на отдалечената част от системата, а именно уеб базиран сървър с релационна база данни. За съхраняването на суровата информация за валутните котировки и параметрите на изкуствените невронни мрежи е представено MySQL базирано решение под формата на релационна база данни. За обмен на информацията между отдалечената база данни и мобилните приложения е представено PHP базирано решение. 
+
+Глава 6 - \nameref{chapter06}: Набляга на комуникацията между отдалечения сървър и локалните клиенти, изпълнявани върху мобилни устройства. Тъй като от страната на сървъра и избрано уеб базирано решение, то в основата на комуникацията е заложен HTTP протокола и неговите възможности да предава JSON пакетирани съобщения. 
+
+Глава 7 - \nameref{chapter07}: Разглежда обучението на изкуствени невронни мрежи, което е свързано с намиране на такива оптимални стойности за теглата, че мрежата максимално добре да изпълнява задачата за която е предназначена. При липсата на обратни връзки се използва обратно разпространение на грешката, а при наличието на обратни връзки генетични алгоритми. 
 
 \newpage
 \chapter{Научни изчисления}
@@ -77,7 +80,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0001.png}
+  \includegraphics[width=1.0\linewidth]{pic0001.png}
   \caption{Сравнение между последователни пресмятания и паралелни пресмятания.}
 \label{fig:pic0001}
 \end{figure}
@@ -88,7 +91,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0002.png}
+  \includegraphics[width=1.0\linewidth]{pic0002.png}
   \caption{Сравнение между конкуретни пресмятания и паралелни пресмятания.}
 \label{fig:pic0002}
 \end{figure}
@@ -119,7 +122,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0003.png}
+  \includegraphics[width=1.0\linewidth]{pic0003.png}
   \caption{Отношението евро/долар в рамките на един час.}
 \label{fig:pic0003}
 \end{figure}
@@ -134,7 +137,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.25\pdfpageheight]{./images/pic0004.png}
+  \includegraphics[height=0.25\pdfpageheight]{pic0004.png}
   \caption{Трислойна изкуствена невронна мрежа.}
 \label{fig:pic0004}
 \end{figure}
@@ -153,7 +156,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0005.png}
+  \includegraphics[width=1.0\linewidth]{pic0005.png}
   \caption{Трите основни операции в генетичните алгоритми.}
 \label{fig:pic0005}
 \end{figure}
@@ -170,7 +173,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0006.png}
+  \includegraphics[width=1.0\linewidth]{pic0006.png}
   \caption{Продуктовата линия TradingSolutions използваща изкуствени невронни мрежи и генетични алгоритми за прогнозиране на Forex финансови инструменти.}
 \label{fig:pic0006}
 \end{figure}
@@ -179,7 +182,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.4\pdfpageheight]{./images/pic0007.png}
+  \includegraphics[height=0.4\pdfpageheight]{pic0007.png}
   \caption{Системата MoneyBee за финансово прогнозиране в разпределена среда.}
 \label{fig:pic0007}
 \end{figure}
@@ -218,7 +221,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.25\pdfpageheight]{./images/pic0008.png}
+  \includegraphics[height=0.25\pdfpageheight]{pic0008.png}
   \caption{Уеб базирана трислойна софтуерна архитектура.}
 \label{fig:pic0008}
 \end{figure}
@@ -229,7 +232,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0009.png}
+  \includegraphics[width=1.0\linewidth]{pic0009.png}
   \caption{Подходи за софтуерна разработка.}
 \label{fig:pic0009}
 \end{figure}
@@ -250,7 +253,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0010.png}
+  \includegraphics[width=1.0\linewidth]{pic0010.png}
   \caption{Публикуване на проект в GitHub.}
 \label{fig:pic0010}
 \end{figure}
@@ -269,7 +272,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0011.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0011.png}
   \caption{Определяне на приложението като активен тапет.}
 \label{fig:pic0011}
 \end{figure}
@@ -279,7 +282,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0012.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0012.png}
   \caption{Модул от тип "услуга".}
 \label{fig:pic0012}
 \end{figure}
@@ -289,7 +292,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0013.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0013.png}
   \caption{Флагове за достъп до ресурса активен тапет.}
 \label{fig:pic0013}
 \end{figure}
@@ -299,7 +302,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0014.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0014.png}
   \caption{Регистрация на услугата за прослушване на съобщения от операционната система.}
 \label{fig:pic0014}
 \end{figure}
@@ -309,7 +312,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0015.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0015.png}
   \caption{Референция към описателния файл на активния тапет.}
 \label{fig:pic0015}
 \end{figure}
@@ -319,7 +322,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0016.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0016.png}
   \caption{Прозорец за установяване на активния тапет.}
 \label{fig:pic0016}
 \end{figure}
@@ -329,7 +332,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0017.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0017.png}
   \caption{XML описателен файл на тапета.}
 \label{fig:pic0017}
 \end{figure}
@@ -343,7 +346,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0018.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0018.png}
   \caption{Фотографии на планината Витоша, до град София, България.}
 \label{fig:pic0018}
 \end{figure}
@@ -353,7 +356,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0019.png}
+  \includegraphics[width=1.0\linewidth]{pic0019.png}
   \caption{Визуализация на информация от изчисленията.}
 \label{fig:pic0019}
 \end{figure}
@@ -363,7 +366,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=1.0\linewidth]{./images/pic0020.png}
+  \includegraphics[width=1.0\linewidth]{pic0020.png}
   \caption{Първоначален набор от настройки.}
 \label{fig:pic0020}
 \end{figure}
@@ -375,7 +378,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0021.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0021.png}
   \caption{Визуален компонент за включване и изключване на тапета.}
 \label{fig:pic0021}
 \end{figure}
@@ -385,7 +388,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0022.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0022.png}
   \caption{Визуален компонент за включване и изключване на тапета.}
 \label{fig:pic0022}
 \end{figure}
@@ -395,7 +398,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0023.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0023.png}
   \caption{Стойности за натоварване на системата.}
 \label{fig:pic0023}
 \end{figure}
@@ -405,7 +408,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0024.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0024.png}
   \caption{Позициониране на областите за визуализация.}
 \label{fig:pic0024}
 \end{figure}
@@ -415,7 +418,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0025.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0025.png}
   \caption{Стойности за позициониране на областите за визуализация.}
 \label{fig:pic0025}
 \end{figure}
@@ -425,7 +428,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0026.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0026.png}
   \caption{Размер на областите за визуализация.}
 \label{fig:pic0026}
 \end{figure}
@@ -435,7 +438,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0027.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0027.png}
   \caption{Стойности за размер на областите за визуализация.}
 \label{fig:pic0027}
 \end{figure}
@@ -449,7 +452,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0028.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0028.png}
   \caption{Събитие за създаване на прозореца.}
 \label{fig:pic0028}
 \end{figure}
@@ -459,7 +462,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0029.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0029.png}
   \caption{Събитие за пауза на прозореца.}
 \label{fig:pic0029}
 \end{figure}
@@ -473,7 +476,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0030.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0030.png}
   \caption{Наследяване на WallpaperService.}
 \label{fig:pic0030}
 \end{figure}
@@ -483,7 +486,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0031.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0031.png}
   \caption{Спомагателни константи.}
 \label{fig:pic0031}
 \end{figure}
@@ -493,7 +496,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0032.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0032.png}
   \caption{Константи за цветовете.}
 \label{fig:pic0032}
 \end{figure}
@@ -503,7 +506,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0033.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0033.png}
   \caption{Променливи отразяващи състоянието на активния тапет.}
 \label{fig:pic0033}
 \end{figure}
@@ -513,7 +516,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0034.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0034.png}
   \caption{Променливи отговарящи за изкуствената невронна мрежа.}
 \label{fig:pic0034}
 \end{figure}
@@ -523,7 +526,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0035.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0035.png}
   \caption{Променливи отговарящи за изкуствената невронна мрежа.}
 \label{fig:pic0035}
 \end{figure}
@@ -535,7 +538,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0036.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0036.png}
   \caption{Определяне на броя и типовете неврони.}
 \label{fig:pic0036}
 \end{figure}
@@ -545,7 +548,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0037.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0037.png}
   \caption{Структура на трислойна изкуствена невронна мрежа.}
 \label{fig:pic0037}
 \end{figure}
@@ -555,7 +558,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0038.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0038.png}
   \caption{Избор на стойности за прогнозиране.}
 \label{fig:pic0038}
 \end{figure}
@@ -565,7 +568,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0039.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0039.png}
   \caption{Определяне на границите във времевия ред.}
 \label{fig:pic0039}
 \end{figure}
@@ -575,7 +578,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0040.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0040.png}
   \caption{Диапазон на активационната функция в изходния слой.}
 \label{fig:pic0040}
 \end{figure}
@@ -585,7 +588,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0041.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0041.png}
   \caption{Тренировъчни примери.}
 \label{fig:pic0041}
 \end{figure}
@@ -595,7 +598,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0042.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0042.png}
   \caption{Входни данни към изкуствената неверонна мрежа за получаване на прогноза.}
 \label{fig:pic0042}
 \end{figure}
@@ -605,7 +608,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0043.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0043.png}
   \caption{Изследване на група от стойности за определяне на диапазона.}
 \label{fig:pic0043}
 \end{figure}
@@ -615,7 +618,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.7\pdfpageheight]{./images/pic0044.png}
+  \includegraphics[height=0.7\pdfpageheight]{pic0044.png}
   \caption{Активационни функции \cite{afwiki}.}
 \label{fig:pic0044}
 \end{figure}
@@ -625,7 +628,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0045.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0045.png}
   \caption{Собствен engine обект.}
 \label{fig:pic0045}
 \end{figure}
@@ -639,7 +642,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0046.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0046.png}
   \caption{Вътрешни променливи за двигателя на услугата.}
 \label{fig:pic0046}
 \end{figure}
@@ -649,7 +652,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0047.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0047.png}
   \caption{Единичен цикъл във фонов режим.}
 \label{fig:pic0047}
 \end{figure}
@@ -659,7 +662,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0048.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0048.png}
   \caption{Изчисляване на прогноза.}
 \label{fig:pic0048}
 \end{figure}
@@ -669,7 +672,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0049.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0049.png}
   \caption{Тренировъчен цикъл на изкуствената невронна мрежа.}
 \label{fig:pic0049}
 \end{figure}
@@ -679,7 +682,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0050.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0050.png}
   \caption{Основна процедура по изрисуване на информацията от тренировъчния процес.}
 \label{fig:pic0050}
 \end{figure}
@@ -689,7 +692,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0051.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0051.png}
   \caption{Разбиване на задачата за визуализация.}
 \label{fig:pic0051}
 \end{figure}
@@ -699,7 +702,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0052.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0052.png}
   \caption{Изрисуване на фона.}
 \label{fig:pic0052}
 \end{figure}
@@ -709,7 +712,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0053.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0053.png}
   \caption{Изрисуване на областите за служебна информация.}
 \label{fig:pic0053}
 \end{figure}
@@ -719,7 +722,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0054.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0054.png}
   \caption{Изрисуване на информацията за валутната двойка.}
 \label{fig:pic0054}
 \end{figure}
@@ -729,7 +732,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0055.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0055.png}
   \caption{Позиция и размери за визуализация на прогнозата.}
 \label{fig:pic0055}
 \end{figure}
@@ -739,7 +742,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0056.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0056.png}
   \caption{Обхват на данните по ширина и височина.}
 \label{fig:pic0056}
 \end{figure}
@@ -749,7 +752,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0057.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0057.png}
   \caption{Цикли за визуализация на стълбовете от времевия реди и прогнозата.}
 \label{fig:pic0057}
 \end{figure}
@@ -759,7 +762,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0058.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0058.png}
   \caption{Топология на изкуствената невронна мрежа която се визуализира.}
 \label{fig:pic0058}
 \end{figure}
@@ -769,7 +772,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0059.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0059.png}
   \caption{Мащабиране на входната и изходната информация.}
 \label{fig:pic0059}
 \end{figure}
@@ -779,7 +782,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0060.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0060.png}
   \caption{Стойности на теглата между слоевете.}
 \label{fig:pic0060}
 \end{figure}
@@ -789,7 +792,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0061.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0061.png}
   \caption{Мащабиране на стойностите в скрития слой.}
 \label{fig:pic0061}
 \end{figure}
@@ -799,7 +802,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0062.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0062.png}
   \caption{Нормализиране на стойностите за теглата.}
 \label{fig:pic0062}
 \end{figure}
@@ -809,7 +812,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0063.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0063.png}
   \caption{Изрисуване на топологията.}
 \label{fig:pic0063}
 \end{figure}
@@ -819,7 +822,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0064.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0064.png}
   \caption{Конструктор на двигателя за услугата.}
 \label{fig:pic0064}
 \end{figure}
@@ -829,7 +832,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0065.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0065.png}
   \caption{Промяна във видимостта на активния тапет.}
 \label{fig:pic0065}
 \end{figure}
@@ -839,7 +842,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0066.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0066.png}
   \caption{Спиране на пресмятанията при разрушаване на повърхността за изрисуване.}
 \label{fig:pic0066}
 \end{figure}
@@ -849,7 +852,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0067.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0067.png}
   \caption{Размер на зоните за изрисуване.}
 \label{fig:pic0067}
 \end{figure}
@@ -860,7 +863,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0068.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0068.png}
   \caption{Координати и размери на областите за визуализация - горе-ляво.}
 \label{fig:pic0068}
 \end{figure}
@@ -868,7 +871,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0069.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0069.png}
   \caption{Координати и размери на областите за визуализация - горе-център.}
 \label{fig:pic0069}
 \end{figure}
@@ -876,7 +879,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0070.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0070.png}
   \caption{Координати и размери на областите за визуализация - горе-дясно.}
 \label{fig:pic0070}
 \end{figure}
@@ -884,7 +887,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0071.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0071.png}
   \caption{Координати и размери на областите за визуализация - център-ляво.}
 \label{fig:pic0071}
 \end{figure}
@@ -892,7 +895,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0072.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0072.png}
   \caption{Координати и размери на областите за визуализация - център-център.}
 \label{fig:pic0072}
 \end{figure}
@@ -900,7 +903,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0073.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0073.png}
   \caption{Координати и размери на областите за визуализация - център-дясно.}
 \label{fig:pic0073}
 \end{figure}
@@ -908,7 +911,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0074.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0074.png}
   \caption{Координати и размери на областите за визуализация - долу-ляво.}
 \label{fig:pic0074}
 \end{figure}
@@ -916,7 +919,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0075.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0075.png}
   \caption{Координати и размери на областите за визуализация - долу-център.}
 \label{fig:pic0075}
 \end{figure}
@@ -924,7 +927,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0076.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0076.png}
   \caption{Координати и размери на областите за визуализация - долу-дясно.}
 \label{fig:pic0076}
 \end{figure}
@@ -934,7 +937,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0077.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0077.png}
   \caption{Натоварване на системата за фонови пресмятания.}
 \label{fig:pic0077}
 \end{figure}
@@ -948,7 +951,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0078.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0078.png}
   \caption{Константи за интервалите на времевия ред (0 до 15).}
 \label{fig:pic0078}
 \end{figure}
@@ -958,7 +961,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0079.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0079.png}
   \caption{Константи за интервалите на времевия ред (30 до 43200).}
 \label{fig:pic0079}
 \end{figure}
@@ -968,7 +971,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0080.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0080.png}
   \caption{Описание на времеви интервал.}
 \label{fig:pic0080}
 \end{figure}
@@ -978,7 +981,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0081.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0081.png}
   \caption{Определяне на константа за интервал по брой минути.}
 \label{fig:pic0081}
 \end{figure}
@@ -988,7 +991,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0082.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0082.png}
   \caption{Определяне на константа за интервал по текстово описание.}
 \label{fig:pic0082}
 \end{figure}
@@ -998,7 +1001,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0083.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0083.png}
   \caption{Конструктор на изброения тип за интервал.}
 \label{fig:pic0083}
 \end{figure}
@@ -1008,7 +1011,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0084.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0084.png}
   \caption{Структура на локалната таблица за котировките.}
 \label{fig:pic0084}
 \end{figure}
@@ -1018,7 +1021,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0085.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0085.png}
   \caption{Структура на локалната таблица за изкуствените невронни мрежи.}
 \label{fig:pic0085}
 \end{figure}
@@ -1028,7 +1031,7 @@
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0086.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0086.png}
   \caption{Име и версията на базата данни.}
 \label{fig:pic0086}
 \end{figure}
@@ -1038,7 +1041,7 @@ Android управлява базите от данни под формата н
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0087.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0087.png}
   \caption{Код за създаване на таблицата за котировки.}
 \label{fig:pic0087}
 \end{figure}
@@ -1046,7 +1049,7 @@ Android управлява базите от данни под формата н
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0088.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0088.png}
   \caption{Код за създаване на таблицата за изкуствените невронни мрежи.}
 \label{fig:pic0088}
 \end{figure}
@@ -1056,7 +1059,7 @@ Android управлява базите от данни под формата н
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0089.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0089.png}
   \caption{Код изтриване на таблиците.}
 \label{fig:pic0089}
 \end{figure}
@@ -1066,13 +1069,77 @@ Android управлява базите от данни под формата н
 
 \begin{figure}[h]
   \centering
-  \includegraphics[height=0.45\pdfpageheight]{./images/pic0090.png}
+  \includegraphics[height=0.45\pdfpageheight]{pic0090.png}
   \caption{Конструктор и виртуални методи на спомагателния клас за базата данни.}
 \label{fig:pic0090}
 \end{figure}
 \FloatBarrier
 
 Конструкторът на спомагателния клас за базата данни има единствена задача да извика конструкторът на родителския клас (Фиг. \ref{fig:pic0090}). Двете предефинирани виртуални функции имат за задача да извикат заявките за конструиране и обновяване на базата данни (Фиг. \ref{fig:pic0090}). 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{pic0091.png}
+  \caption{Изброен тип за вида на невроните.}
+\label{fig:pic0091}
+\end{figure}
+\FloatBarrier
+
+Вторият изброен тип данни е по отношение на типа неврони. В общия случай невроните могат да бъдат обикновени, входни, изходни и отместващи (bias) (Фиг. \ref{fig:pic0090}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{pic0092.png}
+  \caption{Целочислена константа за типа на неврона, която може да се ползва и като битово поле.}
+\label{fig:pic0092}
+\end{figure}
+\FloatBarrier
+
+Тъй като са възможни различни връзки между невроните то се появяват и неврони с повече функции, като: обикновен-входен, обикновен-изходен, входен-изходен, входен-обикновен-изходен. Всички възможни комбинации се записват в целочислена променлива, която може да послужи и като битово поле (Фиг. \ref{fig:pic0092}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{pic0093.png}
+  \caption{Определяне на изброимата константа по числена стойност.}
+\label{fig:pic0093}
+\end{figure}
+\FloatBarrier
+
+Тъй като информацията от сървъра пристига предимно под формата на числа, то е рационално да бъде добавен статичен фактори метод, който по числена стойност да определя константата в изброения тип (Фиг. \ref{fig:pic0093}).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[height=0.45\pdfpageheight]{pic0094.png}
+  \caption{Методи за достъп до вътрешните стойности на константите.}
+\label{fig:pic0094}
+\end{figure}
+\FloatBarrier
+
+За удобство при работата с константите и със скритата в тях информация често се използват методи за достъп (accessor). В този случай един публичен getter, но setter с частен достъп. Разумно е setter-ът да бъде с частен достъп, тъй като е разумно да се запази свойството на изброените константи да бъдат константи (Фиг. \ref{fig:pic0094}).
+
+\newpage
+\chapter{Централизиран сървър}
+\label{chapter05}
+
+\section{Релационна база данни}
+
+\section{Сървър скриптове}
+
+\newpage
+\chapter{Комуникация клиент-сървър}
+\label{chapter06}
+
+\section{Hypertext Transfer Protocol}
+
+\section{JavaScript Object Notation}
+
+\newpage
+\chapter{Обучение на мрежата}
+\label{chapter07}
+
+\section{Обратно разпространение на грешката}
+
+\section{Генетични алгоритми}
 
 \newpage
 \addcontentsline{toc}{chapter}{Заключение}
