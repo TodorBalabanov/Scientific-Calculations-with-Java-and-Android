@@ -1,46 +1,46 @@
 \documentclass[book,14pt,oneside,openany]{memoir}
-% Добавя възможност за сензитивни хипер-връзки в самия документ.
+% Adds the possibility of sensitive hyperlinks in the document itself.
 \usepackage{hyperref}
 \usepackage{nameref}
 \usepackage[utf8x]{inputenc}
 \usepackage[bulgarian]{babel}
 \usepackage{url}
 \usepackage{lipsum}
-% Според изискванията на ИИКТ-БАН не бива да има номерация на страниците в ръкописа.
+% According to the requirements of IICT-BAS, there should be no page numbering in the manuscript.
 %\usepackage{nopageno}
 \usepackage{shorttoc}
 \usepackage{graphicx}
-% Директория в която се намират изображенията.
+% Directory where the images are located.
 \graphicspath{{images/}}
 \usepackage{array}
 \usepackage{imakeidx}
 \usepackage{placeins}
 
-% Заглавие на книгата.
-\title{Научни изчисления с Java и Android \\ практическо ръководство}
+% Title of the book.
+\title{Scientific Computing with Java and Android \\ practical guide}
 
-% Имена на авторите.
-\author{Тодор Балабанов \\ Илиян Занкински \\ Петър Томов}
+% Names of authors.
+\author{Todor Balabanov \\ Iliyan Zankinski \\ Petar Tomov}
 
-% Автоматично създаване на азбучен указател.
-\makeindex[columns=1, title=Азбучен указател, intoc]
+% Automatically create an alphabetical index.
+\makeindex[columns=1, title=Alphabetical index, intoc]
 
 \begin{document}
 
 \maketitle
 
-% Заглавната страница не е с оформлението на останалата част от документа (няма номерация).
+% The title page does not match the layout of the rest of the document (no numbering).
 \thispagestyle{empty}
 
-% Тук стои таблицата със съдържанието, което се генерира от названието на главите.
+% Here is the table of contents generated from the chapters' titles.
 \newpage
-\shorttoc{Теми}{0}
+\shorttoc{Topics}{0}
 
-% Тук стои таблицата със съдържанието, което се генерира от названието на главите и названието на секциите в тях.
+% Here is the table of contents, which is generated from the title of the chapters and the title of the sections.
 \newpage
 \tableofcontents
 
-% По този начин номерацията на подточките е с арабски цифри.
+% Thus, the numbering of the subpoints is in Arabic numerals.
 \renewcommand\thesection{\thechapter.\arabic{section}}
 \renewcommand\thesubsection{\thesection.\arabic{subsection}}
 
@@ -54,30 +54,30 @@
 \include{chapters/chapter07}
 \include{chapters/conclusion}
 
-% Списък с използвана литература и източници на информация.
+% List of references and sources of information.
 \newpage
 \begin{thebibliography}{99}
 
-\bibitem{dcinfo} Distributed Computing Info  \\\texttt{http://www.distributedcomputing.info/}
+\bibitem{dcinfo} Distributed Computing Info \\\texttt{http://www.distributedcomputing.info/}
 
 \bibitem{shuch} Paul Shuch, H. \textit{Searching for Extraterrestrial Intelligence}. Springer-Verlag Berlin Heidelberg, 2011.
 
-\bibitem{bohn} Bohn, A., Guting, T., Mansmann, T. \textit{MoneyBee: A new product to predict stock market developments using artificial intelligence and increased calculation capacitiy} German. et al. Wirtschaftsinf, vol. 45/3, 325--333, 2003.
+\bibitem{bohn} Bohn, A., Guting, T., Mansmann, T. \textit{MoneyBee: A new product to predict stock market developments using artificial intelligence and increased calculation capacity} German. et al. Wirtschaftsinf, vol. 45/3, 325--333, 2003.
 
-\bibitem{vtrade} VitoshaTrade Project  \\\texttt{https://github.com/VelbazhdSoftwareLLC/VitoshaTrade}
+\bibitem{vtrade} VitoshaTrade Project \\\texttt{https://github.com/VelbazhdSoftwareLLC/VitoshaTrade}
 
 \bibitem{afwiki} Activation Function - Wikipedia \\\texttt{https://en.wikipedia.org/wiki/Activation\_function}
 \end{thebibliography}
 
-% Списък с фигурите.
+% List of figures.
 \newpage
 \listoffigures
 
-% Списък с таблиците. 
+% List of tables.
 % \newpage
 % \listoftables
 
-% Азбучен указател на използваните термини.
+% Alphabetical index of terms used.
 \newpage
 \printindex
 

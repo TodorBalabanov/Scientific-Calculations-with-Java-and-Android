@@ -1,635 +1,635 @@
 \newpage
-\chapter{Централизиран сървър}
+\chapter{Centralized Server}
 \label{chapter05}
 
-За да бъдат успешно извършени изчисленията в разпределена среда\index{изчисления в разпределена среда}, освен наличието на множество устройства е от съществено значение да има централизирано място, от което да бъдат раздавани задачите и където да бъдат събирани резултатите. Архитектура от тип клиент-сървър би била изключително удачна при едно техническо решение за не особено интензивна комуникация, която не изисква постоянна връзка между възлите. Приложението, работещо на сървъра, се състои от два компонента - база данни и работна логика. Изборът на системата за управление на бази от данни и скриптовия език на сървъра е обоснован основно от  преследваната висока финансова ефективност. Към настоящия момент най-изгодно е използването на комбинацията MySQL и PHP, както е в проекта VitoshaTrade\cite{vtrade} (Фиг. \ref{fig:pic0095}).
+For distributed computing to be successful\index{distributed computing}, in addition to having multiple devices, it is essential to have a centralized location from which tasks can be issued and results collected. A client-server architecture would be extremely suitable for a technical solution for not particularly intensive communication that does not require a constant connection between the nodes. The application running on the server consists of two components - database and work logic. The choice of the database management system and the scripting language of the server is mainly justified by the pursued high financial efficiency. At the moment, it is most profitable to use the combination of MySQL and PHP, as in the VitoshaTrade\cite{vtrade} project (Fig. \ref{fig:pic0095}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0095}
-  \caption{Публично хранилище за кода на сървър приложението}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0095}
+\caption{Public repository for server application code}
 \label{fig:pic0095}
 \end{figure}
 \FloatBarrier
 
-\section{Релационна база данни}
+\section{Relational Database}
 
-За нуждите от съхраняването на информация от страна на сървъра, е достатъчно да се разработи база от данни, в която таблиците са нормализирани поне до трета нормална форма (Фиг. \ref{fig:pic0096}).
+For the needs of storing information on the server side, it is sufficient to develop a database in which the tables are normalized to at least third normal form (Fig. \ref{fig:pic0096}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.35\pdfpageheight]{pic0096}
-  \caption{Физическа структура на базата данни}
+\centering
+\includegraphics[height=0.35\pdfpageheight]{pic0096}
+\caption{Physical structure of the database}
 \label{fig:pic0096}
 \end{figure}
 \FloatBarrier
 
-Това, което всеки един финансов времеви ред има, е интервал на който се извършват отчитанията на нивата. Тази информация се записва в таблица с три колони - служебен идентификатор, брой минути за интервала и символно название на интервала (Фиг. \ref{fig:pic0097}).
+What each financial time series has is an interval at which level readings are made. This information is recorded in a table with three columns - service identifier, number of minutes for the interval and symbolic name of the interval (Fig. \ref{fig:pic0097}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0097}
-  \caption{Таблица с времевите интервали за редовете}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0097}
+\caption{Table with the time intervals for the rows}
 \label{fig:pic0097}
 \end{figure}
 \FloatBarrier
 
-Най-съществената таблица в базата данни е таблицата за описване на валутните двойки (Фиг. \ref{fig:pic0098}). Тя съдържа следните полета - служебен идентификатор, название на валутната двойка, външен ключ към времевия интервал, отместване, необходимо за нормализиране на информацията, множител за мащабиране, също необходим за нормализирането на информацията, описание на валутната двойка и маркер за време, в което е направен записът в таблицата. 
+The most important table in the database is the table for describing the currency pairs (Fig. \ref{fig:pic0098}). It contains the following fields - service identifier, name of the currency pair, foreign key to the time interval, offset required to normalize the information, scaling factor also required for the normalization of the information, description of the currency pair and time marker in which it is table entry made.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0098}
-  \caption{Таблица за представяне на валутните двойки}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0098}
+\caption{Currency pairs presentation table}
 \label{fig:pic0098}
 \end{figure}
 \FloatBarrier
 
-Топологията на всяка невронна мрежа се описва само един път в таблица за видовете мрежи (Фиг. \ref{fig:pic0099}). Тази таблица съдържа следните полета - служебен идентификатор, външен ключ към валутната двойка, за която се отнася мрежата, брой неврони, флагове за типа на невроните, стойности за връзките между невроните (според матрицата за съседство) и в кой момент от времето е направен записът в таблицата. 
+The topology of each neural network is described only once in a table of network types (Fig. \ref{fig:pic0099}). This table contains the following fields - service identifier, foreign key to the currency pair to which the network refers, number of neurons, flags for the type of neurons, values for the connections between neurons (according to the adjacency matrix) and at what point in time the entry was made in the table.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0099}
-  \caption{Таблица за представяне на типовете мрежи}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0099}
+\caption{Table to represent network types}
 \label{fig:pic0099}
 \end{figure}
 \FloatBarrier
 
-На всяка топология мрежа може да отговарят множество екземпляри от тип изкуствена невронна мрежа (Фиг. \ref{fig:pic0100}). Информацията в таблицата за екземплярите е организирана в следните колони - служебен идентификатор, външен ключ към типа мрежа за който се отнася екземплярът, жизнена стойност на екземпляра, тегла на връзките между невроните (по графа за съседство) и момент от времето, в който е направен записът в таблицата. 
+Each network topology may correspond to multiple instances of the artificial neural network type (Fig. \ref{fig:pic0100}). The information in the instance table is organized into the following columns - service identifier, foreign key to the network type to which the instance refers, lifetime value of the instance, weights of connections between neurons (by adjacency graph), and point in time when it was made the entry in the table.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0100}
-  \caption{Таблица за представяне на типовете мрежи}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0100}
+\caption{Table to represent network types}
 \label{fig:pic0100}
 \end{figure}
 \FloatBarrier
 
-За всеки екземпляр на невронна мрежа, е важно да се знае при какви параметри протича обучението му (Фиг. \ref{fig:pic0101}). За тази цел е предназначена отделна таблица със следните колони - служебен идентификатор, външен ключ към екземпляра, размер на популацията (когато става въпрос за обучаващ генетичен алгоритъм), брой барове на входа и брой барове на изхода.
+For each instance of a neural network, it is important to know under what parameters its training takes place (Fig. \ref{fig:pic0101}). A separate table with the following columns is intended for this purpose - service identifier, foreign key to the instance, population size (when it comes to a training genetic algorithm), number of bars at the input and number of bars at the output.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0101}
-  \caption{Таблица с опции за протичане на обучението}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0101}
+\caption{Table of learning flow options}
 \label{fig:pic0101}
 \end{figure}
 \FloatBarrier
 
-При нужда от визуално представяне на екземпляра за изкуствена невронна мрежа, е удачно да се съхранява информация за координатите на всеки неврон в равнината xOy (Фиг. \ref{fig:pic0102}). Тази таблица съдържа следните колони - служебен идентификатор, външен ключ към екземпляра, координати на невроните по реда на тяхното срещане в екземпляра и маркер за времето, в което е направен записът в таблицата. 
+If you need a visual representation of the instance for an artificial neural network, it is appropriate to store information about the coordinates of each neuron in the xOy plane (Fig. \ref{fig:pic0102}). This table contains the following columns - service identifier, foreign key to the instance, coordinates of the neurons in the order of their occurrence in the instance, and a marker for the time when the entry in the table was made.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0102}
-  \caption{Таблица с опции за протичане на обучението}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0102}
+\caption{Table of learning flow options}
 \label{fig:pic0102}
 \end{figure}
 \FloatBarrier
 
-Последната, но изключително важна таблица, е таблицата за съхранение на обучаващите примери, съдържащи информацията за финансовия времеви ред (Фиг. \ref{fig:pic0103}). Тази таблица съдържа следните колони - служебен идентификатор, външен ключ към валутната двойка, брой измервания, последователност от времеви маркери, последователност от нива (отваряне, най-ниско, най-високо, затваряне), търгуван обем и времеви маркер за момента, в който е направен записът в таблицата. 
+The last but extremely important table is the table for storing the training examples containing the financial time series information (Fig. \ref{fig:pic0103}). This table contains the following columns - service identifier, foreign key to the currency pair, number of measurements, sequence of timestamps, sequence of levels (open, low, high, close), traded volume and timestamp of the moment when the table entry is made.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0103}
-  \caption{Таблица с опции за протичане на обучението}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0103}
+\caption{Table of learning flow options}
 \label{fig:pic0103}
 \end{figure}
 \FloatBarrier
 
-\section{Алгоритмична обработка на суровите данни}
+\section{Algorithmic processing of raw data}
 
-За да се постигне добро разделяне, според трислойната архитектура на системата, от съществено значение е суровите данни да бъдат минимално обвързани с работната логика. Често срещана практика е смесването на работата със суровите данни и програмния код от работната логика. Такова смесване лесно се получава, ако в скриптовете от работната логика се изпълняват сложни SQL заявки. Подобен начин за конструиране на сървърното приложение прави системата трудна за поддържане и още по-трудна за реорганизиране, ако се наложи смяна на системата за управление на бази от данни или инструментите използвани в слоя на работната логика. Добро разделяне между двата слоя се получава, когато работната логика, под формата на SQL заявки, единствено вика съхранени функции и процедури (stored procedures) на системата за управление на бази от данни. От една страна синтаксисът на заявките в междинния слой става максимално опростен, от друга страна евентуална подмяна на базата данни би довела до единствена корекция в начина, по който се извикват съхранените функции и процедури. За да се удовлетвори стремежът за максимално разделяне между слоевете, към структурата на базата данни са добавени група съхранени функции и процедури. 
+In order to achieve good separation, according to the three-layer architecture of the system, it is essential that the raw data is minimally bound to the working logic. A common practice is to mix the work with the raw data and the program code from the work logic. Such mixing easily occurs if complex SQL queries are executed in work logic scripts. Such a way of constructing the server application makes the system difficult to maintain and even more difficult to reorganize if the database management system or the tools used in the business logic layer need to be changed. A good separation between the two layers occurs when the work logic, in the form of SQL queries, only calls stored functions and procedures (stored procedures) of the database management system. On the one hand, the syntax of requests in the intermediate layer becomes maximally simplified, on the other hand, a possible replacement of the database would lead to a single correction in the way stored functions and procedures are called. To satisfy the drive for maximum separation between layers, a group of stored functions and procedures have been added to the database structure.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0104}
-  \caption{Процедура за добавяне на валутна двойка}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0104}
+\caption{Procedure for adding a currency pair}
 \label{fig:pic0104}
 \end{figure}
 \FloatBarrier
 
-При добавянето на нова валутна двойка, като входни данни постъпват названието на валутната двойка и времевият интервал (в брой минути), който интервал трябва да бъде съпоставен на интервалите, изброени в таблицата с времеви интервали. Това налага използването на съхранена процедура, която да извърши обработката на входната информация (Фиг. \ref{fig:pic0104}). 
+When adding a new currency pair, the name of the currency pair and the time interval (in minutes), which interval should be compared to the intervals listed in the table of time intervals, are entered as input data. This necessitates the use of a stored procedure to handle the input information (Fig. \ref{fig:pic0104}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0105}
-  \caption{Процедура за запис на екземпляр от изкуствена невронна мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0105}
+\caption{Procedure for recording an instance of an artificial neural network}
 \label{fig:pic0105}
 \end{figure}
 \FloatBarrier
 
-При записването на екземпляр от изкуствена невронна мрежа, към базата данни постъпва информация за валутната двойка, периода на времевия ред, броя и типовете на невроните, матрици на съседство за връзките и жизнена оценка на екземпляра (Фиг. \ref{fig:pic0105}). Преди екземплярът да бъде добавен в таблицата с екземплярите се проверява дали валутната дойка е налична и се определя нейният идентификатор. Ако валутната двойка не е налична, то тя се създава. Следва проверка за съществуването на типа мрежа. Ако не съществува, то тя се създава. Последната инструкция е самото добавяне на екземпляра към таблицата с екземплярите. При така подбраната стратегия за работа максимално се спазват правилата за съблюдаване на референциалния интегритет. 
+When saving an instance of an artificial neural network, the database receives information about the currency pair, the period of the time series, the number and types of neurons, adjacency matrices for the connections, and a live score of the instance (Fig. \ref{fig:pic0105}) . Before the instance is added to the instance table, it is checked whether the currency sucker is available and its identifier is determined. If the currency pair is not available, it is created. Next is a check for the existence of the network type. If it does not exist, it is created. The last instruction is to add the instance itself to the instance table. With the work strategy chosen in this way, the rules for observing referential integrity are observed as much as possible.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0106}
-  \caption{Процедура за запис на тренировъчни примери}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0106}
+\caption{Procedure for recording training examples}
 \label{fig:pic0106}
 \end{figure}
 \FloatBarrier
 
-При записа на тренировъчни примери, на входа на базата данни се подават серия параметри за стойностите на времевия ред (Фиг. \ref{fig:pic0106}). По аналогичен начин се извършва проверка за съществуване на валутната двойка. Следва изтриване на предишни тренировъчни примери, ако такива бъдат открити. Финалната стъпка е добавянето на постъпилата информация. 
+When recording training examples, a series of time series value parameters are fed to the database input (Fig. \ref{fig:pic0106}). In an analogous way, a check for the existence of the currency pair is carried out. This is followed by deletion of previous training examples if any are found. The final step is adding the received information.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0107}
-  \caption{Функция за определяне на типа мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0107}
+\caption{Function to determine network type}
 \label{fig:pic0107}
 \end{figure}
 \FloatBarrier
 
-Помощна функция определя служебния идентификатор на типа мрежа по описанието на екземпляр (Фиг. \ref{fig:pic0107}). Ако не бъде открит такъв тип служебно се връща нулева стойност. 
+A helper function determines the service identifier of the network type from the instance description (Fig. \ref{fig:pic0107}). If no such type is found, a null value is automatically returned.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0108}
-  \caption{Функция за определяне на типа валутна двойка}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0108}
+\caption{Function to determine currency pair type}
 \label{fig:pic0108}
 \end{figure}
 \FloatBarrier
 
-По аналогичен начин, помощна функция служи за определяне на служебния идентификатор за валутна двойка, чрез зададено символно име и период (Фиг. \ref{fig:pic0108}). Ако валутната двойка не бъде открита се връща служебна нула. 
+Similarly, a helper function serves to determine the service identifier for a currency pair, by means of a given symbol name and period (Fig. \ref{fig:pic0108}). If the currency pair is not found, a service zero is returned.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0109}
-  \caption{Функция за определяне на най-добрата жизненост}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0109}
+\caption{Function to determine the best vitality}
 \label{fig:pic0109}
 \end{figure}
 \FloatBarrier
 
-По зададено описание на изкуствена невронна мрежа, клиентските мобилни устройства запитват сървъра, на определени интервали от време, колко е стойността на най-жизнената мрежа. Това запитване е съществено, тъй като по него се взема решение дали мобилното устройство да докладва резултатите си на сървъра. Обработката се извършва на две стъпки - първо се намират всички мрежи с идентична топология, а след това се определя най-добрата жизненост (Фиг. \ref{fig:pic0109}).
+According to a set description of the artificial neural network, the client mobile devices ask the server, at certain time intervals, what is the value of the most vital network. This query is essential because it decides whether the mobile device should report its results to the server. The processing is done in two steps - first all networks with identical topology are found and then the best liveness is determined (Fig. \ref{fig:pic0109}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0110}
-  \caption{Функция за определяне на броя неврони за определен еземпляр мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0110}
+\caption{Function to determine the number of neurons for a particular network instance}
 \label{fig:pic0110}
 \end{figure}
 \FloatBarrier
 
-Помощна функция определя и броя неврони по зададен идентификатор на екземпляр мрежа (Фиг. \ref{fig:pic0110}).
+A helper function also determines the number of neurons by a given ID of a network instance (Fig. \ref{fig:pic0110}).
 
-\section{Сървър скриптове}
+\section{Server Scripts}
 
-Директният достъп до базата данни (TCP свързване) често е нежелателен, тъй като създава определени опасности за сигурността на данните. Поради тази причина е прието да се използва междинен слой, който да осъществява комуникацията с базата данни. За нуждите на настоящото помагало това са група PHP скриптове. 
+Direct access to the database (TCP connection) is often undesirable because it creates certain data security hazards. For this reason, it is accepted to use an intermediate layer to communicate with the database. For the purposes of this tutorial, these are a group of PHP scripts.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0111}
-  \caption{Глобални променливи за достъп до базата данни}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0111}
+\caption{Global Database Access Variables}
 \label{fig:pic0111}
 \end{figure}
 \FloatBarrier
 
-В специално отделен за целта файл (db.php) се задават следните глобални променливи за достъп до базата данни - хост на който е разположен MySQL сървърът, потребител в MySQL, парола на потребителя, название на базата данни и връзка (Фиг. \ref{fig:pic0111}).
+In a special file (db.php) set the following global variables for accessing the database - host on which the MySQL server is located, user in MySQL, password of the user, name of the database and connection (Fig. \ref{ fig:pic0111}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0112}
-  \caption{Отваряне на връзка към базата данни}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0112}
+\caption{Opening database connection}
 \label{fig:pic0112}
 \end{figure}
 \FloatBarrier
 
-Две помощни функции служат за отваряне и затваряне на връзка към базата данни (Фиг. \ref{fig:pic0112}, \ref{fig:pic0113}).
+Two helper functions serve to open and close a connection to the database (Fig. \ref{fig:pic0112}, \ref{fig:pic0113}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0113}
-  \caption{Затваряне на връзката към базата данни}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0113}
+\caption{Close database connection}
 \label{fig:pic0113}
 \end{figure}
 \FloatBarrier
 
-Допълнителна помощна функция изпълнява заявките към базата данни и връща резултата от изпълнението под формата на двумерен масив (Фиг. \ref{fig:pic0114}).
+An additional helper function executes the queries to the database and returns the result of the execution in the form of a two-dimensional array (Fig. \ref{fig:pic0114}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0114}
-  \caption{Изпълнение на заявки към базата данни}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0114}
+\caption{Executing Database Queries}
 \label{fig:pic0114}
 \end{figure}
 \FloatBarrier
 
-На този етап в разработката клиентското приложение изпраща своите данни под формата на POST заявка, а сървърът отговаря с JSON съобщение. Макар и спестяващ допълнителна работа около съставянето на JSON съобщения от страна на клиента, този подход не е за препоръчване и е желателно клиентите също да изпращат информацията в JSON формат, така че да се спазват конвенциите на RESTful приложенията. 
+At this stage in development, the client application sends its data in the form of a POST request, and the server responds with a JSON message. While saving additional work around composing JSON messages on the client side, this approach is not recommended and it is desirable that clients also send the information in JSON format so that the conventions of RESTful applications are respected.
 
-\subsection{Зареждане на мрежа по идентификатор}
+\subsection{Load Grid by ID}
 
-Всеки екземпляр на изкуствена невронна мрежа има служебен идентификатор, който представлява и първичен ключ в съответната таблица. За да бъде заредена мрежата, се извиква PHP скрипт изпълняващ тази задача. 
+Each instance of an artificial neural network has a service identifier, which is also a primary key in the corresponding table. To load the network, a PHP script is called to perform this task.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0115}
-  \caption{Проверка на входните данни}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0115}
+\caption{Input Verification}
 \label{fig:pic0115}
 \end{figure}
 \FloatBarrier
 
-Преди същинското зареждане на мрежата се включва модулът за работа с базата данни и се извършва проверка на входните параметри. В случая единственият параметър е цяло число което е идентификатор на екземпляра (Фиг. \ref{fig:pic0115}).
+Before actually loading the network, the database module is turned on and the input parameters are checked. In this case, the only parameter is an integer which is the identifier of the instance (Fig. \ref{fig:pic0115}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0116}
-  \caption{Заявка за извличане на екземпляр по идентификатор}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0116}
+\caption{Query to retrieve instance by identifier}
 \label{fig:pic0116}
 \end{figure}
 \FloatBarrier
 
-Следва отваряне на връзка към базата данни, съставяне на заявка (добрата практика изисква извикване на съхранена функция) и изпълнение на заявката (Фиг. \ref{fig:pic0116}). 
+This is followed by opening a connection to the database, constructing a query (good practice calls for a stored function call), and executing the query (Fig. \ref{fig:pic0116}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0117}
-  \caption{Проверка за наличност на екземпляра}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0117}
+\caption{Instance availability check}
 \label{fig:pic0117}
 \end{figure}
 \FloatBarrier
 
-Възможни са два изхода от изпълнението на заявката, спрямо това дали такъв екземпляр присъства в базата данни или не присъства. Ако екземплярът бъде открит започва изграждането на JSON съобщение с отговор към клиента. Отговорът съдържа единица, за намерен екземпляр, названието на валутната двойка, интервала на времевия ред, жизнената стойност на екземпляра, брой и типове на невроните, матрица на връзките и матрица на теглата (Фиг. \ref{fig:pic0117}-\ref{fig:pic0120}).
+There are two possible exits from the execution of the query, depending on whether such an instance is present in the database or not. If the instance is found, it starts building a JSON message with a response to the client. The response contains a unit, per found instance, the name of the currency pair, the interval of the time series, the lifetime value of the instance, the number and types of neurons, a matrix of connections and a matrix of weights (Fig. \ref{fig:pic0117}-\ref{ fig:pic0120}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0118}
-  \caption{Информация за невроните}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0118}
+\caption{Information about neurons}
 \label{fig:pic0118}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0119}
-  \caption{Информация за връзките}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0119}
+\caption{Link Information}
 \label{fig:pic0119}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0120}
-  \caption{Информация за теглата}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0120}
+\caption{Information about weights}
 \label{fig:pic0120}
 \end{figure}
 \FloatBarrier
 
-В ситуацията, когато екземплярът не е открит се връща нулев флаг. И при двата случая (открит или не) JSON съобщението се завършва, базата данни се затваря и информацията се изпраща към клиента (Фиг. \ref{fig:pic0121}).
+In the situation when the instance is not found, a null flag is returned. In either case (discovered or not), the JSON message is completed, the database is closed, and the information is sent to the client (Fig. \ref{fig:pic0121}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0121}
-  \caption{Приключване на процедурата по изпращане на отговор}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0121}
+\caption{Completing the procedure for sending a response}
 \label{fig:pic0121}
 \end{figure}
 \FloatBarrier
 
-\subsection{Зареждане на случайно избрана мрежа}
+\subsection{Load a random grid}
 
-Когато изчисленията се извършват на принципа за дарената изчислителна мощност, логично е изборът на мрежата, която ще бъде допълнително тренирана  да е на случаен принцип. За тази цел, скриптът от страна на сървъра избира мрежата по случаен начин.
+When computations are performed on the principle of donated computing power, it is logical that the selection of the network to be further trained should be random. For this purpose, the server-side script selects the network in a random manner.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0157}
-  \caption{Заявка за зареждане на случайна мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0157}
+\caption{Request to Load Random Grid}
 \label{fig:pic0157}
 \end{figure}
 \FloatBarrier
 
-Единствената разлика от зареждането на мрежа по идентификатори и случайно избрана мрежа е в SQL заявката, която се изпълнява от MySQL (Фиг. \ref{fig:pic0157}).
+The only difference between loading a grid by identifiers and a random grid is in the SQL query that is executed by MySQL (Fig. \ref{fig:pic0157}).
 
-\subsection{Зареждане на най-добрата жизненост от глобалната популация}
+\subsection{Loading the best vitality from the global population}
 
-Един от основните критерии, по които клиентските приложения вземат решение дали да докладват откритите от тях резултати, е стойността на най-добрата жизненост в глобалната популация (популацията, която се съхранява на сървъра). Скриптът, отговарящ за тази проверка, също включва модула за работа с базата данни и извършва серия проверки на входните параметри. 
+One of the main criteria by which client applications decide whether to report the results they find is the best liveness value in the global population (the population that is stored on the server). The script responsible for this check also includes the database module and performs a series of checks on the input parameters.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0122}
-  \caption{Входни параметри за конкретна топология на невронна мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0122}
+\caption{Input parameters for a specific neural network topology}
 \label{fig:pic0122}
 \end{figure}
 \FloatBarrier
 
-Проверяват се названието на валутната двойка, периодът на времевия ред, броят и типовете на невроните, както и връзките между тях (Фиг. \ref{fig:pic0122}).
+The name of the currency pair, the period of the time series, the number and types of neurons, as well as the connections between them are checked (Fig. \ref{fig:pic0122}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0123}
-  \caption{Флагове на невроните и връзките между тях}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0123}
+\caption{Neuron flags and connections between them}
 \label{fig:pic0123}
 \end{figure}
 \FloatBarrier
 
-Тъй като типовете на невроните са представени като масив, а връзките между самите неврони в матрица на съседство, то проверката им изисква малко по-сложна обработка в цикли (Фиг. \ref{fig:pic0123}).
+Since the neuron types are represented as an array, and the connections between the neurons themselves in an adjacency matrix, checking them requires a bit more complex processing in loops (Fig. \ref{fig:pic0123}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0124}
-  \caption{Заявка за най-добра жизненост}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0124}
+\caption{Best Vitality Request}
 \label{fig:pic0124}
 \end{figure}
 \FloatBarrier
 
-Следва отваряне на връзката към базата данни, изпълнение на съхранената функция за откриване на най-добра жизненост, затваряне на базата данни и изпращане до клиента на JSON пакетиран отговор (Фиг. \ref{fig:pic0124}).
+This is followed by opening the database connection, executing the best liveness detection stored function, closing the database, and sending a JSON packed response to the client (Fig. \ref{fig:pic0124}).
 
-\subsection{Зареждане на брой неврони по идентификатор}
+\subsection{Loading number of neurons by ID}
 
-При работата с екземпляри на изкуствените невронни мрежи, съществено е запитването за броя неврони в мрежата. 
+When working with instances of artificial neural networks, it is essential to inquire about the number of neurons in the network.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0125}
-  \caption{Определяне на броя неврони по идентификатор на мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0125}
+\caption{Determining the number of neurons by network ID}
 \label{fig:pic0125}
 \end{figure}
 \FloatBarrier
 
-Процедурата отново включва модула за работа с базата данни, проверка на входния параметър за идентификатор на екземпляр, отваряне на връзка към базата данни и стартиране на съхранена функция (Фиг. \ref{fig:pic0125}).
+The procedure again includes the database module, checking the input parameter for an instance ID, opening a connection to the database, and running a stored function (Fig. \ref{fig:pic0125}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0126}
-  \caption{Отговор към клиента}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0126}
+\caption{Response to customer}
 \label{fig:pic0126}
 \end{figure}
 \FloatBarrier
 
-Резултатът от съхранената функция се опакова в JSON съобщение и се изпраща на клиента (Фиг. \ref{fig:pic0126}).
+The result of the stored function is packed into a JSON message and sent to the client (Fig. \ref{fig:pic0126}).
 
-\subsection{Зареждане на тренировъчно множество по информация за валутна двойка}
+\subsection{Loading Training Set by Currency Pair Information}
 
-За обучението на всяка изкуствена невронна мрежа се използва тренировъчно множество, което е различно, според названието на валутната двойка и времевия интервал на реда. 
+For the training of each artificial neural network, a training set is used, which is different according to the name of the currency pair and the time interval of the order.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0127}
-  \caption{Проверка на входните параметри}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0127}
+\caption{Checking input parameters}
 \label{fig:pic0127}
 \end{figure}
 \FloatBarrier
 
-Зареждането започва по класическия начин с включване на модула за работа с базата данни, проверка на входната информация и отваряне на връзка към базата данни (Фиг. \ref{fig:pic0127}).
+Booting begins in the classic way by turning on the database module, checking input information, and opening a connection to the database (Fig. \ref{fig:pic0127}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0128}
-  \caption{Заявка за тренировъчно множество}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0128}
+\caption{Request for training set}
 \label{fig:pic0128}
 \end{figure}
 \FloatBarrier
 
-Следва заявка, извличане на резултата и затваряне на връзката към базата данни (Фиг. \ref{fig:pic0128}). Макар и да не е направено, добрият стил за разделяне на слоевете предполага вместо заявка да се извика съхранена функция. 
+Next comes a query, retrieving the result, and closing the database connection (Fig. \ref{fig:pic0128}). Although not done, good layer separation style suggests calling a stored function instead of a query.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0129}
-  \caption{Брой примери, времеви маркери и нива на отваряне}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0129}
+\caption{Number of examples, timestamps and opening levels}
 \label{fig:pic0129}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0130}
-  \caption{Най-ниска и най-висока постигната стойност}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0130}
+\caption{Lowest and highest value achieved}
 \label{fig:pic0130}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0131}
-  \caption{Нива на затваряне и търгуван обем}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0131}
+\caption{Closing levels and traded volume}
 \label{fig:pic0131}
 \end{figure}
 \FloatBarrier
 
-Ако е намерено тренировъчно множество за посочената валутна двойка и времеви интервал, то стойностите от времевия ред се пакетират и изпращат на клиента (Фиг. \ref{fig:pic0129}-\ref{fig:pic0131}).
+If a training set is found for the specified currency pair and time interval, then the time series values are packed and sent to the client (Fig. \ref{fig:pic0129}-\ref{fig:pic0131}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0132}
-  \caption{Изпращане на отговор до клиента}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0132}
+\caption{Send response to client}
 \label{fig:pic0132}
 \end{figure}
 \FloatBarrier
 
-Ако тренировъчно множество не бъде открито, се изпраща съобщение с нулев размер за данните. Без значение дали е открито множество или не, JSON съобщението се изпраща до клиента (Фиг. \ref{fig:pic0132}).
+If no training set is found, a message of zero size is sent for the data. Regardless of whether a set is found or not, the JSON message is sent to the client (Fig \ref{fig:pic0132}).
 
-\subsection{Зареждане на брой екземпляри по идентификатор или информация за валутна двойка}
+\subsection{Load number of instances by identifier or currency pair information}
 
-За подбирането на подмножество от глобалната популация е нужно да се знае колко екземпляра присъстват в базата данни по зададен идентификатор на екземпляр или название на валутна двойка с период. 
+To select a subset of the global population, it is necessary to know how many instances are present in the database by a given instance identifier or currency pair name with a period.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0133}
-  \caption{Проверка на входните аргументи}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0133}
+\caption{Validation of input arguments}
 \label{fig:pic0133}
 \end{figure}
 \FloatBarrier
 
-Проверката отново започва с включване на модула за работа с базата данни, проверка на входните аргументи и отваряне на връзка към базата данни (Фиг. \ref{fig:pic0133}).
+The check again begins by turning on the database module, checking the input arguments, and opening a connection to the database (Fig. \ref{fig:pic0133}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0134}
-  \caption{Еземпляри от типа на подадения идентификатор}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0134}
+\caption{Instances of the submitted identifier type}
 \label{fig:pic0134}
 \end{figure}
 \FloatBarrier
 
-Първо се изброяват екземплярит,е които са от типа на подадения идентификатор (Фиг. \ref{fig:pic0134}).
+First, the instances that are of the type of the submitted identifier are listed (Fig. \ref{fig:pic0134}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0135}
-  \caption{Пакетиране на получените стойности в JSON съобщение}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0135}
+\caption{Pack the received values into a JSON message}
 \label{fig:pic0135}
 \end{figure}
 \FloatBarrier
 
-Получените стойности се пакетират в JSON съобщение (Фиг. \ref{fig:pic0135}). 
+The resulting values are packed into a JSON message (Fig. \ref{fig:pic0135}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0136}
-  \caption{Проверка за екземпляри по название на валутна двойка и период}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0136}
+\caption{Check for instances by currency pair name and period}
 \label{fig:pic0136}
 \end{figure}
 \FloatBarrier
 
-Следва проверка за екземпляри по название на валутна двойка и период. Този списък се използва само, ако първоначално не е открито подмножество (Фиг. \ref{fig:pic0136}).
+Next is a check for instances by currency pair name and period. This list is only used if no subset is initially found (Fig. \ref{fig:pic0136}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0137}
-  \caption{Пакетиране на получените стойности в JSON съобщение}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0137}
+\caption{Pack the received values into a JSON message}
 \label{fig:pic0137}
 \end{figure}
 \FloatBarrier
 
-Пакетирането в JSON съобщение е аналогично на предходното (Фиг. \ref{fig:pic0137}).
+Packaging in a JSON message is analogous to the previous one (Fig. \ref{fig:pic0137}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0138}
-  \caption{Изпращане на резултата}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0138}
+\caption{Send Result}
 \label{fig:pic0138}
 \end{figure}
 \FloatBarrier
 
-Скриптът завършва със затваряне на връзката към базата данни, оформяне и изпращане на резултата до клиента (Фиг. \ref{fig:pic0138}).
+The script ends by closing the database connection, formatting, and sending the result to the client (Fig. \ref{fig:pic0138}).
 
-\subsection{Зареждане на брой тренировъчни примери по информация за валутна двойка}
+\subsection{Loading number of training examples by currency pair information}
 
-За определянето на броя тренировъчни примери се подхожда по аналогичен начин с включване на модула за работа с базата данни, проверка на входните аргументи и отваряне на връзка към базата данни (Фиг. \ref{fig:pic0139}). 
+Determining the number of training examples is approached in a similar way by turning on the database module, checking the input arguments, and opening a connection to the database (Fig. \ref{fig:pic0139}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0139}
-  \caption{Брой тренировъчни примери по валутна информация}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0139}
+\caption{Number of currency information training examples}
 \label{fig:pic0139}
 \end{figure}
 \FloatBarrier
 
-Изпълнението на заявката може да открие подходящо тренировъчно множество или да не открие такова (Фиг. \ref{fig:pic0140}). 
+Running the query may or may not find a suitable training set (Fig. \ref{fig:pic0140}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0140}
-  \caption{Заявка за брой тренировъчни примери}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0140}
+\caption{Request for number of training examples}
 \label{fig:pic0140}
 \end{figure}
 \FloatBarrier
 
-Скриптът приключва със затваряне на връзката към базата данни, пакетиране и изпращане на отговора до клиента (Фиг. \ref{fig:pic0141}).
+The script ends by closing the database connection, packaging and sending the response to the client (Fig. \ref{fig:pic0141}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0141}
-  \caption{Изпращане на отговор до клиента}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0141}
+\caption{Send response to client}
 \label{fig:pic0141}
 \end{figure}
 \FloatBarrier
 
-\subsection{Съхраняване на екземпляр изкуствена невронна мрежа}
+\subsection{Storing an Artificial Neural Network Instance}
 
-Съхраняването на екземпляр от изкуствената невронна мрежа не връща резултат за изпълнението на операцията и поради тази причина не се използва JSON. След включването на модула за работа с базата от данни се изисква по-сложна проверка на входните аргументи, тъй като те са повече на брой и по-сложни (Фиг. \ref{fig:pic0142}-\ref{fig:pic0146}). 
+Storing an instance of the artificial neural network does not return a result for the execution of the operation, and therefore JSON is not used. After the database module is included, a more complex check of the input arguments is required, as they are more numerous and more complex (Fig. \ref{fig:pic0142}-\ref{fig:pic0146}) .
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0142}
-  \caption{Проверка на входните аргументи за валутна двойка, период, жизненост и брой неврони}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0142}
+\caption{Validation of input arguments for currency pair, period, liveness and number of neurons}
 \label{fig:pic0142}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0143}
-  \caption{Проверка на входните аргументи за флагове на невроните, връзки и тегла между невроните}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0143}
+\caption{Checking input arguments for neuron flags, connections and weights between neurons}
 \label{fig:pic0143}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0144}
-  \caption{Проверка за типа на всеки неврон}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0144}
+\caption{Checking for the type of each neuron}
 \label{fig:pic0144}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0145}
-  \caption{Проверка за стойността на всяко тегло}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0145}
+\caption{Checking for the value of each weight}
 \label{fig:pic0145}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0146}
-  \caption{Проверка за стойността на всяка връзка}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0146}
+\caption{Checking for the value of each link}
 \label{fig:pic0146}
 \end{figure}
 \FloatBarrier
 
-При този скрипт проверките са значително по-сложни, тъй като освен наличност на аргументите се следи за числените стойности, които пристигат от клиентското приложение. 
+With this script, the checks are significantly more complicated, because in addition to the availability of the arguments, the numeric values that arrive from the client application are monitored.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0147}
-  \caption{Съхраняване на екземпляр изкуствена невронна мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0147}
+\caption{Storage of an artificial neural network instance}
 \label{fig:pic0147}
 \end{figure}
 \FloatBarrier
 
-Същината на скрипта представлява отваряне на връзка към базата данни, изпълнение на съхранена процедура и затваряне на връзката към базата данни (Фиг. \ref{fig:pic0147}).
+The essence of the script is to open a connection to the database, execute a stored procedure, and close the connection to the database (Fig. \ref{fig:pic0147}).
 
-\subsection{Съхраняване на екземпляр изкуствена невронна мрежа след дообучение}
+\subsection{Saving an artificial neural network instance after retraining}
 
-Когато определена изкуствена невронна мрежа е преминала допълнителен цикъл на обучение и бъде изпратена до отдалечения сървър, разумно е информацията да се съхранява само, ако води до подобряване на жизнеността. 
+When a particular artificial neural network has undergone an additional training cycle and is sent to the remote server, it is reasonable to store the information only if it leads to an improvement in liveness.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0158}
-  \caption{Проверка на жизнеността преди съхраняване на информацията}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0158}
+\caption{Validity check before storing the information}
 \label{fig:pic0158}
 \end{figure}
 \FloatBarrier
 
-Разликата между общата процедура за съхраняване на изкуствена невронна мрежа и съхраняването след допълнително обучение е в проверката на най-добрата постигната жизнена стойност (Фиг. \ref{fig:pic0158}).
+The difference between the general artificial neural network storage procedure and the storage after additional training is in the verification of the best lifetime value achieved (Fig. \ref{fig:pic0158}).
 
-\subsection{Съхраняване на тренировъчно множество}
+\subsection{Storing training set}
 
-По аналогичен начин, при съхраняването на тренировъчни примери не се връща JSON съобщение и кодът по проверката на входните данни превъзхожда кода за самото съхраняване. Първоначално се проверява наличието на аргументите (Фиг. \ref{fig:pic0148},\ref{fig:pic0149}).
+Similarly, storing training examples does not return a JSON message, and the input validation code overrides the code for storing itself. Initially, the presence of the arguments is checked (Fig. \ref{fig:pic0148},\ref{fig:pic0149}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0148}
-  \caption{Проверка на агументите за валутна двойка, период, брой примери и времеви маркери}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0148}
+\caption{Checking arguments for currency pair, period, number of examples and timestamps}
 \label{fig:pic0148}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0149}
-  \caption{Проверка на агументите за отваряне, най-ниска стойност, най-висока стойност, затваряне и изтъргуван обем}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0149}
+\caption{Checking arguments for open, low, high, close and traded volume}
 \label{fig:pic0149}
 \end{figure}
 \FloatBarrier
 
-Всеки от масивите преминава допълнителна проверка за стойностите, които съдържа (Фиг. \ref{fig:pic0150}-\ref{fig:pic0152}).
+Each of the arrays passes an additional check for the values it contains (Fig. \ref{fig:pic0150}-\ref{fig:pic0152}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0150}
-  \caption{Проверка на стойностите за времеви маркери и нива на отваряне}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0150}
+\caption{Checking values for timestamps and open levels}
 \label{fig:pic0150}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0151}
-  \caption{Проверка на стойностите за най-ниско и най-високо постигнато ниво}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0151}
+\caption{Checking the values for the lowest and highest level reached}
 \label{fig:pic0151}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0152}
-  \caption{Проверка на стойностите за затваряне и изтъргуван обем}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0152}
+\caption{Checking closing values and traded volume}
 \label{fig:pic0152}
 \end{figure}
 \FloatBarrier
 
-Същинската част на скрипта отваря връзка към базата данни, изпълнява съхранена процедура и затваря връзката към базата данни (Фиг. \ref{fig:pic0153}).
+The script itself opens a connection to the database, executes a stored procedure, and closes the connection to the database (Fig. \ref{fig:pic0153}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0153}
-  \caption{Съхраняване на тренировъчно множество}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0153}
+\caption{Store training set}
 \label{fig:pic0153}
 \end{figure}
 \FloatBarrier

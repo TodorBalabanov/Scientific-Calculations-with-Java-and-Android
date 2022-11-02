@@ -1,873 +1,873 @@
 \newpage
-\chapter{Android активен тапет}
+\chapter{Android live wallpaper}
 \label{chapter04}
 
-Технологията Android Live Wallpaper предоставя анимирани възможности за визуално представяне под формата на виртуален тапет. По своята същина този вид приложения не се различават драстично от останалите Android  приложения и дори могат да изпълняват почти всички техни възможности. Тъй като виртуалният тапет е постоянно активен той е идеален кандидат за реализацията на пресмятания във фонов режим\index{изчисления в разпределена среда}. За създаването на активен тапет са необходими следните компоненти: 1. XML файл който описва компонентите на тапета; 2. Фонов модул (Android Service); 3. Подходящи флагове за достъп до ресурсите на устройството. 
+Android Live Wallpaper technology provides animated visual representation capabilities in the form of virtual wallpaper. In essence, this type of application does not differ drastically from other Android applications and can even perform almost all of their capabilities. Since the virtual wallpaper is always active, it is an ideal candidate for the implementation of background computing\index{distributed computing}. The following components are required to create an active wallpaper: 1. An XML file that describes the components of the wallpaper; 2. Background module (Android Service); 3. Appropriate flags to access device resources.
 
-\section{Манифест файл на мобилното приложение}
+\section{Mobile App Manifest File}
 
-При създаването на приложения за операционната система Android е възприет подходът компонентите на мобилното приложение да бъдат описани в манифест файл (AndroidManifest.xml) с използването на XML синтаксис. 
+When creating applications for the Android operating system, the approach adopted is to describe the components of the mobile application in a manifest file (AndroidManifest.xml) using XML syntax.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0011}
-  \caption{Определяне на приложението като активен тапет}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0011}
+\caption{Setting the app as active wallpaper}
 \label{fig:pic0011}
 \end{figure}
 \FloatBarrier
 
-За да се определи приложението като приложение от тип активен тапет, е необходимо това изрично да се маркира в манифест файла (Фиг. \ref{fig:pic0011}). Най-съществената полза от тази дефиниция е, че тя предотвратява възможността приложението да бъде инсталирано на устройства, които не поддържат възможностите за визуално представяне на активен тапет. 
+To define the application as an active wallpaper application, it is necessary to explicitly mark this in the manifest file (Fig. \ref{fig:pic0011}). The most significant benefit of this definition is that it prevents the application from being installed on devices that do not support live wallpaper rendering capabilities.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0012}
-  \caption{Модул от тип ``услуга''}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0012}
+\caption{Module of type ``service''}
 \label{fig:pic0012}
 \end{figure}
 \FloatBarrier
 
-Когато в Android се използват много продължителни пресмятания, които не са удачни за извършване, в нишка е прието тези изчисления да се изнасят в модули без графичен потребителски интерфейс, наречени „услуги“ (Service). Работата на активния тапет се извършва точно в такъв модул и поради тази причина в проекта е добавен един (Фиг. \ref{fig:pic0012}).
+When Android uses very long calculations that are not convenient to perform, it is common for a thread to export these calculations to non-GUI modules called "services". The work of the active wallpaper is carried out in just such a module, and for this reason one has been added to the project (Fig. \ref{fig:pic0012}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0013}
-  \caption{Флагове за достъп до ресурса активен тапет}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0013}
+\caption{Active wallpaper resource access flags}
 \label{fig:pic0013}
 \end{figure}
 \FloatBarrier
 
-Моделът за сигурност изисква за всяко по-особено действие да се получи изричното съгласие на потребителя. В случая с активния тапет е необходимо добавянето на android.permission.BIND\_WALLPAPER разрешение (Фиг. \ref{fig:pic0013}).
+The security model requires that the user's explicit consent be obtained for any more specific action. In the case of the active wallpaper, the addition of the android.permission.BIND\_WALLPAPER permission is required (Fig. \ref{fig:pic0013}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0014}
-  \caption{Регистрация на услугата за прослушване на съобщения от операционната система.}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0014}
+\caption{Operating system message listening service registration.}
 \label{fig:pic0014}
 \end{figure}
 \FloatBarrier
 
-Освен нуждата от разрешения за ползване на ресурсите за активен тапет, е нужно услугата да се абонира за прослушване на съобщения от операционната система (Фиг. \ref{fig:pic0014}).
+In addition to the need for permissions to use the active wallpaper resources, the service needs to be subscribed to listen for messages from the operating system (Fig \ref{fig:pic0014}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0015}
-  \caption{Референция към описателния файл на активния тапет}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0015}
+\caption{Reference to active wallpaper description file}
 \label{fig:pic0015}
 \end{figure}
 \FloatBarrier
 
-Описанието на самия активен тапет се съдържа в отделен XML файл, референция към който се посочва в манифеста (Фиг. \ref{fig:pic0015}).
+The description of the active wallpaper itself is contained in a separate XML file, a reference to which is indicated in the manifest (Fig. \ref{fig:pic0015}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0016}
-  \caption{Прозорец за установяване на активния тапет}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0016}
+\caption{Window to set active wallpaper}
 \label{fig:pic0016}
 \end{figure}
 \FloatBarrier
 
-Последният компонент в такъв тип приложение е прозорец (Android Activity), който да се стартира от операционната система и да служи за установяване на активния тапет (Фиг. \ref{fig:pic0016}). В случая се използва възможността този стартов прозорец да съчетава и функциите на прозорец с опции (Preference Activity).
+The last component in such an application is a window (Android Activity) to be launched by the operating system and serve to establish the active wallpaper (Fig. \ref{fig:pic0016}). In this case, the possibility is used that this launch window also combines the functions of a window with options (Preference Activity).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0017}
-  \caption{XML описателен файл на тапета}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0017}
+\caption{XML wallpaper description file}
 \label{fig:pic0017}
 \end{figure}
 \FloatBarrier
 
-Както вече бе споменато, активният тапет се описва в отделен XML файл, който съдържа кратка анотация на приложението, предварителен изглед, умалена икона и името на прозореца за настройки (Фиг. \ref{fig:pic0017}). 
+As already mentioned, the active wallpaper is described in a separate XML file, which contains a short annotation of the application, a preview, a thumbnail icon and the name of the settings window (Fig. \ref{fig:pic0017}).
 
-\section{Екран с настройки}
+\section{Settings Screen}
 
-Тъй като активният тапет ще има и вторична задача да визуализира прогреса на пресмятанията, то е разумно към него да бъде създаден и прозорец с настройки. 
+Since the active wallpaper will also have a secondary task of visualizing the progress of calculations, it is reasonable to create a settings window for it.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0018}
-  \caption{Графични файлове, съдържащи фотографии на планината Витоша до град София, България}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0018}
+\caption{Graphic files containing photographs of Vitosha Mountain near the city of Sofia, Bulgaria}
 \label{fig:pic0018}
 \end{figure}
 \FloatBarrier
 
-Като визуално представяне е избран възможно най-опростен вариант. Няколко фотографии на планината Витоша се визуализират под формата на отрязъци с размерите на екрана който мобилното устройство има (Фиг. \ref{fig:pic0018}). В три полупрозрачни области се визуализира информация за финансовия времеви ред (код и времеви период), стълб-диаграма за входните и изходните данни и текущо състояние на изкуствената невронна мрежа\index{изкуствени невронни мрежи} (Фиг. \ref{fig:pic0019}). 
+As a visual representation, the simplest possible option has been chosen. Several photographs of the Vitosha mountain are visualized in the form of segments with the dimensions of the screen of the mobile device (Fig. \ref{fig:pic0018}). Three translucent areas visualize information about the financial time series (code and time period), a bar chart about the input and output data, and the current state of the artificial neural network\index{artificial neural networks} (Fig. \ref{fig:pic0019} ).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[width=1.0\linewidth]{pic0019}
-  \caption{Висуално представяне на информация от изчисленията}
+\centering
+\includegraphics[width=1.0\linewidth]{pic0019}
+\caption{Visual representation of information from calculations}
 \label{fig:pic0019}
 \end{figure}
 \FloatBarrier
 
-В настройките за активния тапет са предоставени възможности за управление на позицията и размерът за трите визуални области. Също така са добавени първоначални настройки за натоварване на устройството и дали активният тапет да бъде включен (Фиг. \ref{fig:pic0020}). 
+Position and size controls for the three visual areas are provided in the live wallpaper settings. Also added initial settings for loading the device and whether to enable active wallpaper (Fig \ref{fig:pic0020}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[width=1.0\linewidth]{pic0020}
-  \caption{Първоначален набор от настройки}
+\centering
+\includegraphics[width=1.0\linewidth]{pic0020}
+\caption{Initial set of settings}
 \label{fig:pic0020}
 \end{figure}
 \FloatBarrier
 
-Всеки прозорец в Android се описва със свой файл за разполагане (layout) и файл с Java програмен код. Описателният файл за графичен потребителски интерфейс използва XML и много наподобява съставянето на уеб страница. Когато се изготвя екран за настройки един от най-полезните инструменти в операционната система Android са споделените преференции (Shared Preferences). Те позволяват състоянието на визуалните компоненти директно да бъде запаметено в устройството под формата на ключ-стойност двойки и след това програмно тази информация да бъде използвана. 
+Each window in Android is described with its own layout file and Java code file. A GUI descriptor file uses XML and is very similar to composing a web page. When designing a settings screen, one of the most useful tools in the Android operating system is Shared Preferences. They allow the state of visual components to be directly stored in the device in the form of key-value pairs and then programmatically used for this information.
 
-\subsection{Описание на потребителския интерфейс под формата на XML файлове}
+\subsection{Description of the user interface in the form of XML files}
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0021}
-  \caption{Визуален компонент за включване и изключване на тапета}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0021}
+\caption{Visual component to turn wallpaper on and off}
 \label{fig:pic0021}
 \end{figure}
 \FloatBarrier
 
-На първо място е разположен визуален компонент за включване и изключване на активния тапет. Когато ключът е в състояние O,N активният тапет бива стартиран, а когато е в позиция OFF, активният тапет бива деактивиран (Фиг. \ref{fig:pic0021}). 
+First, there is a visual component for turning on and off the active wallpaper. When the switch is in the O,N state, the active wallpaper is started, and when it is in the OFF position, the active wallpaper is disabled (Fig. \ref{fig:pic0021}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0154}
-  \caption{Визуален компонент за посочване на сървър URL}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0154}
+\caption{Visual Component for Specifying a Server URL}
 \label{fig:pic0154}
 \end{figure}
 \FloatBarrier
 
-Тъй като мобилното приложение тегли информацията за времевите редове от отдалечен уеб сървър, то е подходящо потребителят да има възможност да настройва URL адреса на сървъра, с който се работи (Фиг. \ref{fig:pic0154}). Тази опция позволява пренасочване на трафика към други сървъри, след като мобилното приложение вече е инсталирано на потребителските мобилни устройства.
+Since the mobile application pulls the time series information from a remote web server, it is appropriate for the user to be able to set the URL of the server being worked with (Fig. \ref{fig:pic0154}). This option allows traffic to be redirected to other servers after the mobile application is already installed on users' mobile devices.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0022}
-  \caption{Визуален компонент за регулиране на натоварването}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0022}
+\caption{Visual load adjustment component}
 \label{fig:pic0022}
 \end{figure}
 \FloatBarrier
 
-За натоварването на устройството при извършването на фоновите пресмятания се използва списък с предварително дефинирани стойности (Фиг. \ref{fig:pic0022}). 
+A list of predefined values is used to load the device when performing the background calculations (Fig. \ref{fig:pic0022}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0023}
-  \caption{Стойности за натоварване на системата}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0023}
+\caption{System Load Values}
 \label{fig:pic0023}
 \end{figure}
 \FloatBarrier
 
-При проектирането на системата Android, една от основните цели е била максимално разделяне на графичния интерфейс от данните. Точно поради тази причина стойностите за натоварване са изнесени в отделен ресурс (Фиг. \ref{fig:pic0023}).
+When designing the Android system, one of the main goals was to separate the graphical interface from the data as much as possible. It is precisely for this reason that the load values are exported in a separate resource (Fig. \ref{fig:pic0023}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0024}
-  \caption{Позициониране на областите за визуално представяне}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0024}
+\caption{Positioning of visual presentation areas}
 \label{fig:pic0024}
 \end{figure}
 \FloatBarrier
 
-Позиционирането на областите за визуално представяне също се настройва с избор на стойности от списък (Фиг. \ref{fig:pic0024}). 
+The positioning of the visual representation areas is also adjusted by selecting values from a list (Fig. \ref{fig:pic0024}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0025}
-  \caption{Стойности за позициониране на областите за визуално представяне}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0025}
+\caption{Position values for visual representation areas}
 \label{fig:pic0025}
 \end{figure}
 \FloatBarrier
 
-Аналогично на стойностите за натоварване, списъкът с възможните позиции на областите за визуално представяне е изнесен в отделен ресурсен файл (Фиг. \ref{fig:pic0025}). 
+Analogously to the load values, the list of possible positions of the visual representation areas is exported in a separate resource file (Fig. \ref{fig:pic0025}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0026}
-  \caption{Размер на областите за визуално представяне}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0026}
+\caption{Size of visual representation areas}
 \label{fig:pic0026}
 \end{figure}
 \FloatBarrier
 
-От първоначалните характеристики, последна е размерът на областите за визуално представяне на информацията (Фиг. \ref{fig:pic0026}). 
+Of the initial characteristics, the last is the size of the areas for visual presentation of information (Fig. \ref{fig:pic0026}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0027}
-  \caption{Стойности за размер на областите за визуално представяне}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0027}
+\caption{Size values for visual representation areas}
 \label{fig:pic0027}
 \end{figure}
 \FloatBarrier
 
-Областите за визуално представяне на информацията се предлагат в три размера – малък, среден и голям (Фиг. \ref{fig:pic0027}).
+Areas for visual representation of information are available in three sizes � small, medium and large (Fig. \ref{fig:pic0027}).
 
-\subsection{Програмен код за управление на интерфейса}
+\subsection{Interface Control Program Code}
 
-Събитията, предизвикани от графичния програмен интерфейс, биват прихващани в специално написани за целта Java функции, така че при активирането им да бъдат извършени необходимите програмни действия. За екрана с настройки се прихващат само две събития – създаване и паузиране. 
+Events raised by the GUI are intercepted in specially written Java functions so that when they are activated, the necessary programmatic actions are performed. Only two events are caught for the settings screen - create and pause.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0028}
-  \caption{Събитие за създаване на прозореца}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0028}
+\caption{Window creation event}
 \label{fig:pic0028}
 \end{figure}
 \FloatBarrier
 
-Събитието за създаване има за цел да трансформира XML описанието на интерфейса до визуални компоненти, видими за потребителя (Фиг. \ref{fig:pic0028}). 
+The create event aims to transform the XML description of the interface into visual components visible to the user (Fig. \ref{fig:pic0028}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0029}
-  \caption{Събитие за пауза на прозореца}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0029}
+\caption{Window Pause Event}
 \label{fig:pic0029}
 \end{figure}
 \FloatBarrier
 
-При събитието за пауза единствено се взема решение дали активният тапет да бъде стартиран или да бъде спрян (Фиг. \ref{fig:pic0029}). 
+The pause event only decides whether the active wallpaper should be started or stopped (Fig. \ref{fig:pic0029}).
 
-\section{Пресмятане на фонов режим}
+\section{Background Calculation}
 
-Продължителните пресмятания, които не изискват графичен потребителски интерфейс се осъществяват в модули, наречени „услуги“ (Service). Когато става въпрос за активен тапет, е необходимо да се напише собствен клас, който е наследник на класа WallpaperService (Фиг. \ref{fig:pic0030}).
+Long-term calculations that do not require a graphical user interface are carried out in modules called "services". When it comes to active wallpaper, it is necessary to write its own class that inherits from the WallpaperService class (Fig. \ref{fig:pic0030}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0030}
-  \caption{Наследяване на WallpaperService}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0030}
+\caption{Inheriting WallpaperService}
 \label{fig:pic0030}
 \end{figure}
 \FloatBarrier
 
-Група от константи спомагат за генерирането на случайни числа, определяне на разстояние между зоните за визуално представяне и подразбираща се стойност за времето между две отделни стартирания на тренировъчния алгоритъм (Фиг. \ref{fig:pic0031}). 
+A group of constants help generate random numbers, specify a distance between the visual representation areas, and an implied value for the time between two separate runs of the training algorithm (Fig. \ref{fig:pic0031}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0031}
-  \caption{Спомагателни константи}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0031}
+\caption{Auxiliary constants}
 \label{fig:pic0031}
 \end{figure}
 \FloatBarrier
 
-Цветовете, използвани за визуалното представяне, също са зададени с група от константи, но в последствие ще бъдат превърнати в настройки със стойности от прозореца за настройки (Фиг. \ref{fig:pic0032}).
+The colors used for the visual representation are also set with a group of constants, but will subsequently be converted to settings with values from the settings window (Fig \ref{fig:pic0032}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0032}
-  \caption{Константи за цветовете}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0032}
+\caption{Color constants}
 \label{fig:pic0032}
 \end{figure}
 \FloatBarrier
 
-Група променливи отговарят за състоянието на активния тапет. Това включва – размери на екрана, време между отделните обучения на изкуствената невронна мрежа, дали активният тапет е включен или изключен и точната позиция на зоните за визуално представяне на информацията от процеса по обучение на изкуствената невронна мрежа (Фиг. \ref{fig:pic0033}). 
+A group of variables are responsible for the state of the active wallpaper. This includes - screen sizes, time between separate neural network trainings, whether active wallpaper is on or off, and the exact position of areas for visual representation of information from the neural network training process (Fig. \ref{fig:pic0033 }).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0033}
-  \caption{Променливи отразяващи състоянието на активния тапет}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0033}
+\caption{Variables reflecting the state of the active wallpaper}
 \label{fig:pic0033}
 \end{figure}
 \FloatBarrier
 
-Друга група променливи (референции към обекти) поемат отговорността за управлението на изкуствената невронна мрежа, тренировъчните примери, входно-изходните данни към мрежата и правилото за нейното обучение (Фиг. \ref{fig:pic0034}).
+Another group of variables (references to objects) take responsibility for managing the artificial neural network, the training examples, the input-output data to the network, and the rule for its training (Fig. \ref{fig:pic0034}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0034}
-  \caption{Променливи отговарящи за изкуствената невронна мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0034}
+\caption{Variables responsible for artificial neural network}
 \label{fig:pic0034}
 \end{figure}
 \FloatBarrier
 
-При комерсиалното производство на софтуер много често използван похват е създаването на „софтуерни тапи“. Това са парчета код, които служат за комуникация между обекти и части от системата, които още не са създадени. В настоящия случай точно такава софтуерна тапа представя липсата на сървър и източник с реални данни  (Фиг. \ref{fig:pic0035}).  
+In commercial software production, a very common trick is to create "software plugs". These are pieces of code that serve to communicate between objects and parts of the system that have not yet been created. In the present case, just such a software plug represents the absence of a server and a real data source (Fig. \ref{fig:pic0035}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0035}
-  \caption{Променливи отговарящи за изкуствената невронна мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0035}
+\caption{Variables responsible for artificial neural network}
 \label{fig:pic0035}
 \end{figure}
 \FloatBarrier
 
-Финансовите времеви редове най-често се описват със следните характеристики: 1. Вид финансов инструмент (ticker symbol или stock symbol), в случая математическата функция синус; 2. Интервал между отделните измервания (отчитан в брой минути), в случая една минута; 3. Шест паралелни масива (дискретно време, нива на отваряне, най-ниско постигнато ниво, най-високо постигнато ниво, нива на затваряне и изтъргуван обем).
+Financial time series are most often described with the following characteristics: 1. Type of financial instrument (ticker symbol or stock symbol), in this case the mathematical function sine; 2. Interval between individual measurements (counted in minutes), in this case one minute; 3. Six parallel arrays (discrete time, open levels, lowest level reached, highest level reached, close levels and volume traded).
 
-Освен финансовата информация, към клиентското приложение трябва да се подава и информация за топологията на изкуствената невронна мрежа. За описанието на изкуствената невронна мрежа са нужни: 1. Брой, подредба и тип на невроните (едномерен масив от константи); 2. Матрица на съседство между невроните (единица там, където има връзка и нула там, където няма връзка); 3. Текуща стойност на тегловния коефициент за всяка връзка между два неврона (включително и примките, ако има такива). 
+In addition to financial information, information about the topology of the artificial neural network must also be submitted to the client application. The description of the artificial neural network requires: 1. Number, arrangement and type of neurons (one-dimensional array of constants); 2. Adjacency matrix between neurons (one where there is a connection and zero where there is no connection); 3. Current value of the weight coefficient for each connection between two neurons (including loops, if any).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0036}
-  \caption{Определяне на броя и типовете неврони}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0036}
+\caption{Determining the number and types of neurons}
 \label{fig:pic0036}
 \end{figure}
 \FloatBarrier
 
-Чрез сортиране с броене, ефективно се определя броят на невроните и техните типове (Фиг. \ref{fig:pic0036}).
+By counting sorting, the number of neurons and their types is efficiently determined (Fig. \ref{fig:pic0036}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0037}
-  \caption{Структура на трислойна изкуствена невронна мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0037}
+\caption{Structure of a three-layer artificial neural network}
 \label{fig:pic0037}
 \end{figure}
 \FloatBarrier
 
-За да се илюстрират възможностите за прогнозиране на изкуствените невронни мрежи, е избрана една от най-популярните структури, а именно трислойна невронна мрежа, която се обучава с обратно разпространение на грешката (Фиг. \ref{fig:pic0037}). Входният слой има единствената задача да получи сигналите от външната среда и поради тази причина не се задава активационна функция. За скрития и изходния слой е избрана функцията $\tanh( x )$ (хиперболичен тангенс), тъй като тя е асимптотично сходима в безкрайностите по абсцисата и в същото време е симетрична по същата тази ос. Обучението протича малко по-бързо с хиперболичен тангенс, тъй като стойностите на сигналите в скритите слоеве по-лесно се „отклоняват“ в положителна или отрицателна посока. За сравнение, при сигмоидната функция сигналите са само положителни и при нужда от отрицателни стойности тази компенсация трябва да се получава единствено през отрицателни тегла на връзките. Входният и скритият слоеве имат отместващ неврон (bias), който не е нужен в изходния слои, тъй като отместващият неврон винаги емитира високото ниво на сигнализация.
+To illustrate the predictive capabilities of artificial neural networks, one of the most popular structures is chosen, namely a three-layer neural network that is trained with error backpropagation (Fig. \ref{fig:pic0037}). The input layer has the sole task of receiving the signals from the external environment and for this reason no activation function is set. The function $\tanh( x )$ (hyperbolic tangent) is chosen for the hidden and output layers, since it is asymptotically convergent at infinity along the abscissa and at the same time is symmetric along this same axis. Training is slightly faster with a hyperbolic tangent because the signal values in the hidden layers are more easily "skewed" in a positive or negative direction. In comparison, with the sigmoid function the signals are only positive and if negative values are needed this compensation must be obtained only through negative link weights. The input and hidden layers have a bias neuron that is not needed in the output layer because the bias neuron always emits the high level signal.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0038}
-  \caption{Избор на стойности за прогнозиране}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0038}
+\caption{Choosing values to predict}
 \label{fig:pic0038}
 \end{figure}
 \FloatBarrier
 
-От описанието на паралелните масиви при финансовите времеви редове ясно се вижда, че има четири възможни редици числа, които да се подават за прогнозиране към невронната мрежа (отваряне, най-ниско, най-високо, затваряне). 
+From the description of parallel arrays in financial time series, it is clear that there are four possible sequences of numbers to feed to the neural network for prediction (open, low, high, close).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0039}
-  \caption{Определяне на границите във времевия ред}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0039}
+\caption{Determining boundaries in the time series}
 \label{fig:pic0039}
 \end{figure}
 \FloatBarrier
 
-В практиката най-често се използва поредицата за стойности на затваряне, а целта е да се прогнозира нивото на отваряне в следващия времеви интервал. Целите на настоящото изложение не са реално постигане на финансови прогнози и поради тази причина на случаен принцип се избира коя последователност да бъде използвана при различните стартирания на обучението/прогнозирането (Фиг. \ref{fig:pic0038}).
+In practice, the closing value series is most often used, and the purpose is to predict the opening level in the next time interval. The purposes of this presentation are not to actually achieve financial predictions, and for this reason it is randomly chosen which sequence to use in the different training/forecasting runs (Fig. \ref{fig:pic0038}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0040}
-  \caption{Диапазон на активационната функция в изходния слой}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0040}
+\caption{Range of the activation function in the output layer}
 \label{fig:pic0040}
 \end{figure}
 \FloatBarrier
 
-Тъй като целта е към системата за прогнозиране да се подават различни финансови времеви редове, то неизбежно се налага входната информация в системата да бъде предварително нормализирана, а първата стъпка към това е да се определят най-големата и най-малката стойности във времевия ред (Фиг. \ref{fig:pic0039}). В същото време данните трябва да бъдат съпоставени с диапазона, в който работят активационните функции на изкуствената невронна мрежа. В настоящото помагало е прието, че на входа ще се подадат сигнали в диапазона на функцията, използвана в изходния слой (Фиг. \ref{fig:pic0040}). Това решение се аргументира с факта, че информацията, подадена от невронната мрежа към външната среда, ще претърпи обратен процес на преоразмеряване, така че да има смисъл в конкретния финансов времеви ред.
+Since the goal is to feed different financial time series to the forecasting system, it is inevitable that the input information in the system needs to be pre-normalized, and the first step to this is to determine the largest and smallest values in the time series ( Fig. \ref{fig:pic0039}). At the same time, the data must be matched to the range in which the activation functions of the artificial neural network work. In this tutorial, it is assumed that signals in the range of the function used in the output layer will be applied to the input (Fig. \ref{fig:pic0040}). This decision is argued by the fact that the information fed by the neural network to the external environment will undergo a reverse resizing process so that it makes sense in the particular financial time series.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0041}
-  \caption{Тренировъчни примери}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0041}
+\caption{Training examples}
 \label{fig:pic0041}
 \end{figure}
 \FloatBarrier
 
-Нормализираните входни данни условно разделяме на две множества (измервания в миналото и измервания в бъдещето). Разделянето е условно, тъй като практически данните са от реални измервания в миналото (Фиг. \ref{fig:pic0041}).
+We conditionally divide the normalized input data into two sets (measurements in the past and measurements in the future). The separation is conditional, since practically the data are from real measurements in the past (Fig. \ref{fig:pic0041}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0042}
-  \caption{Входни данни към изкуствената неверонна мрежа за получаване на прогноза}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0042}
+\caption{Input to the artificial neural network to obtain a prediction}
 \label{fig:pic0042}
 \end{figure}
 \FloatBarrier
 
-Тъй като изкуствената невронна мрежа се използва и в двата й режима (обучение и прогнозиране), то се изготвя и вектор входни данни, спрямо които да бъде направена прогноза (Фиг. \ref{fig:pic0042}).
+Since the artificial neural network is used in both its modes (training and prediction), it also prepares a vector of input data against which to make a prediction (Fig. \ref{fig:pic0042}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0043}
-  \caption{Изследване на група от стойности за определяне на диапазона}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0043}
+\caption{Exploring a group of values to determine the range}
 \label{fig:pic0043}
 \end{figure}
 \FloatBarrier
 
-В общия случай активационните функции имат асимптотична сходимост и са монотонно нарастващи (Фиг. \ref{fig:pic0044}), което позволява техните крайни диапазони да бъдат установявани, чрез проверка на група от стойности (Фиг. \ref{fig:pic0043}).
+In general, the activation functions have asymptotic convergence and are monotonically increasing (Fig. \ref{fig:pic0044}), which allows their finite ranges to be established by inspecting a set of values (Fig. \ref{fig:pic0043}) .
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.7\pdfpageheight]{pic0044}
-  \caption{Активационни функции \cite{afwiki}}
+\centering
+\includegraphics[height=0.7\pdfpageheight]{pic0044}
+\caption{Activation Functions \cite{afwiki}}
 \label{fig:pic0044}
 \end{figure}
 \FloatBarrier
 
-Както е добре видно на Фиг. \ref{fig:pic0044}, за някои от активационните функции такова определяне на диапазона може да се окаже силно подвеждащо (примерно при синус функцията). 
+As is clearly visible in Fig. \ref{fig:pic0044}, for some of the activation functions, such a range determination can be highly misleading (eg the sine function).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0045}
-  \caption{Собствена реализация на наследения Engine клас и създаване на обект}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0045}
+\caption{Custom implementation of the inherited Engine class and object creation}
 \label{fig:pic0045}
 \end{figure}
 \FloatBarrier
 
-Събитието за създаване на engine обект се предефинира, така че да се връща обект от нашия собствен клас за engine (Фиг. \ref{fig:pic0045}). 
+The engine object creation event is redefined to return an object from our own engine class (Fig \ref{fig:pic0045}).
 
-\section{Двигател на услугата}
+\section{Service Engine}
 
-Същинската работа за фоново пресмятане в услугата се извършва от обект, описан с частен вътрешен клас от тип „двигател“ (Engine).
+The actual background computation work in the service is done by an object described with a private inner class of type "Engine".
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0046}
-  \caption{Вътрешни променливи за двигателя на услугата}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0046}
+\caption{Internal variables for the service engine}
 \label{fig:pic0046}
 \end{figure}
 \FloatBarrier
 
-В този двигател се използват три вътрешни променливи (Фиг. \ref{fig:pic0046}). Обектът от тип „четка“ (Paint) е само спомагателен и служи за еднократно определяне на характеристиките за изрисуване. Ползата е, че обектът бива създаден веднъж и след това се ползва през целия жизнен цикъл на услугата. 
+Three internal variables are used in this engine (Fig \ref{fig:pic0046}). The object of type "brush" (Paint) is only auxiliary and serves to define the characteristics for painting once. The benefit is that the object is created once and then used throughout the life cycle of the service.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0047}
-  \caption{Единичен цикъл във фонов режим}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0047}
+\caption{Single loop in background}
 \label{fig:pic0047}
 \end{figure}
 \FloatBarrier
 
-За реалната работа на двигателя се дефинира отделна нишка (trainer), която да извършва операциите по генериране на прогноза, изчертаване на активния тапет и извършването на един цикъл от обучаващия процес на изкуствената невронна мрежа\index{изкуствени невронни мрежи} (Фиг. \ref{fig:pic0047}). Ефективното управление на нишки в Android се извършва с помощта на обекти „държател“ (Handler). Обектът държател поема отговорността по стартирането на нишката, спирането на нишката и реализацията на интервала за изчакване преди да бъде осъществено следващото събуждане на нишката. 
+For the real operation of the engine, a separate thread (trainer) is defined to perform the operations of generating a prediction, drawing the active wallpaper and performing one cycle of the training process of the artificial neural network\index{artificial neural networks} (Fig. \ref {fig:pic0047}). Effective thread management in Android is done using Handler objects. The holder object takes responsibility for starting the thread, stopping the thread, and implementing the timeout interval before the next wakeup of the thread takes place.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0048}
-  \caption{Изчисляване на прогноза}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0048}
+\caption{Prediction calculation}
 \label{fig:pic0048}
 \end{figure}
 \FloatBarrier
 
-За да се изчисли прогноза, според текущото ниво на обученост на изкуствената невронна мрежа\index{изкуствени невронни мрежи}, е достатъчно мрежата да се активира в работен режим с подходящи данни към входния слой (Фиг. \ref{fig:pic0048}).
+To calculate a prediction, according to the current level of training of the artificial neural network\index{artificial neural networks}, it is enough to activate the network in working mode with appropriate data to the input layer (Fig. \ref{fig:pic0048}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0049}
-  \caption{Тренировъчен цикъл на изкуствената невронна мрежа}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0049}
+\caption{Training cycle of the artificial neural network}
 \label{fig:pic0049}
 \end{figure}
 \FloatBarrier
 
-За да се осъществи един тренировъчен цикъл на изкуствената невронна мрежа\index{изкуствени невронни мрежи}, е достатъчно да се създаде тренировъчен обект (в случая от еластично обратно разпространение на грешката\index{обратно разпространение на грешката}), към който се подават мрежата и тренировъчните примери (Фиг. \ref{fig:pic0049}).
+To perform one training cycle of the artificial neural network\index{artificial neural networks}, it is enough to create a training object (in the case of elastic backpropagation of the error\index{backpropagation of the error}) to which the network is fed and the training examples (Fig. \ref{fig:pic0049}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0050}
-  \caption{Основна процедура по изрисуване на информацията от тренировъчния процес}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0050}
+\caption{Basic procedure for plotting the information from the training process}
 \label{fig:pic0050}
 \end{figure}
 \FloatBarrier
 
-Изрисуването на информацията от тренировъчния процес е организирано в отделна функция (Фиг. \ref{fig:pic0050}). За да бъде осъществена визуалното представяне, се осигурява достъп до повърхността и платното, което тя съдържа. В самия край на функцията за визуално представяне се взема решение дали ще се изпълни следващ цикъл на обучение или изпълнението ще бъде преустановено. 
+Drawing the information from the training process is organized in a separate function (Fig. \ref{fig:pic0050}). In order for the visual representation to take place, access is provided to the surface and the canvas it contains. At the very end of the visualization function, a decision is made whether to execute the next training cycle or to abort execution.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0051}
-  \caption{Разбиване на задачата за визуално представяне}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0051}
+\caption{Breakdown of the visual representation task}
 \label{fig:pic0051}
 \end{figure}
 \FloatBarrier
 
-Добрите практики за писане на програмен код включват разбиване на една сложна задача в група от множество по-прости задачи. Този принцип е приложен по отношение на визуалното представяне като са създадени пет помощни функции (Фиг. \ref{fig:pic0051}).  Първата функция изрисува фон, втората очертава полупрозрачни области за панелите, третата запълва панела с информация за валутната двойка, четвъртата показва информация в панела за текущо актуалната прогноза, а петата стилизиран модел на изкуствената невронна мрежа\index{изкуствени невронни мрежи}. 
+Good practices for writing programming code include breaking a single complex task into a group of multiple simpler tasks. This principle has been applied to the visual representation by creating five auxiliary functions (Fig. \ref{fig:pic0051}). The first function draws a background, the second draws translucent areas for the panels, the third fills the panel with information about the currency pair, the fourth displays information in the panel about the current forecast, and the fifth a stylized model of the artificial neural network\index{artificial neural networks}.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0052}
-  \caption{Изрисуване на фона}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0052}
+\caption{Paint the background}
 \label{fig:pic0052}
 \end{figure}
 \FloatBarrier
 
-За да бъде изрисуван фонът, се зарежда предварително подготвено изображение и от него се отрязва такова парче, че да пасва на размерите на екрана (Фиг. \ref{fig:pic0052}). Коя част от изображението да бъде използвана се определя на случаен принцип.
+To draw the background, a previously prepared image is loaded and a piece is cut from it to fit the dimensions of the screen (Fig. \ref{fig:pic0052}). Which part of the image is used is determined randomly.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0053}
-  \caption{Изрисуване на областите за служебна информация}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0053}
+\caption{Drawing service information areas}
 \label{fig:pic0053}
 \end{figure}
 \FloatBarrier
 
-Веднага след изрисуването на фона се изрисуват и полупрозрачните петна за визуално представяне на информацията от процеса по обучението (Фиг. \ref{fig:pic0053}). Похватът за полупрозрачност е нужен, за да се избегне страничният ефект от сливане на цветове между служебната информация и фона. 
+Immediately after drawing the background, the semi-transparent spots are also drawn to visually represent the information from the learning process (Fig. \ref{fig:pic0053}). The translucency grip is needed to avoid the side effect of color blending between the service information and the background.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0054}
-  \caption{Изрисуване на информацията за валутната двойка}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0054}
+\caption{Drawing currency pair information}
 \label{fig:pic0054}
 \end{figure}
 \FloatBarrier
 
-Информацията за валутната двойка се състои от название и времеви интервал на финансовия времеви ред (Фиг. \ref{fig:pic0054}). 
+The information about the currency pair consists of name and time interval of the financial time series (Fig. \ref{fig:pic0054}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0055}
-  \caption{Позиция и размери за визуално представяне на прогнозата}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0055}
+\caption{Position and dimensions for visual representation of the forecast}
 \label{fig:pic0055}
 \end{figure}
 \FloatBarrier
 
-Визуалното представяне на прогнозата изисква малко по-сложни пресмятания, така че информацията от входа и изхода да се поместят в рамките на определеното петно. За да бъде изпълнена тази задача, се вземат координатите и размерите на определената област (Фиг. \ref{fig:pic0055}). 
+The visual representation of the prediction requires slightly more complex calculations so that the input and output information fit within the specified blob. To accomplish this task, the coordinates and dimensions of the specified area are taken (Fig. \ref{fig:pic0055}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0056}
-  \caption{Обхват на данните по ширина и височина}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0056}
+\caption{Width and height data range}
 \label{fig:pic0056}
 \end{figure}
 \FloatBarrier
 
-За да бъдат визуализирани данните, е от съществено значение да се определи минималната и максималната стойности за вход-изхода, както и броят стойности, които ще бъдат визуализирани (Фиг. \ref{fig:pic0056}). В случая броят стойности за визуално представяне съвпада със сумата от броя входни въздействия и броя изходни сигнали. 
+In order to visualize the data, it is essential to define the minimum and maximum values for the input-output as well as the number of values to be visualized (Fig. \ref{fig:pic0056}). In this case, the number of values for visual representation coincides with the sum of the number of input impacts and the number of output signals.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0057}
-  \caption{Цикли за визуално представяне на стълбовете от времевия реди и прогнозата}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0057}
+\caption{Cycles for visual presentation of the time series and forecast pillars}
 \label{fig:pic0057}
 \end{figure}
 \FloatBarrier
 
-Данните за отминалия период от време се показват с един цвят, а данните за прогнозата в друг цвят (Фиг. \ref{fig:pic0057}). Самата визуално представяне представлява стълбова диаграма (bar-chart) на входните данни и на прогнозата. 
+The data for the elapsed time period is shown in one color and the forecast data in another color (Fig. \ref{fig:pic0057}). The visual presentation itself is a bar-chart of the input data and the forecast.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0058}
-  \caption{Топология на изкуствената невронна мрежа, която се визуализира}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0058}
+\caption{Topology of the artificial neural network being visualized}
 \label{fig:pic0058}
 \end{figure}
 \FloatBarrier
 
-В третата област за визуално представяне се изрисува стилизирана информация за състоянието на изкуствената невронна мрежа\index{изкуствени невронни мрежи}. Областта е правоъгълна и бива разделена на пет вертикални зони: 1. Стойности на невроните във входния слой; 2. Стойности на теглата между входния и скрития слой; 3. Стойности на невроните в скрития слой; 4. Стойности на теглата между скрития и изходния слой; 5. Стойности на невроните в изходния слой (Фиг. \ref{fig:pic0058}).
+In the third visual representation area, stylized information about the state of the artificial neural network is drawn\index{artificial neural networks}. The area is rectangular and is divided into five vertical zones: 1. Values of the neurons in the input layer; 2. Values of the weights between the input and the hidden layer; 3. Values of the neurons in the hidden layer; 4. Values of the weights between the hidden and output layers; 5. Values of neurons in the output layer (Fig. \ref{fig:pic0058}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0059}
-  \caption{Мащабиране на входната и изходната информация}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0059}
+\caption{Input and output scaling}
 \label{fig:pic0059}
 \end{figure}
 \FloatBarrier
 
-Информацията за входа и изхода се преоразмерява спрямо минималните и максималните стойности с които работят невроните в изходния слой (Фиг. \ref{fig:pic0059}). Приложена е формулата за MinMax Scaling (\ref{equation04}). 
+The input and output information is resized relative to the minimum and maximum values that the neurons in the output layer work with (Fig. \ref{fig:pic0059}). The formula for MinMax Scaling (\ref{equation04}) is attached.
 
 \begin{equation}
 \label{equation04}
 X_{sc} = \frac{X-X_{min}}{X_{max}-X_{min}}
 \end{equation}
 
-Невроните във входния слой на практика не би трябвало да имат ограничение от активационна функция, тъй като те само събират информацията от външния свят. 
+Neurons in the input layer should in practice not have an activation function constraint, since they only collect the information from the outside world.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0060}
-  \caption{Стойности на теглата между слоевете}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0060}
+\caption{Weight values between layers}
 \label{fig:pic0060}
 \end{figure}
 \FloatBarrier
 
-Следва определянето на теглата между слоевете (Фиг. \ref{fig:pic0060}).
+Next is the determination of the weights between the layers (Fig. \ref{fig:pic0060}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0061}
-  \caption{Мащабиране на стойностите в скрития слой}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0061}
+\caption{Scaling the values in the hidden layer}
 \label{fig:pic0061}
 \end{figure}
 \FloatBarrier
 
-И финално за средната вертикална област се определят стойностите за скрития слой, мащабирани спрямо минималното и максималното ниво на активационната функция, приложена в него (Фиг. \ref{fig:pic0061}).
+And finally, for the middle vertical region, the values for the hidden layer are determined, scaled to the minimum and maximum level of the activation function applied to it (Fig. \ref{fig:pic0061}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0062}
-  \caption{Нормализиране на стойностите за теглата}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0062}
+\caption{Normalize values for weights}
 \label{fig:pic0062}
 \end{figure}
 \FloatBarrier
 
-За да бъде визуализирана информацията за теглата, е нужно стойностите им да се нормализират спрямо най-малката и най-голямата стойност измежду тях (Фиг. \ref{fig:pic0062}).
+In order to visualize the information about the weights, it is necessary to normalize their values relative to the smallest and largest value among them (Fig. \ref{fig:pic0062}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0063}
-  \caption{Изрисуване на топологията}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0063}
+\caption{Draw the topology}
 \label{fig:pic0063}
 \end{figure}
 \FloatBarrier
 
-Така подготвените предварително данни с лекота биват визуализирани от група вложени цикли (Фиг. \ref{fig:pic0063}).
+Thus, the previously prepared data is easily visualized by a group of nested loops (Fig. \ref{fig:pic0063}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0064}
-  \caption{Конструктор на двигателя за услугата}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0064}
+\caption{Engine constructor for the service}
 \label{fig:pic0064}
 \end{figure}
 \FloatBarrier
 
-Конструкторът на двигателя на услугата има единствената задача да зареди нишката за изпълнение (Фиг. \ref{fig:pic0064}).
+The service engine constructor has the sole task of loading the execution thread (Fig \ref{fig:pic0064}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0065}
-  \caption{Промяна във видимостта на активния тапет}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0065}
+\caption{Change in active wallpaper visibility}
 \label{fig:pic0065}
 \end{figure}
 \FloatBarrier
 
-Когато видимостта на активния тапет бъде променена, се активира събитие onVisibilityChanged, в което се определя дали нишката да бъде активирана отново или викането й да бъде преустановено (Фиг. \ref{fig:pic0065}).
+When the visibility of the active wallpaper is changed, an onVisibilityChanged event is fired, which determines whether the thread should be reactivated or its calling terminated (Fig. \ref{fig:pic0065}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0066}
-  \caption{Спиране на пресмятанията при разрушаване на повърхността за изрисуване}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0066}
+\caption{Stop calculations when destroying draw surface}
 \label{fig:pic0066}
 \end{figure}
 \FloatBarrier
 
-При събитие за унищожаване на рисувателната площ, се вдига флаг за спиране на изчисленията и нишката отговорна за тях се премахва от опашката за изпълнение (Фиг. \ref{fig:pic0066}).
+On an event to destroy the drawing area, a flag to stop the calculations is raised and the thread responsible for them is removed from the execution queue (Fig. \ref{fig:pic0066}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0067}
-  \caption{Размер на зоните за изрисуване}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0067}
+\caption{Size of drawing areas}
 \label{fig:pic0067}
 \end{figure}
 \FloatBarrier
 
-Когато настъпи промяна в площта за изрисуване на активния тапет, е нужно да се вземат серия мерки по преизчисляване на размерите. Такова събитие примерно настъпва, когато устройството сменя визуалното представане от портретна в пейзажна или обратното. Първата характеристика която се следи е размерът на петната за визуално представяне (Фиг. \ref{fig:pic0067}).
+When a change occurs in the drawing area of the active wallpaper, a series of resizing measures must be taken. Such an event, for example, occurs when the device changes the visual representation from portrait to landscape or vice versa. The first feature to monitor is the size of the spots for visual representation (Fig. \ref{fig:pic0067}).
 
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0068}
-  \caption{Координати и размери на областите за визуално представяне - горе-ляво}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0068}
+\caption{Coordinates and dimensions of visual representation areas - top-left}
 \label{fig:pic0068}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0069}
-  \caption{Координати и размери на областите за визуално представяне - горе-център}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0069}
+\caption{Coordinates and dimensions of visual representation areas - top-center}
 \label{fig:pic0069}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0070}
-  \caption{Координати и размери на областите за визуално представяне - горе-дясно}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0070}
+\caption{Coordinates and dimensions of visual representation areas - top-right}
 \label{fig:pic0070}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0071}
-  \caption{Координати и размери на областите за визуално представяне - център-ляво}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0071}
+\caption{Coordinates and dimensions of visual representation areas - center-left}
 \label{fig:pic0071}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0072}
-  \caption{Координати и размери на областите за визуално представяне - център-център}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0072}
+\caption{Coordinates and dimensions of visual representation areas - center-center}
 \label{fig:pic0072}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0073}
-  \caption{Координати и размери на областите за визуално представяне - център-дясно}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0073}
+\caption{Coordinates and dimensions of visual representation areas - center-right}
 \label{fig:pic0073}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0074}
-  \caption{Координати и размери на областите за визуално представяне - долу-ляво}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0074}
+\caption{Coordinates and dimensions of visual representation areas - bottom-left}
 \label{fig:pic0074}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0075}
-  \caption{Координати и размери на областите за визуално представяне - долу-център}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0075}
+\caption{Coordinates and dimensions of visual representation areas - bottom-center}
 \label{fig:pic0075}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0076}
-  \caption{Координати и размери на областите за визуално представяне - долу-дясно}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0076}
+\caption{Coordinates and dimensions of visual representation areas - bottom-right}
 \label{fig:pic0076}
 \end{figure}
 \FloatBarrier
 
-На потребителя е позволено да избере в коя част на активния тапет да бъдат позиционирани зоните за визуално представяне. Възможностите по хоризонтала са ляво, център и дясно, а възможностите по вертикала са горе, център и долу. 
+The user is allowed to choose in which part of the active wallpaper the visual presentation areas should be positioned. The horizontal options are left, center, and right, and the vertical options are top, center, and bottom.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0077}
-  \caption{Натоварване на системата за фонови пресмятания}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0077}
+\caption{System load for background calculations}
 \label{fig:pic0077}
 \end{figure}
 \FloatBarrier
 
-Последната характеристика, която потребителят има възможност да контролира, е до каква степен мобилното му устройство да бъде натоварвано с фонови пресмятания (Фиг. \ref{fig:pic0077}).
+The final feature that the user has the ability to control is to what extent their mobile device will be loaded with background calculations (Fig. \ref{fig:pic0077}).
 
-\section{Представяне на информацията върху локалното устройство}
+\section{Presentation of the information on the local device}
 
-Ефективността от изчисленията значително се повишава, ако локалните изчислителни възли разполагат с възможност за локално съхранение на изходни данни и пресметнати резултати. 
+The efficiency of calculations is significantly increased if the local computing nodes have the possibility of local storage of source data and calculated results.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0078}
-  \caption{Константи за интервалите на времевия ред (0 до 15)}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0078}
+\caption{Time series interval constants (0 to 15)}
 \label{fig:pic0078}
 \end{figure}
 \FloatBarrier
 
-За нуждите на това локално представяне се ползва помощен тип данни от изброен тип, който обозначава разстоянието между две отчитания във финансовите времеви редове (Фиг. \ref{fig:pic0078}, \ref{fig:pic0079}).
+For the needs of this local representation, an auxiliary data type of enumerated type is used, which indicates the distance between two readings in the financial time series (Fig. \ref{fig:pic0078}, \ref{fig:pic0079}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0079}
-  \caption{Константи за интервалите на времевия ред (30 до 43200)}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0079}
+\caption{Constants for time series intervals (30 to 43200)}
 \label{fig:pic0079}
 \end{figure}
 \FloatBarrier
 
-Интервалите в използваните времеви редове се определят на база брой минути като най-краткият интервал е една минута. Описването на интервалите става с две променливи - название и брой минути (Фиг. \ref{fig:pic0080}).
+The intervals in the time series used are determined based on the number of minutes, with the shortest interval being one minute. The intervals are described with two variables - name and number of minutes (Fig. \ref{fig:pic0080}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0080}
-  \caption{Описание на времеви интервал}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0080}
+\caption{Time slot description}
 \label{fig:pic0080}
 \end{figure}
 \FloatBarrier
 
-Използването на изброени константи в Java дава възможност за елегантно използване на статични функции за конструиране на обекти (Factory Method Design Pattern), които по зададено число (брой минути) да връщат съответстващата константа (Фиг. \ref{fig:pic0081}).
+The use of enumerated constants in Java makes it possible to elegantly use static functions to construct objects (Factory Method Design Pattern) that after a given number (number of minutes) return the corresponding constant (Fig. \ref{fig:pic0081}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0081}
-  \caption{Определяне на константа за интервал по брой минути}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0081}
+\caption{Defining an interval constant by number of minutes}
 \label{fig:pic0081}
 \end{figure}
 \FloatBarrier
 
-Аналогичен ефект може да се постигне и с използване на текстовото описание на константите (Фиг. \ref{fig:pic0082}).
+A similar effect can be achieved using the text description of the constants (Fig. \ref{fig:pic0082}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0082}
-  \caption{Определяне на константа за интервал по текстово описание}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0082}
+\caption{Defining an interval constant by textual description}
 \label{fig:pic0082}
 \end{figure}
 \FloatBarrier
 
-За да се възпрепятства създаването на константи извън изброения тип, е прието конструкторът да бъде с частно ниво на достъп (Фиг. \ref{fig:pic0083}).
+To prevent the creation of constants outside the enumerated type, it is assumed that the constructor has a private access level (Fig. \ref{fig:pic0083}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0083}
-  \caption{Конструктор на изброения тип за интервал}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0083}
+\caption{Constructor of the enumerated type for space}
 \label{fig:pic0083}
 \end{figure}
 \FloatBarrier
 
-Операционната система Android предоставя изключително полезни средства за съхраняване на информация, едно от които е релационната система за управление на бази от данни SQLite. 
+The Android operating system provides extremely useful means of storing information, one of which is the SQLite relational database management system.
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0084}
-  \caption{Структура на локалната таблица за котировките}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0084}
+\caption{Local table structure for quotations}
 \label{fig:pic0084}
 \end{figure}
 \FloatBarrier
 
-Информацията за времевия ред може да се съхранява локално в таблица с подходяща структура, която да отразява наличието на четири стойности за всеки интервал, времето на интервала, търгувания обем, названието на валутната двойка и размера на времевия интервал (Фиг. \ref{fig:pic0084}).
+Information about the time series can be stored locally in a table with a suitable structure that reflects the presence of four values for each interval, the time of the interval, the traded volume, the name of the currency pair and the size of the time interval (Fig. \ref{fig: pic0084}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0085}
-  \caption{Структура на локалната таблица за изкуствените невронни мрежи}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0085}
+\caption{Local Table Structure for Artificial Neural Networks}
 \label{fig:pic0085}
 \end{figure}
 \FloatBarrier
 
-Допълнителна таблица поема съхранението на информацията за изкуствените неврони мрежи, което включва названието на валутната двойка, времевия интервал, стойността на невроните, стойността на връзките между невроните и стойността на теглата между невроните (Фиг. \ref{fig:pic0085}). 
+An additional table takes care of the storage of the information about the artificial neural networks, which includes the name of the currency pair, the time interval, the value of the neurons, the value of the connections between the neurons and the value of the weights between the neurons (Fig. \ref{fig:pic0085}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0086}
-  \caption{Име и версията на базата данни}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0086}
+\caption{Database name and version}
 \label{fig:pic0086}
 \end{figure}
 \FloatBarrier
 
-Android управлява базите от данни под формата на DB ресурс и целочислена версия за структурата (Фиг. \ref{fig:pic0086}).
+Android manages databases in the form of a DB resource and an integer version for the structure (Fig. \ref{fig:pic0086}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0087}
-  \caption{Код за създаване на таблицата за котировки}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0087}
+\caption{Code to create the quote table}
 \label{fig:pic0087}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0088}
-  \caption{Код за създаване на таблицата за изкуствените невронни мрежи}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0088}
+\caption{Code to create the artificial neural network table}
 \label{fig:pic0088}
 \end{figure}
 \FloatBarrier
 
-Създаването на таблиците се управлява от параметризирани символни константи (Фиг. \ref{fig:pic0087}, \ref{fig:pic0088}).
+The creation of the tables is controlled by parameterized symbolic constants (Fig. \ref{fig:pic0087}, \ref{fig:pic0088}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0089}
-  \caption{Код за изтриване на таблиците}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0089}
+\caption{Code to delete the tables}
 \label{fig:pic0089}
 \end{figure}
 \FloatBarrier
 
-Изтриването на таблиците също става с параметризирани символни константи (Фиг. \ref{fig:pic0089}).
+Deleting tables is also done with parameterized symbolic constants (Fig. \ref{fig:pic0089}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0090}
-  \caption{Конструктор и виртуални методи на спомагателния клас за базата данни}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0090}
+\caption{Constructor and virtual methods of the database helper class}
 \label{fig:pic0090}
 \end{figure}
 \FloatBarrier
 
-Конструкторът на спомагателния клас за базата данни има единствена задача да извика конструкторът на родителския клас (Фиг. \ref{fig:pic0090}). Двете предефинирани виртуални функции имат за задача да извикат заявките за конструиране и обновяване на базата данни (Фиг. \ref{fig:pic0090}). 
+The constructor of the helper class for the database has the sole task of calling the constructor of the parent class (Fig \ref{fig:pic0090}). The two predefined virtual functions are tasked with calling the requests to construct and update the database (Fig. \ref{fig:pic0090}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0091}
-  \caption{Изброен тип за вида на невроните}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0091}
+\caption{Type listed for neuron type}
 \label{fig:pic0091}
 \end{figure}
 \FloatBarrier
 
-Вторият изброен тип данни е по отношение на типа неврони. В общия случай невроните могат да бъдат обикновени, входни, изходни и отместващи (bias) (Фиг. \ref{fig:pic0090}).
+The second type of data listed is regarding the type of neurons. In general, neurons can be simple, input, output and bias (Fig. \ref{fig:pic0090}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0092}
-  \caption{Целочислена константа за типа на неврона, която може да се ползва и като битово поле}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0092}
+\caption{An integer constant for the neuron type that can also be used as a bit field}
 \label{fig:pic0092}
 \end{figure}
 \FloatBarrier
 
-Тъй като са възможни различни връзки между невроните, то се появяват и неврони с повече функции като: обикновен-входен, обикновен-изходен, входен-изходен, входен-обикновен-изходен. Всички възможни комбинации се записват в целочислена променлива, която може да послужи и като битово поле (Фиг. \ref{fig:pic0092}).
+Since different connections between neurons are possible, neurons with more functions appear, such as: simple-input, simple-output, input-output, input-simple-output. All possible combinations are recorded in an integer variable, which can also serve as a bit field (Fig. \ref{fig:pic0092}).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0093}
-  \caption{Определяне на изброимата константа по числена стойност}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0093}
+\caption{Determining the enumerable constant by numeric value}
 \label{fig:pic0093}
 \end{figure}
 \FloatBarrier
 
-Тъй като информацията от сървъра пристига предимно под формата на числа, то е рационално да бъде добавена статичена функция за конструиране на обекта (Factory Method Design Pattern), която по числена стойност да определя константата в изброения тип (Фиг. \ref{fig:pic0093}).
+Since the information from the server arrives mainly in the form of numbers, it is rational to add a static function for constructing the object (Factory Method Design Pattern), which numerically determines the constant in the enumerated type (Fig. \ref{fig:pic0093 }).
 
 \begin{figure}[h]
-  \centering
-  \includegraphics[height=0.45\pdfpageheight]{pic0094}
-  \caption{Методи за достъп до вътрешните стойности на константите}
+\centering
+\includegraphics[height=0.45\pdfpageheight]{pic0094}
+\caption{Methods to access internal constant values}
 \label{fig:pic0094}
 \end{figure}
 \FloatBarrier
 
-За удобство, при работата с константите и със скритата в тях информация, често се използват методи за достъп (accessor). В този случай един публичен getter, но setter с частен достъп. Разумно е setter-ът да бъде с частен достъп, тъй като е разумно да се запази свойството на изброените константи да бъдат константи (Фиг. \ref{fig:pic0094}).
+For convenience, when working with constants and the information hidden in them, accessor methods are often used. In this case, a public getter but a setter with private access. It makes sense to make the setter private because it makes sense to preserve the property of enumerated constants to be constants (Fig \ref{fig:pic0094}).
