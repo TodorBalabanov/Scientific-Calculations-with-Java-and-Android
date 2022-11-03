@@ -2,11 +2,11 @@
 \chapter{Network Training}
 \label{chapter07}
 
-Training in classical multilayer artificial neural networks is related to the optimization of the weights that characterize the connections between individual neurons. In its essence, the learning task is a numerical optimization in a multidimensional space of real numbers. Many exact numerical methods and many heuristic methods have been developed in the last few decades. In the present work, the emphasis falls on two methods (one exact numerical and the other heuristic). As an exact numerical method, the Encog software library offers the widely used error backpropagation method (as well as some modifications thereof). From the group of heuristic methods, genetic algorithms with mutation modification are used, according to the method of evolution of differences. The Genetic Algorithms - Apache Commons software library is used for the implementation of the genetic algorithm.
+Training in classical multilayer artificial neural networks is related to optimizing the weights that characterize the connections between individual neurons. The learning task is a numerical optimization in a multidimensional space of real numbers. Many exact numerical methods and many heuristic methods have been developed in the last few decades. In the present work, the emphasis falls on two methods (one exact numerical and the other heuristic). As an exact numerical method, the Encog software library offers the widely used error backpropagation method (as well as some modifications thereof). From the group of heuristic methods, genetic algorithms with mutation modification are used according to the method of evolution of differences. The Genetic Algorithms - Apache Commons software library implements the genetic algorithm.
 
 \section{Backpropagation of the error}
 
-In reverse error propagation, in operational mode, signals travel from the input of the network to its output. The training examples are applied in a randomly determined order so that the network does not learn the feed pattern but develops its generalization abilities. The total error is calculated at the output of the network and then fed back, from output to input, to calculate the error each neuron contributes. After determining the individual error for each neuron, a numerical correction (according to the gradient) is performed on the weights that connect the neurons. This back-calculation gives the method its name and also places it in the group of exact numerical methods that rely on the gradient to perform correction in the weights. Essential to error backpropagation learning is that the activation function of the neuron must be differentiable. The Encog library provides a group of methods for optimizing network weights.
+In reverse error propagation, in operational mode, signals travel from the input of the network to its output. The training examples are applied randomly so that the network does not learn the feed pattern but develops its generalization abilities. The total error is calculated at the network's output and then fed back, from output to input, to estimate the error each neuron contributes. After determining the individual error for each neuron, a numerical correction (according to the gradient) is performed on the weights that connect the neurons. This back-calculation gives the method its name and places it in the group of exact numerical methods that rely on the gradient to correct the weights. Essential to error backpropagation learning is that the neuron's activation function must be differentiable. The Encog library provides a group of methods for optimizing network weights.
 
 \begin{figure}[h]
 \centering
@@ -16,7 +16,7 @@ In reverse error propagation, in operational mode, signals travel from the input
 \end{figure}
 \FloatBarrier
 
-The Encog library allows several training options with exact numerical methods, and the Resilient Propagation method, which is elastic backpropagation of the error (Fig. \ref{fig:pic0173}), is chosen in this tutorial. Elastic error propagation is a modification of the basic method in which the learning rate is determined dynamically and is not just one value for the entire network. In the classic error backpropagation approach, the learning rate is just one value, usually empirically tuned between 0.0 and 1.0. The most commonly used is 0.35, which is a trade-off between learning speed and reaching an optimal value for the weights (the fine-tuning of the weights in the final phase of training).
+The Encog library allows several training options with exact numerical methods, and the Resilient Propagation method, which is elastic backpropagation of the error (Fig. \ref{fig:pic0173}), is chosen in this tutorial. Elastic error propagation is a modification of the primary method in which the learning rate is determined dynamically and is not just one value for the entire network. In the classic error backpropagation approach, the learning rate is just one value, usually empirically tuned between 0.0 and 1.0. The most commonly used is 0.35, a trade-off between learning speed and reaching an optimal value for the weights (the fine-tuning of the weights in the final training phase).
 
 \begin{figure}[h]
 \centering
@@ -36,7 +36,7 @@ The fact that the Encog library is written according to the canons of object-ori
 \end{figure}
 \FloatBarrier
 
-With exactly the same ease, the library allows one to switch to fast error propagation (Fig. \ref{fig:pic0175}). This modification of the error backpropagation algorithm introduces an improvement by using the Newton-Rawson method to further determine the second derivative so that the additional information from the second derivative improves the way the network weights are adjusted. Thanks to this modification, larger steps are taken along the slopes of the error function, and when approaching the extreme point, the step is reduced.
+With precisely the same ease, the library allows one to switch to fast error propagation (Fig. \ref{fig:pic0175}). This modification of the error backpropagation algorithm introduces an improvement by using the Newton-Rawson method to determine the second derivative further so that the additional information from the second derivative improves the way the network weights are adjusted. Thanks to this modification, more giant steps are taken along the slopes of the error function, and when approaching the extreme point, the step is reduced.
 
 \begin{figure}[h]
 \centering
@@ -46,7 +46,7 @@ With exactly the same ease, the library allows one to switch to fast error propa
 \end{figure}
 \FloatBarrier
 
-The scaled gradient fit (Fig. \ref{fig:pic0176}) also uses the information from the second derivative. Thus, a better path to the optimal point is found compared to methods that use only the first derivative. The price of such an improvement is the need to use more computing resources. The difference with this method is that the weight corrections are not always in the direction indicated by the first derivative.
+The scaled gradient fit (Fig. \ref{fig:pic0176}) also uses the information from the second derivative. Thus, a better path to the optimal point is found than methods that only use the first derivative. The need to use more computing resources is the price of such an improvement. The difference with this method is that the weight corrections are not always in the direction indicated by the first derivative.
 
 \begin{figure}[h]
 \centering
@@ -56,11 +56,11 @@ The scaled gradient fit (Fig. \ref{fig:pic0176}) also uses the information from 
 \end{figure}
 \FloatBarrier
 
-A simplified variant of elastic learning is the adjustment of weights according to the Manhattan rule (Fig. \ref{fig:pic0177}). In this modification of the backpropagation of the error, only the direction of the first derivative is used, and a single, predefined value (theLearningRate) is applied to correct the weights. The benefit of this method comes from the fact that sometimes the first derivative is calculated to a value that is too large or too small. When the correction is a fixed value and only the direction of the derivative is used, the negative effect of large/small correction values is avoided. A disadvantage of this algorithm is that the single correction value must be adaptively tuned. It is usually started with a larger value and reduced, analogous to the simulated annealing method.
+A simplified variant of elastic learning is the adjustment of weights according to the Manhattan rule (Fig. \ref{fig:pic0177}). In this modification of the error's backpropagation, only the first derivative's direction is used, and a single, predefined value (theLearningRate) is applied to correct the weights. The benefit of this method comes from the fact that sometimes the first derivative is calculated to a value that is too large or too small. When the correction is a fixed value, and only the direction of the derivative is used, the negative effect of large/small correction values is avoided. A disadvantage of this algorithm is that the single correction value must be adaptively tuned. It is usually started with a more significant value and reduced, analogous to the simulated annealing method.
 
 \section{Genetic Algorithms}
 
-Although the Encog library has capabilities for training artificial neural networks with genetic algorithms (the MLMethodGeneticAlgorithm class), the Genetic Algorithms - Apache Commons library is preferred in this tutorial because it gives much more freedom to implement genetic algorithm operations and extensions towards the difference evolution method.
+Although the Encog library has capabilities for training artificial neural networks with genetic algorithms (the MLMethodGeneticAlgorithm class), the Genetic Algorithms - Apache Commons library is preferred in this tutorial because it gives much more freedom to implement genetic algorithm operations and extensions towards the differential evolution method.
 
 \begin{figure}[h]
 \centering
@@ -70,7 +70,7 @@ Although the Encog library has capabilities for training artificial neural netwo
 \end{figure}
 \FloatBarrier
 
-With the addition of a genetic algorithm, a hybrid system for training artificial neural networks is obtained (Fig. \ref{fig:pic0178}). Randomly, half of the cases are trained with an exact numerical method and the other half with a heuristic method.
+With the addition of a genetic algorithm, a hybrid system for training artificial neural networks is obtained (Fig. \ref{fig:pic0178}). Half of the cases are randomly trained with an exact numerical method, and the other half with a heuristic method.
 
 \begin{figure}[h]
 \centering
@@ -80,7 +80,7 @@ With the addition of a genetic algorithm, a hybrid system for training artificia
 \end{figure}
 \FloatBarrier
 
-The genetic algorithm is tuned with a set of parameters (population size, percentage of elite in the population, crossover rate, mutation rate, number for the selection tournament, and maximum number of seconds to perform optimization), which in this case are statically set, but is reasonably be controlled by a configuration file or a settings screen (Fig. \ref{fig:pic0179}).
+The genetic algorithm is tuned with a set of parameters (population size, percentage of elite in the population, crossover rate, mutation rate, number for the selection tournament, and the maximum number of seconds to perform optimization), which in this case are statically set. However, it is reasonably be controlled by a configuration file or a settings screen (Fig. \ref{fig:pic0179}).
 
 \begin{figure}[h]
 \centering
@@ -122,7 +122,7 @@ An implementation of the genetic algorithm follows (Fig. \ref{fig:pic0182}). A u
 
 \subsection{Chromosome Coding}
 
-Since the weights of the network are a set of real numbers, they can ideally be represented in a chromosome containing a list of values (Fig. \ref{fig:pic0184}). Since the liveness estimation requires the weights to be loaded into the network and the straight-pass backpropagation training run over the network, the chromosome contains references to the network object and the training object.
+Since the network weights are a set of real numbers, they can ideally be represented in a chromosome containing a list of values (Fig. \ref{fig:pic0184}). Since the liveness estimation requires the weights to be loaded into the network and the straight-pass backpropagation training run over the network, the chromosome contains references to the network object and the training object.
 
 \begin{figure}[h]
 \centering
@@ -168,7 +168,7 @@ Vitality determination begins by loading the fractional values as weights into t
 \end{figure}
 \FloatBarrier
 
-The straight pass is performed and the total error committed by the network is returned as a vital value (Fig. \ref{fig:pic0189}).
+The straight pass is performed, and the total error committed by the network is returned as a fitness value (Fig. \ref{fig:pic0189}).
 
 \begin{figure}[h]
 \centering
@@ -188,7 +188,7 @@ The validity of the chromosome depends only on having enough fractional numbers 
 \end{figure}
 \FloatBarrier
 
-Constructing a new chromosome of fixed length is done by calling one of the constructors and using deep copy for the values (Fig. \ref{fig:pic0191}).
+Constructing a new chromosome of fixed length is done by calling one of the constructors and using a deep copy for the values (Fig. \ref{fig:pic0191}).
 
 \begin{figure}[h]
 \centering
@@ -198,7 +198,7 @@ Constructing a new chromosome of fixed length is done by calling one of the cons
 \end{figure}
 \FloatBarrier
 
-For the needs of calculations outside the class, a function was created to output the values (Fig. \ref{fig:pic0192}).
+A function was created for calculations outside the class to output the values (Fig. \ref{fig:pic0192}).
 
 \begin{figure}[h]
 \centering
@@ -230,7 +230,7 @@ The proposed mutation operation is suitable to be applied only to the used codin
 \end{figure}
 \FloatBarrier
 
-Unlike the classical mutation in genetic algorithms, a modification is made here, resembling the difference evolution method. Each gene in the chromosome is changed by a small fractional amount (Fig. \ref{fig:pic0195}).
+Unlike the classical mutation in genetic algorithms, a modification is made here, resembling the differential evolution method. A small fractional amount changes each gene in the chromosome (Fig. \ref{fig:pic0195}).
 
 \begin{figure}[h]
 \centering

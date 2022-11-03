@@ -2,11 +2,11 @@
 \chapter{Client-Server Communication}
 \label{chapter06}
 
-Communication between the Android client and the PHP based server is done over HTTP with the exchange of JSON packed messages.
+Communication between the Android client and the PHP-based server is done over HTTP by exchanging JSON-packed messages.
 
 \section{Hypertext Transfer Protocol}
 
-Each time a wallpaper instance is created, a connection to the remote server must be made and a job package requested. If the connection is not possible, the data stored in the local database is used.
+Each time a wallpaper instance is created, a connection to the remote server must be made, and a job package must be requested. If the connection is not possible, the data stored in the local database is used.
 
 \begin{figure}[h]
 \centering
@@ -36,7 +36,7 @@ The initialization of internal variables over HTTP is taken over by an additiona
 \end{figure}
 \FloatBarrier
 
-The HTTP communication with the remote server and the parsing of the JSON messages are exported to the HttpHelper helper class (Fig. \ref{fig:pic0159}). There are various ways to set the names used for remote scripts, but one of the most basic is through named constants. Server script names are subject to change, but this is expected to be significantly less frequent than changing the URL. It is precisely for this reason that the information is parameterized in a different way.
+The HTTP communication with the remote server and the parsing of the JSON messages are exported to the HttpHelper helper class (Fig. \ref{fig:pic0159}). Server script names are subject to change, but this is expected to be significantly less frequent than changing the URL. It is precisely for this reason that the information is parameterized differently. There are various ways to set the names for remote scripts, but one of the most basic is named constants.
 
 \begin{figure}[h]
 \centering
@@ -56,7 +56,7 @@ Since the URL of the remote server is likely to change multiple times, it is wis
 \end{figure}
 \FloatBarrier
 
-To spawn a random network, the designated script on the remote server is called. This is done in an auxiliary function load, which loads the information into the publicly available global structure for representing the working data (Fig. \ref{fig:pic0163}).
+To spawn a random network, the designated script on the remote server is called. This is done in an auxiliary function load, which loads the information into the publicly available global structure for representing the operational data (Fig. \ref{fig:pic0163}).
 
 \begin{figure}[h]
 \centering
@@ -76,7 +76,7 @@ After a randomly selected network is loaded, a training set suitable for the net
 \end{figure}
 \FloatBarrier
 
-In the process of storing the additionally trained network, a second helper function save is used, which aims to send, by HTTP request, the information available in the global structure with the training data (Fig. \ref{fig:pic0164}).
+In storing the additionally trained network, a second helper function save is used, which aims to send, by the HTTP request, the information available in the global structure with the training data (Fig. \ref{fig:pic0164}).
 
 \begin{figure}[h]
 \centering
@@ -96,7 +96,7 @@ The data from the global structure is formed as an HTTP request of the POST type
 \end{figure}
 \FloatBarrier
 
-Sending the information ends with the execution of the HTTP request (Fig. \ref{fig:pic0166}).
+Sending the information ends with executing the HTTP request (Fig. \ref{fig:pic0166}).
 
 \section{JavaScript Object Notation}
 
@@ -110,7 +110,7 @@ Once received over HTTP, the JSON-packaged information is parsed and transformed
 \end{figure}
 \FloatBarrier
 
-One of the main roles of JSON is in the construction of communication protocols, which in the present development consists of information organized hierarchically on the "key-value" principle. Since communication protocols are subject to change, it is convenient to represent key values in the form of renamed constants (Fig. \ref{fig:pic0160},\ref{fig:pic0161}).
+One of the primary roles of JSON is in the construction of communication protocols, which in the present development consists of information organized hierarchically on the "key-value" principle. Since communication protocols are subject to change, it is convenient to represent key values in the form of renamed constants (Fig. \ref{fig:pic0160},\ref{fig:pic0161}).
 
 \begin{figure}[h]
 \centering
@@ -120,7 +120,7 @@ One of the main roles of JSON is in the construction of communication protocols,
 \end{figure}
 \FloatBarrier
 
-When loading an artificial neural network and its training timeline from the remote server, the information is obtained with two separate HTTP requests. This requires two separate fragments to process the JSON messages.
+The information is obtained with two separate HTTP requests when loading an artificial neural network and its training timeline from the remote server. This requires two different fragments to process the JSON messages.
 
 \begin{figure}[h]
 \centering
@@ -140,7 +140,7 @@ The first fragment provides information about the type of time series, the perio
 \end{figure}
 \FloatBarrier
 
-In the second fragment, information about the time series is obtained, which includes a time array, an open array, an array low (Fig. \ref{fig:pic0170}), an array high, an array close and an array for traded volume (Fig. \ ref{fig:pic0171}).
+In the second fragment, information about the time series is obtained, which includes a time array, an open array, an array low (Fig. \ref{fig:pic0170}), an array high, an array close, and an array for traded volume (Fig. \ ref{fig:pic0171}).
 
 \begin{figure}[h]
 \centering
@@ -158,7 +158,7 @@ In the second fragment, information about the time series is obtained, which inc
 \end{figure}
 \FloatBarrier
 
-Upon successful receipt of the information from the remote server, the data is written to the global calculation structure (Fig. \ref{fig:pic0172}).
+Upon successfully receiving the information from the remote server, the data is written to the global calculation structure (Fig. \ref{fig:pic0172}).
 
 \begin{figure}[h]
 \centering

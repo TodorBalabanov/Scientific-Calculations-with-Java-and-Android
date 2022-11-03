@@ -1,8 +1,8 @@
 \newpage
-\chapter{Android live wallpaper}
+\chapter{Android Live Wallpaper}
 \label{chapter04}
 
-Android Live Wallpaper technology provides animated visual representation capabilities in the form of virtual wallpaper. In essence, this type of application does not differ drastically from other Android applications and can even perform almost all of their capabilities. Since the virtual wallpaper is always active, it is an ideal candidate for the implementation of background computing\index{distributed computing}. The following components are required to create an active wallpaper: 1. An XML file that describes the components of the wallpaper; 2. Background module (Android Service); 3. Appropriate flags to access device resources.
+Android Live Wallpaper technology provides animated visual representation capabilities in virtual wallpaper. This type of application does not differ drastically from other Android applications and can perform almost all of its capabilities. Since the virtual wallpaper is always active, it is an ideal candidate for implementing background computing\index{distributed computing}. The following components are required to create an active wallpaper: 1. An XML file that describes the components of the wallpaper; 2. Background module (Android Service); 3. Appropriate flags to access device resources.
 
 \section{Mobile App Manifest File}
 
@@ -16,7 +16,7 @@ When creating applications for the Android operating system, the approach adopte
 \end{figure}
 \FloatBarrier
 
-To define the application as an active wallpaper application, it is necessary to explicitly mark this in the manifest file (Fig. \ref{fig:pic0011}). The most significant benefit of this definition is that it prevents the application from being installed on devices that do not support live wallpaper rendering capabilities.
+To define the application as an active wallpaper application, mark it explicitly in the manifest file (Fig. \ref{fig:pic0011}). The most significant benefit of this definition is that it prevents the application from being installed on devices that do not support live wallpaper rendering capabilities.
 
 \begin{figure}[h]
 \centering
@@ -26,7 +26,7 @@ To define the application as an active wallpaper application, it is necessary to
 \end{figure}
 \FloatBarrier
 
-When Android uses very long calculations that are not convenient to perform, it is common for a thread to export these calculations to non-GUI modules called "services". The work of the active wallpaper is carried out in just such a module, and for this reason one has been added to the project (Fig. \ref{fig:pic0012}).
+When Android uses very long calculations that are not convenient to perform, it is common for a thread to export them to non-GUI modules called "services". The work of the active wallpaper is carried out in just such a module, and for this reason, one has been added to the project (Fig. \ref{fig:pic0012}).
 
 \begin{figure}[h]
 \centering
@@ -36,7 +36,7 @@ When Android uses very long calculations that are not convenient to perform, it 
 \end{figure}
 \FloatBarrier
 
-The security model requires that the user's explicit consent be obtained for any more specific action. In the case of the active wallpaper, the addition of the android.permission.BIND\_WALLPAPER permission is required (Fig. \ref{fig:pic0013}).
+The security model requires the user's explicit consent to be obtained for any more specific action, in the case of the active wallpaper, the addition of the android.permission.BIND\_WALLPAPER permission is required (Fig. \ref{fig:pic0013}).
 
 \begin{figure}[h]
 \centering
@@ -46,7 +46,7 @@ The security model requires that the user's explicit consent be obtained for any
 \end{figure}
 \FloatBarrier
 
-In addition to the need for permissions to use the active wallpaper resources, the service needs to be subscribed to listen for messages from the operating system (Fig \ref{fig:pic0014}).
+In addition to the need for permission to use the active wallpaper resources, the service needs to be subscribed to listen for messages from the operating system (Fig \ref{fig:pic0014}).
 
 \begin{figure}[h]
 \centering
@@ -56,7 +56,7 @@ In addition to the need for permissions to use the active wallpaper resources, t
 \end{figure}
 \FloatBarrier
 
-The description of the active wallpaper itself is contained in a separate XML file, a reference to which is indicated in the manifest (Fig. \ref{fig:pic0015}).
+The description of the active wallpaper itself is contained in a separate XML file, a reference indicated in the manifest (Fig. \ref{fig:pic0015}).
 
 \begin{figure}[h]
 \centering
@@ -76,7 +76,7 @@ The last component in such an application is a window (Android Activity) to be l
 \end{figure}
 \FloatBarrier
 
-As already mentioned, the active wallpaper is described in a separate XML file, which contains a short annotation of the application, a preview, a thumbnail icon and the name of the settings window (Fig. \ref{fig:pic0017}).
+As already mentioned, the active wallpaper is described in a separate XML file, which contains a short annotation of the application, a preview, a thumbnail icon, and the name of the settings window (Fig. \ref{fig:pic0017}).
 
 \section{Settings Screen}
 
@@ -90,7 +90,7 @@ Since the active wallpaper will also have a secondary task of visualizing the pr
 \end{figure}
 \FloatBarrier
 
-As a visual representation, the simplest possible option has been chosen. Several photographs of the Vitosha mountain are visualized in the form of segments with the dimensions of the screen of the mobile device (Fig. \ref{fig:pic0018}). Three translucent areas visualize information about the financial time series (code and time period), a bar chart about the input and output data, and the current state of the artificial neural network\index{artificial neural networks} (Fig. \ref{fig:pic0019} ).
+As a visual representation, the simplest possible option has been chosen. Several photographs of the Vitosha mountain are visualized in the form of segments with the dimensions of the screen of the mobile device (Fig. \ref{fig:pic0018}). Three translucent areas visualize information about the financial time series (code and period), a bar chart about the input and output data, and the current state of the artificial neural network\index{artificial neural networks} (Fig. \ref{fig:pic0019} ).
 
 \begin{figure}[h]
 \centering
@@ -100,7 +100,7 @@ As a visual representation, the simplest possible option has been chosen. Severa
 \end{figure}
 \FloatBarrier
 
-Position and size controls for the three visual areas are provided in the live wallpaper settings. Also added initial settings for loading the device and whether to enable active wallpaper (Fig \ref{fig:pic0020}).
+The live wallpaper settings provide position and size controls for the three visual areas. They also added initial settings for loading the device and whether to enable active wallpaper (Fig \ref{fig:pic0020}).
 
 \begin{figure}[h]
 \centering
@@ -110,7 +110,7 @@ Position and size controls for the three visual areas are provided in the live w
 \end{figure}
 \FloatBarrier
 
-Each window in Android is described with its own layout file and Java code file. A GUI descriptor file uses XML and is very similar to composing a web page. When designing a settings screen, one of the most useful tools in the Android operating system is Shared Preferences. They allow the state of visual components to be directly stored in the device in the form of key-value pairs and then programmatically used for this information.
+Each window in Android is described with its layout file and Java code file. A GUI descriptor file uses XML and is very similar to composing a web page. When designing a settings screen, one of the most valuable tools in the Android operating system is Shared Preferences. They allow the state of visual components to be directly stored in the device in the form of key-value pairs and then programmatically used for this information.
 
 \subsection{Description of the user interface in the form of XML files}
 
@@ -122,7 +122,7 @@ Each window in Android is described with its own layout file and Java code file.
 \end{figure}
 \FloatBarrier
 
-First, there is a visual component for turning on and off the active wallpaper. When the switch is in the O,N state, the active wallpaper is started, and when it is in the OFF position, the active wallpaper is disabled (Fig. \ref{fig:pic0021}).
+First, there is a visual component for turning on and off the active wallpaper. When the switch is in the ON state, the active wallpaper is started, and when it is in the OFF position, the active wallpaper is disabled (Fig. \ref{fig:pic0021}).
 
 \begin{figure}[h]
 \centering
@@ -132,7 +132,7 @@ First, there is a visual component for turning on and off the active wallpaper. 
 \end{figure}
 \FloatBarrier
 
-Since the mobile application pulls the time series information from a remote web server, it is appropriate for the user to be able to set the URL of the server being worked with (Fig. \ref{fig:pic0154}). This option allows traffic to be redirected to other servers after the mobile application is already installed on users' mobile devices.
+Since the mobile application pulls the time series information from a remote web server, it is appropriate for the user to be able to set the URL of the server being worked with (Fig. \ref{fig:pic0154}). This option allows traffic to be redirected to other servers after the application is installed on users' mobile devices.
 
 \begin{figure}[h]
 \centering
@@ -152,7 +152,7 @@ A list of predefined values is used to load the device when performing the backg
 \end{figure}
 \FloatBarrier
 
-When designing the Android system, one of the main goals was to separate the graphical interface from the data as much as possible. It is precisely for this reason that the load values are exported in a separate resource (Fig. \ref{fig:pic0023}).
+When designing the Android system, one of the main goals was to separate the graphical interface from the data as much as possible. This is precisely why the load values are exported in a separate resource (Fig. \ref{fig:pic0023}).
 
 \begin{figure}[h]
 \centering
@@ -182,7 +182,7 @@ Analogously to the load values, the list of possible positions of the visual rep
 \end{figure}
 \FloatBarrier
 
-Of the initial characteristics, the last is the size of the areas for visual presentation of information (Fig. \ref{fig:pic0026}).
+Of the initial characteristics, the last is the size of the areas for the visual presentation of information (Fig. \ref{fig:pic0026}).
 
 \begin{figure}[h]
 \centering
@@ -192,7 +192,7 @@ Of the initial characteristics, the last is the size of the areas for visual pre
 \end{figure}
 \FloatBarrier
 
-Areas for visual representation of information are available in three sizes small, medium and large (Fig. \ref{fig:pic0027}).
+Areas for the visual representation of information are available in three sizes small, medium, and large (Fig. \ref{fig:pic0027}).
 
 \subsection{Interface Control Program Code}
 
@@ -220,7 +220,7 @@ The pause event only decides whether the active wallpaper should be started or s
 
 \section{Background Calculation}
 
-Long-term calculations that do not require a graphical user interface are carried out in modules called "services". When it comes to active wallpaper, it is necessary to write its own class that inherits from the WallpaperService class (Fig. \ref{fig:pic0030}).
+Long-term calculations that do not require a graphical user interface are carried out in modules called "services". When it comes to active wallpaper, it is necessary to write its class that inherits from the WallpaperService class (Fig. \ref{fig:pic0030}).
 
 \begin{figure}[h]
 \centering
@@ -230,7 +230,7 @@ Long-term calculations that do not require a graphical user interface are carrie
 \end{figure}
 \FloatBarrier
 
-A group of constants help generate random numbers, specify a distance between the visual representation areas, and an implied value for the time between two separate runs of the training algorithm (Fig. \ref{fig:pic0031}).
+A group of constants helps generate random numbers, specify a distance between the visual representation areas, and an implied value for the time between two separate runs of the training algorithm (Fig. \ref{fig:pic0031}).
 
 \begin{figure}[h]
 \centering
@@ -240,7 +240,7 @@ A group of constants help generate random numbers, specify a distance between th
 \end{figure}
 \FloatBarrier
 
-The colors used for the visual representation are also set with a group of constants, but will subsequently be converted to settings with values from the settings window (Fig \ref{fig:pic0032}).
+The colors used for the visual representation are also set with a group of constants but will subsequently be converted to settings with values from the settings window (Fig \ref{fig:pic0032}).
 
 \begin{figure}[h]
 \centering
@@ -250,7 +250,7 @@ The colors used for the visual representation are also set with a group of const
 \end{figure}
 \FloatBarrier
 
-A group of variables are responsible for the state of the active wallpaper. This includes - screen sizes, time between separate neural network trainings, whether active wallpaper is on or off, and the exact position of areas for visual representation of information from the neural network training process (Fig. \ref{fig:pic0033 }).
+A group of variables is responsible for the state of the active wallpaper. This includes - screen sizes, the time between separate neural network training, whether active wallpaper is on or off, and the exact position of areas for the visual representation of information from the neural network training process (Fig. \ref{fig:pic0033}).
 
 \begin{figure}[h]
 \centering
@@ -260,7 +260,7 @@ A group of variables are responsible for the state of the active wallpaper. This
 \end{figure}
 \FloatBarrier
 
-Another group of variables (references to objects) take responsibility for managing the artificial neural network, the training examples, the input-output data to the network, and the rule for its training (Fig. \ref{fig:pic0034}).
+Another group of variables (references to objects) takes responsibility for managing the artificial neural network, the training examples, the input-output data to the network, and the rule for its training (Fig. \ref{fig:pic0034}).
 
 \begin{figure}[h]
 \centering
@@ -270,7 +270,7 @@ Another group of variables (references to objects) take responsibility for manag
 \end{figure}
 \FloatBarrier
 
-In commercial software production, a very common trick is to create "software plugs". These are pieces of code that serve to communicate between objects and parts of the system that have not yet been created. In the present case, just such a software plug represents the absence of a server and a real data source (Fig. \ref{fig:pic0035}).
+In commercial software production, a widespread trick is to create "software plugs". These are pieces of code that communicate between objects and parts of the system that still need to be made. In the present case, just such a software plug represents the absence of a server and a real data source (Fig. \ref{fig:pic0035}).
 
 \begin{figure}[h]
 \centering
@@ -280,9 +280,9 @@ In commercial software production, a very common trick is to create "software pl
 \end{figure}
 \FloatBarrier
 
-Financial time series are most often described with the following characteristics: 1. Type of financial instrument (ticker symbol or stock symbol), in this case the mathematical function sine; 2. Interval between individual measurements (counted in minutes), in this case one minute; 3. Six parallel arrays (discrete time, open levels, lowest level reached, highest level reached, close levels and volume traded).
+Financial time series are often described with the following characteristics: 1. Type of financial instrument (ticker symbol or stock symbol), in this case, the mathematical function sine; 2. The interval between individual measurements (counted in minutes), in this case, one minute; 3. Six parallel arrays (discrete time, open levels, lowest level reached, the highest level reached, close levels, and volume traded).
 
-In addition to financial information, information about the topology of the artificial neural network must also be submitted to the client application. The description of the artificial neural network requires: 1. Number, arrangement and type of neurons (one-dimensional array of constants); 2. Adjacency matrix between neurons (one where there is a connection and zero where there is no connection); 3. Current value of the weight coefficient for each connection between two neurons (including loops, if any).
+In addition to financial information, information about the topology of the artificial neural network must also be submitted to the client application. The description of the artificial neural network requires: 1. Number, arrangement, and type of neurons (a one-dimensional array of constants); 2. Adjacency matrix between neurons (one where there is a connection and zero where there is no connection); 3. The current value of the weight coefficient for each connection between two neurons (including loops, if any).
 
 \begin{figure}[h]
 \centering
@@ -292,7 +292,7 @@ In addition to financial information, information about the topology of the arti
 \end{figure}
 \FloatBarrier
 
-By counting sorting, the number of neurons and their types is efficiently determined (Fig. \ref{fig:pic0036}).
+Counting sorting efficiently determines the number of neurons and their types (Fig. \ref{fig:pic0036}).
 
 \begin{figure}[h]
 \centering
@@ -302,7 +302,7 @@ By counting sorting, the number of neurons and their types is efficiently determ
 \end{figure}
 \FloatBarrier
 
-To illustrate the predictive capabilities of artificial neural networks, one of the most popular structures is chosen, namely a three-layer neural network that is trained with error backpropagation (Fig. \ref{fig:pic0037}). The input layer has the sole task of receiving the signals from the external environment and for this reason no activation function is set. The function $\tanh( x )$ (hyperbolic tangent) is chosen for the hidden and output layers, since it is asymptotically convergent at infinity along the abscissa and at the same time is symmetric along this same axis. Training is slightly faster with a hyperbolic tangent because the signal values in the hidden layers are more easily "skewed" in a positive or negative direction. In comparison, with the sigmoid function the signals are only positive and if negative values are needed this compensation must be obtained only through negative link weights. The input and hidden layers have a bias neuron that is not needed in the output layer because the bias neuron always emits the high level signal.
+To illustrate the predictive capabilities of artificial neural networks, one of the most used structures is chosen, namely a three-layer neural network that is trained with error backpropagation (Fig. \ref{fig:pic0037}). The input layer has the sole task of receiving the signals from the external environment, so no activation function is set. The function $\tanh( x )$ (hyperbolic tangent) is chosen for the hidden and output layers since it is asymptotically convergent at infinity along the abscissa and, simultaneously, is symmetric along this same axis. Training is slightly faster with a hyperbolic tangent because the signal values in the hidden layers are more easily "skewed" in a positive or negative direction. In comparison, with the sigmoid function, the signals are only positive; if negative values are needed, this compensation must be obtained only through negative link weights. The input and hidden layers have a bias neuron that is not required in the output layer because the bias neuron constantly emits the high-level signal.
 
 \begin{figure}[h]
 \centering
@@ -312,7 +312,7 @@ To illustrate the predictive capabilities of artificial neural networks, one of 
 \end{figure}
 \FloatBarrier
 
-From the description of parallel arrays in financial time series, it is clear that there are four possible sequences of numbers to feed to the neural network for prediction (open, low, high, close).
+From the description of parallel arrays in financial time series, it is clear that there are four possible sequences of numbers to feed to the neural network for prediction (open, low, high, and close).
 
 \begin{figure}[h]
 \centering
@@ -322,7 +322,7 @@ From the description of parallel arrays in financial time series, it is clear th
 \end{figure}
 \FloatBarrier
 
-In practice, the closing value series is most often used, and the purpose is to predict the opening level in the next time interval. The purposes of this presentation are not to actually achieve financial predictions, and for this reason it is randomly chosen which sequence to use in the different training/forecasting runs (Fig. \ref{fig:pic0038}).
+In practice, the closing value series is most often used, and the purpose is to predict the opening level in the next time interval. The objectives of this presentation are not to achieve financial predictions, and for this reason, it is a randomly chosen sequence to use in the different training/forecasting runs (Fig. \ref{fig:pic0038}).
 
 \begin{figure}[h]
 \centering
@@ -332,7 +332,7 @@ In practice, the closing value series is most often used, and the purpose is to 
 \end{figure}
 \FloatBarrier
 
-Since the goal is to feed different financial time series to the forecasting system, it is inevitable that the input information in the system needs to be pre-normalized, and the first step to this is to determine the largest and smallest values in the time series ( Fig. \ref{fig:pic0039}). At the same time, the data must be matched to the range in which the activation functions of the artificial neural network work. In this tutorial, it is assumed that signals in the range of the function used in the output layer will be applied to the input (Fig. \ref{fig:pic0040}). This decision is argued by the fact that the information fed by the neural network to the external environment will undergo a reverse resizing process so that it makes sense in the particular financial time series.
+Since the goal is to feed different financial time series to the forecasting system, the input information in the system inevitably needs to be pre-normalized, and the first step to this is to determine the most significant and most minor values in the time series ( Fig. \ref{fig:pic0039}). At the same time, the data must be matched to the range in which the activation functions of the artificial neural network work. This tutorial assumes that signals in the scope of the function used in the output layer will be applied to the input (Fig. \ref{fig:pic0040}). This decision is argued by the fact that the information fed by the neural network to the external environment will undergo a reverse resizing process to make sense of the particular financial time series.
 
 \begin{figure}[h]
 \centering
@@ -342,7 +342,7 @@ Since the goal is to feed different financial time series to the forecasting sys
 \end{figure}
 \FloatBarrier
 
-We conditionally divide the normalized input data into two sets (measurements in the past and measurements in the future). The separation is conditional, since practically the data are from real measurements in the past (Fig. \ref{fig:pic0041}).
+We conditionally divide the normalized input data into two sets (measurements in the past and measures in the future). The separation is conditional since practically the data are from real measurements in the past (Fig. \ref{fig:pic0041}).
 
 \begin{figure}[h]
 \centering
@@ -362,7 +362,7 @@ Since the artificial neural network is used in both its modes (training and pred
 \end{figure}
 \FloatBarrier
 
-In general, the activation functions have asymptotic convergence and are monotonically increasing (Fig. \ref{fig:pic0044}), which allows their finite ranges to be established by inspecting a set of values (Fig. \ref{fig:pic0043}) .
+In general, the activation functions have asymptotic convergence and are monotonically increasing (Fig. \ref{fig:pic0044}), which allows their finite ranges to be established by inspecting a set of values (Fig. \ref{fig:pic0043}).
 
 \begin{figure}[h]
 \centering
@@ -372,7 +372,7 @@ In general, the activation functions have asymptotic convergence and are monoton
 \end{figure}
 \FloatBarrier
 
-As is clearly visible in Fig. \ref{fig:pic0044}, for some of the activation functions, such a range determination can be highly misleading (eg the sine function).
+As is visible in Fig. \ref{fig:pic0044}, for some of the activation functions, such a range determination can be highly misleading (e.g., the sine function).
 
 \begin{figure}[h]
 \centering
@@ -382,7 +382,7 @@ As is clearly visible in Fig. \ref{fig:pic0044}, for some of the activation func
 \end{figure}
 \FloatBarrier
 
-The engine object creation event is redefined to return an object from our own engine class (Fig \ref{fig:pic0045}).
+The engine object creation event is redefined to return an object from our engine class (Fig \ref{fig:pic0045}).
 
 \section{Service Engine}
 
@@ -396,7 +396,7 @@ The actual background computation work in the service is done by an object descr
 \end{figure}
 \FloatBarrier
 
-Three internal variables are used in this engine (Fig \ref{fig:pic0046}). The object of type "brush" (Paint) is only auxiliary and serves to define the characteristics for painting once. The benefit is that the object is created once and then used throughout the life cycle of the service.
+Three internal variables are used in this engine (Fig \ref{fig:pic0046}). The object of type "brush" (Paint) is only auxiliary and serves to define the characteristics of painting once. The benefit is that the object is created once and then used throughout the service's life cycle.
 
 \begin{figure}[h]
 \centering
@@ -406,7 +406,7 @@ Three internal variables are used in this engine (Fig \ref{fig:pic0046}). The ob
 \end{figure}
 \FloatBarrier
 
-For the real operation of the engine, a separate thread (trainer) is defined to perform the operations of generating a prediction, drawing the active wallpaper and performing one cycle of the training process of the artificial neural network\index{artificial neural networks} (Fig. \ref {fig:pic0047}). Effective thread management in Android is done using Handler objects. The holder object takes responsibility for starting the thread, stopping the thread, and implementing the timeout interval before the next wakeup of the thread takes place.
+For the actual operation of the engine, a separate thread (trainer) is defined to perform the operations of generating a prediction, drawing the active wallpaper, and completing one cycle of the training process of the artificial neural network\index{artificial neural networks} (Fig. \ref {fig:pic0047}). Effective thread management in Android is done using Handler objects. The holder object takes responsibility for starting the thread, stopping the thread, and implementing the timeout interval before the next wakeup of the thread occurs.
 
 \begin{figure}[h]
 \centering
@@ -436,7 +436,7 @@ To perform one training cycle of the artificial neural network\index{artificial 
 \end{figure}
 \FloatBarrier
 
-Drawing the information from the training process is organized in a separate function (Fig. \ref{fig:pic0050}). In order for the visual representation to take place, access is provided to the surface and the canvas it contains. At the very end of the visualization function, a decision is made whether to execute the next training cycle or to abort execution.
+Drawing the information from the training process is organized in a separate function (Fig. \ref{fig:pic0050}). For the visual representation to take place, access is provided to the surface and the canvas it contains. At the very end of the visualization function, a decision is made whether to execute the next training cycle or abort execution.
 
 \begin{figure}[h]
 \centering
@@ -446,7 +446,7 @@ Drawing the information from the training process is organized in a separate fun
 \end{figure}
 \FloatBarrier
 
-Good practices for writing programming code include breaking a single complex task into a group of multiple simpler tasks. This principle has been applied to the visual representation by creating five auxiliary functions (Fig. \ref{fig:pic0051}). The first function draws a background, the second draws translucent areas for the panels, the third fills the panel with information about the currency pair, the fourth displays information in the panel about the current forecast, and the fifth a stylized model of the artificial neural network\index{artificial neural networks}.
+Good practices for writing programming code include breaking a single complex task into a group of multiple, more straightforward tasks. This principle has been applied to the visual representation by creating five auxiliary functions (Fig. \ref{fig:pic0051}). The first function draws a background, the second draw translucent areas for the panels, the third fills the panel with information about the currency pair, the fourth displays information in the panel about the current forecast, and the fifth a stylized model of the artificial neural network\index{artificial neural networks}.
 
 \begin{figure}[h]
 \centering
@@ -456,7 +456,7 @@ Good practices for writing programming code include breaking a single complex ta
 \end{figure}
 \FloatBarrier
 
-To draw the background, a previously prepared image is loaded and a piece is cut from it to fit the dimensions of the screen (Fig. \ref{fig:pic0052}). Which part of the image is used is determined randomly.
+A previously prepared image is loaded to draw the background, and a piece is cut from it to fit the screen's dimensions (Fig. \ref{fig:pic0052}). Which part of the image is used is determined randomly.
 
 \begin{figure}[h]
 \centering
@@ -466,7 +466,7 @@ To draw the background, a previously prepared image is loaded and a piece is cut
 \end{figure}
 \FloatBarrier
 
-Immediately after drawing the background, the semi-transparent spots are also drawn to visually represent the information from the learning process (Fig. \ref{fig:pic0053}). The translucency grip is needed to avoid the side effect of color blending between the service information and the background.
+Immediately after drawing the background, the semi-transparent spots are also drawn to represent the information from the learning process visually (Fig. \ref{fig:pic0053}). A translucency grip is needed to avoid the side effect of color blending between the service information and the background.
 
 \begin{figure}[h]
 \centering
@@ -476,12 +476,12 @@ Immediately after drawing the background, the semi-transparent spots are also dr
 \end{figure}
 \FloatBarrier
 
-The information about the currency pair consists of name and time interval of the financial time series (Fig. \ref{fig:pic0054}).
+The information about the currency pair consists of the name and time interval of the financial time series (Fig. \ref{fig:pic0054}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[height=0.45\pdfpageheight]{pic0055}
-\caption{Position and dimensions for visual representation of the forecast}
+\caption{Position and dimensions for the visual representation of the forecast}
 \label{fig:pic0055}
 \end{figure}
 \FloatBarrier
@@ -496,7 +496,7 @@ The visual representation of the prediction requires slightly more complex calcu
 \end{figure}
 \FloatBarrier
 
-In order to visualize the data, it is essential to define the minimum and maximum values for the input-output as well as the number of values to be visualized (Fig. \ref{fig:pic0056}). In this case, the number of values for visual representation coincides with the sum of the number of input impacts and the number of output signals.
+To visualize the data, it is essential to define the minimum and maximum values for the input-output as well as the number of values to be visualized (Fig. \ref{fig:pic0056}). In this case, the number of values for visual representation coincides with the sum of the number of input impacts and the number of output signals.
 
 \begin{figure}[h]
 \centering
@@ -506,7 +506,7 @@ In order to visualize the data, it is essential to define the minimum and maximu
 \end{figure}
 \FloatBarrier
 
-The data for the elapsed time period is shown in one color and the forecast data in another color (Fig. \ref{fig:pic0057}). The visual presentation itself is a bar-chart of the input data and the forecast.
+The data for the elapsed period is shown in one color, and the forecast data in another color (Fig. \ref{fig:pic0057}). The visual presentation is a bar chart of the input data and the forecast.
 
 \begin{figure}[h]
 \centering
@@ -516,7 +516,7 @@ The data for the elapsed time period is shown in one color and the forecast data
 \end{figure}
 \FloatBarrier
 
-In the third visual representation area, stylized information about the state of the artificial neural network is drawn\index{artificial neural networks}. The area is rectangular and is divided into five vertical zones: 1. Values of the neurons in the input layer; 2. Values of the weights between the input and the hidden layer; 3. Values of the neurons in the hidden layer; 4. Values of the weights between the hidden and output layers; 5. Values of neurons in the output layer (Fig. \ref{fig:pic0058}).
+In the third visual representation area, stylized information about the state of the artificial neural network is drawn\index{artificial neural networks}. The rectangular area is divided into five vertical zones: 1. Values of the neurons in the input layer; 2. Values of the weights between the input and the hidden layer; 3. Values of the neurons in the hidden layer; 4. Values of the weights between the hidden and output layers; 5. Values of neurons in the output layer (Fig. \ref{fig:pic0058}).
 
 \begin{figure}[h]
 \centering
@@ -533,7 +533,7 @@ The input and output information is resized relative to the minimum and maximum 
 X_{sc} = \frac{X-X_{min}}{X_{max}-X_{min}}
 \end{equation}
 
-Neurons in the input layer should in practice not have an activation function constraint, since they only collect the information from the outside world.
+In practice, neurons in the input layer should not have an activation function constraint since they only collect information from the outside world.
 
 \begin{figure}[h]
 \centering
@@ -543,7 +543,7 @@ Neurons in the input layer should in practice not have an activation function co
 \end{figure}
 \FloatBarrier
 
-Next is the determination of the weights between the layers (Fig. \ref{fig:pic0060}).
+Next is determining the weights between the layers (Fig. \ref{fig:pic0060}).
 
 \begin{figure}[h]
 \centering
@@ -553,7 +553,7 @@ Next is the determination of the weights between the layers (Fig. \ref{fig:pic00
 \end{figure}
 \FloatBarrier
 
-And finally, for the middle vertical region, the values for the hidden layer are determined, scaled to the minimum and maximum level of the activation function applied to it (Fig. \ref{fig:pic0061}).
+And finally, for the middle vertical region, the values for the hidden layer are determined and scaled to the minimum, and maximum level of the activation function applied to it (Fig. \ref{fig:pic0061}).
 
 \begin{figure}[h]
 \centering
@@ -563,7 +563,7 @@ And finally, for the middle vertical region, the values for the hidden layer are
 \end{figure}
 \FloatBarrier
 
-In order to visualize the information about the weights, it is necessary to normalize their values relative to the smallest and largest value among them (Fig. \ref{fig:pic0062}).
+To visualize the information about the weights, it is necessary to normalize their values relative to the smallest and largest value among them (Fig. \ref{fig:pic0062}).
 
 \begin{figure}[h]
 \centering
@@ -603,7 +603,7 @@ When the visibility of the active wallpaper is changed, an onVisibilityChanged e
 \end{figure}
 \FloatBarrier
 
-On an event to destroy the drawing area, a flag to stop the calculations is raised and the thread responsible for them is removed from the execution queue (Fig. \ref{fig:pic0066}).
+In the event of destroying the drawing area, a flag to stop the calculations is raised, and the thread responsible for them is removed from the execution queue (Fig. \ref{fig:pic0066}).
 
 \begin{figure}[h]
 \centering
@@ -613,7 +613,7 @@ On an event to destroy the drawing area, a flag to stop the calculations is rais
 \end{figure}
 \FloatBarrier
 
-When a change occurs in the drawing area of the active wallpaper, a series of resizing measures must be taken. Such an event, for example, occurs when the device changes the visual representation from portrait to landscape or vice versa. The first feature to monitor is the size of the spots for visual representation (Fig. \ref{fig:pic0067}).
+When a change occurs in the drawing area of the active wallpaper, a series of resizing measures must be taken. Such an event, for example, occurs when the device changes the visual representation from portrait to landscape or vice versa. The first feature to monitor is the size of the spots for a graphical representation (Fig. \ref{fig:pic0067}).
 
 
 \begin{figure}[h]
@@ -688,7 +688,7 @@ When a change occurs in the drawing area of the active wallpaper, a series of re
 \end{figure}
 \FloatBarrier
 
-The user is allowed to choose in which part of the active wallpaper the visual presentation areas should be positioned. The horizontal options are left, center, and right, and the vertical options are top, center, and bottom.
+The user can choose which part of the active wallpaper the visual presentation areas should be positioned. The horizontal options are left, center, and right, and the vertical options are top, center, and bottom.
 
 \begin{figure}[h]
 \centering
@@ -698,11 +698,11 @@ The user is allowed to choose in which part of the active wallpaper the visual p
 \end{figure}
 \FloatBarrier
 
-The final feature that the user has the ability to control is to what extent their mobile device will be loaded with background calculations (Fig. \ref{fig:pic0077}).
+The final feature that the user can control is to what extent their mobile device will be loaded with background calculations (Fig. \ref{fig:pic0077}).
 
 \section{Presentation of the information on the local device}
 
-The efficiency of calculations is significantly increased if the local computing nodes have the possibility of local storage of source data and calculated results.
+The efficiency of calculations is significantly increased if the local computing nodes can store source data and calculated results locally.
 
 \begin{figure}[h]
 \centering
@@ -722,7 +722,7 @@ For the needs of this local representation, an auxiliary data type of enumerated
 \end{figure}
 \FloatBarrier
 
-The intervals in the time series used are determined based on the number of minutes, with the shortest interval being one minute. The intervals are described with two variables - name and number of minutes (Fig. \ref{fig:pic0080}).
+The intervals in the time series are determined based on the number of minutes, with the shortest interval being one minute. The intervals are described with two variables - name and number of minutes (Fig. \ref{fig:pic0080}).
 
 \begin{figure}[h]
 \centering
@@ -732,7 +732,7 @@ The intervals in the time series used are determined based on the number of minu
 \end{figure}
 \FloatBarrier
 
-The use of enumerated constants in Java makes it possible to elegantly use static functions to construct objects (Factory Method Design Pattern) that after a given number (number of minutes) return the corresponding constant (Fig. \ref{fig:pic0081}).
+The use of enumerated constants in Java makes it possible to elegantly use static functions to construct objects (Factory Method Design Pattern) that, after a given number (number of minutes), return the corresponding constant (Fig. \ref{fig:pic0081}).
 
 \begin{figure}[h]
 \centering
@@ -762,7 +762,7 @@ To prevent the creation of constants outside the enumerated type, it is assumed 
 \end{figure}
 \FloatBarrier
 
-The Android operating system provides extremely useful means of storing information, one of which is the SQLite relational database management system.
+The Android operating system provides reasonable means of storing information, including the SQLite relational database management system.
 
 \begin{figure}[h]
 \centering
@@ -772,7 +772,7 @@ The Android operating system provides extremely useful means of storing informat
 \end{figure}
 \FloatBarrier
 
-Information about the time series can be stored locally in a table with a suitable structure that reflects the presence of four values for each interval, the time of the interval, the traded volume, the name of the currency pair and the size of the time interval (Fig. \ref{fig: pic0084}).
+Information about the time series can be stored locally in a table with a suitable structure that reflects the presence of four values for each interval, the time of the interval, the traded volume, the name of the currency pair, and the size of the time interval (Fig. \ref{fig:pic0084}).
 
 \begin{figure}[h]
 \centering
@@ -782,7 +782,7 @@ Information about the time series can be stored locally in a table with a suitab
 \end{figure}
 \FloatBarrier
 
-An additional table takes care of the storage of the information about the artificial neural networks, which includes the name of the currency pair, the time interval, the value of the neurons, the value of the connections between the neurons and the value of the weights between the neurons (Fig. \ref{fig:pic0085}).
+An additional table takes care of the storage of the information about the artificial neural networks, which includes the name of the currency pair, the time interval, the value of the neurons, the value of the connections between the neurons, and the value of the weights between the neurons (Fig. \ref{fig:pic0085}).
 
 \begin{figure}[h]
 \centering
@@ -810,7 +810,7 @@ Android manages databases in the form of a DB resource and an integer version fo
 \end{figure}
 \FloatBarrier
 
-The creation of the tables is controlled by parameterized symbolic constants (Fig. \ref{fig:pic0087}, \ref{fig:pic0088}).
+Parameterized symbolic constants control the creation of the tables (Fig. \ref{fig:pic0087}, \ref{fig:pic0088}).
 
 \begin{figure}[h]
 \centering
@@ -830,7 +830,7 @@ Deleting tables is also done with parameterized symbolic constants (Fig. \ref{fi
 \end{figure}
 \FloatBarrier
 
-The constructor of the helper class for the database has the sole task of calling the constructor of the parent class (Fig \ref{fig:pic0090}). The two predefined virtual functions are tasked with calling the requests to construct and update the database (Fig. \ref{fig:pic0090}).
+The constructor of the helper class for the database has the sole task of calling the parent class's constructor (Fig \ref{fig:pic0090}). The two predefined virtual functions call the requests to construct and update the database (Fig. \ref{fig:pic0090}).
 
 \begin{figure}[h]
 \centering
@@ -840,7 +840,7 @@ The constructor of the helper class for the database has the sole task of callin
 \end{figure}
 \FloatBarrier
 
-The second type of data listed is regarding the type of neurons. In general, neurons can be simple, input, output and bias (Fig. \ref{fig:pic0090}).
+The second type of data listed is regarding the type of neurons. In general, neurons can be simple, input, output, and bias (Fig. \ref{fig:pic0090}).
 
 \begin{figure}[h]
 \centering
@@ -850,7 +850,7 @@ The second type of data listed is regarding the type of neurons. In general, neu
 \end{figure}
 \FloatBarrier
 
-Since different connections between neurons are possible, neurons with more functions appear, such as: simple-input, simple-output, input-output, input-simple-output. All possible combinations are recorded in an integer variable, which can also serve as a bit field (Fig. \ref{fig:pic0092}).
+Since different connections between neurons are possible, neurons with more functions appear, such as: simple-input, simple-output, input-output, and input-simple-output. All possible combinations are recorded in an integer variable, which can also serve as a bit field (Fig. \ref{fig:pic0092}).
 
 \begin{figure}[h]
 \centering
@@ -860,14 +860,14 @@ Since different connections between neurons are possible, neurons with more func
 \end{figure}
 \FloatBarrier
 
-Since the information from the server arrives mainly in the form of numbers, it is rational to add a static function for constructing the object (Factory Method Design Pattern), which numerically determines the constant in the enumerated type (Fig. \ref{fig:pic0093 }).
+Since the information from the server arrives mainly in the form of numbers, it is rational to add a static function for constructing the object (Factory Method Design Pattern), which numerically determines the constant in the enumerated type (Fig. \ref{fig:pic0093}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[height=0.45\pdfpageheight]{pic0094}
-\caption{Methods to access internal constant values}
+\caption{Methods to access constant internal values}
 \label{fig:pic0094}
 \end{figure}
 \FloatBarrier
 
-For convenience, when working with constants and the information hidden in them, accessor methods are often used. In this case, a public getter but a setter with private access. It makes sense to make the setter private because it makes sense to preserve the property of enumerated constants to be constants (Fig \ref{fig:pic0094}).
+For convenience, accessor methods are often used when working with constants and the information hidden in them. In this case, a public getter but a setter with private access. It makes sense to make the setter private because it makes sense to preserve the property of enumerated constants to be constants (Fig \ref{fig:pic0094}).

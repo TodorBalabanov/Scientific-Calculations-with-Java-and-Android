@@ -2,7 +2,7 @@
 \chapter{Centralized Server}
 \label{chapter05}
 
-For distributed computing to be successful\index{distributed computing}, in addition to having multiple devices, it is essential to have a centralized location from which tasks can be issued and results collected. A client-server architecture would be extremely suitable for a technical solution for not particularly intensive communication that does not require a constant connection between the nodes. The application running on the server consists of two components - database and work logic. The choice of the database management system and the scripting language of the server is mainly justified by the pursued high financial efficiency. At the moment, it is most profitable to use the combination of MySQL and PHP, as in the VitoshaTrade\cite{vtrade} project (Fig. \ref{fig:pic0095}).
+For distributed computing to be successful\index{distributed computing}, in addition to having multiple devices, it is essential to have a centralized location from which tasks can be issued and results collected. A client-server architecture would be highly suitable for a technical solution for not particularly intensive communication that does not require a constant connection between the nodes. The application running on the server consists of two components - database and work logic. The choice of the database management system and the scripting language of the server is mainly justified by the pursued high financial efficiency. At the moment, it is most profitable to use the combination of MySQL and PHP, as in the VitoshaTrade\cite{vtrade} project (Fig. \ref{fig:pic0095}).
 
 \begin{figure}[h]
 \centering
@@ -14,7 +14,7 @@ For distributed computing to be successful\index{distributed computing}, in addi
 
 \section{Relational Database}
 
-For the needs of storing information on the server side, it is sufficient to develop a database in which the tables are normalized to at least third normal form (Fig. \ref{fig:pic0096}).
+For storing information on the server side, it is sufficient to develop a database in which the tables are normalized to at least a third normal form (Fig. \ref{fig:pic0096}).
 
 \begin{figure}[h]
 \centering
@@ -24,7 +24,7 @@ For the needs of storing information on the server side, it is sufficient to dev
 \end{figure}
 \FloatBarrier
 
-What each financial time series has is an interval at which level readings are made. This information is recorded in a table with three columns - service identifier, number of minutes for the interval and symbolic name of the interval (Fig. \ref{fig:pic0097}).
+Each financial time series has an interval at which level readings are done. This information is recorded in a table with three columns - service identifier, number of minutes for the interval, and the symbolic name of the interval (Fig. \ref{fig:pic0097}).
 
 \begin{figure}[h]
 \centering
@@ -34,7 +34,7 @@ What each financial time series has is an interval at which level readings are m
 \end{figure}
 \FloatBarrier
 
-The most important table in the database is the table for describing the currency pairs (Fig. \ref{fig:pic0098}). It contains the following fields - service identifier, name of the currency pair, foreign key to the time interval, offset required to normalize the information, scaling factor also required for the normalization of the information, description of the currency pair and time marker in which it is table entry made.
+The most important table in the database is the table for describing the currency pairs (Fig. \ref{fig:pic0098}). It contains the following fields - service identifier, name of the currency pair, foreign key to the time interval, offset required to normalize the information, scaling factor also required for the normalization of the information, description of the currency pair, and time marker in which it is table entry made.
 
 \begin{figure}[h]
 \centering
@@ -44,7 +44,7 @@ The most important table in the database is the table for describing the currenc
 \end{figure}
 \FloatBarrier
 
-The topology of each neural network is described only once in a table of network types (Fig. \ref{fig:pic0099}). This table contains the following fields - service identifier, foreign key to the currency pair to which the network refers, number of neurons, flags for the type of neurons, values for the connections between neurons (according to the adjacency matrix) and at what point in time the entry was made in the table.
+The topology of each neural network is described only once in a table of network types (Fig. \ref{fig:pic0099}). This table contains the following fields - service identifier, foreign key to the currency pair to which the network refers, number of neurons, flags for the type of neurons, values for the connections between neurons (according to the adjacency matrix), and at what point in time the entry was made in the table.
 
 \begin{figure}[h]
 \centering
@@ -64,7 +64,7 @@ Each network topology may correspond to multiple instances of the artificial neu
 \end{figure}
 \FloatBarrier
 
-For each instance of a neural network, it is important to know under what parameters its training takes place (Fig. \ref{fig:pic0101}). A separate table with the following columns is intended for this purpose - service identifier, foreign key to the instance, population size (when it comes to a training genetic algorithm), number of bars at the input and number of bars at the output.
+For each instance of a neural network, it is important to know under what parameters its training takes place (Fig. \ref{fig:pic0101}). A separate table with the following columns is intended for this purpose - service identifier, foreign key to the instance, population size (when it comes to a genetic training algorithm), number of bars at the input, and number of bars at the output.
 
 \begin{figure}[h]
 \centering
@@ -84,7 +84,7 @@ If you need a visual representation of the instance for an artificial neural net
 \end{figure}
 \FloatBarrier
 
-The last but extremely important table is the table for storing the training examples containing the financial time series information (Fig. \ref{fig:pic0103}). This table contains the following columns - service identifier, foreign key to the currency pair, number of measurements, sequence of timestamps, sequence of levels (open, low, high, close), traded volume and timestamp of the moment when the table entry is made.
+The last but critical table stores the training examples containing the financial time series information (Fig. \ref{fig:pic0103}). This table contains the following columns - service identifier, foreign key to the currency pair, number of measurements, sequence of timestamps, sequence of levels (open, low, high, close), traded volume, and timestamp of the moment when the table entry is made.
 
 \begin{figure}[h]
 \centering
@@ -96,7 +96,7 @@ The last but extremely important table is the table for storing the training exa
 
 \section{Algorithmic processing of raw data}
 
-In order to achieve good separation, according to the three-layer architecture of the system, it is essential that the raw data is minimally bound to the working logic. A common practice is to mix the work with the raw data and the program code from the work logic. Such mixing easily occurs if complex SQL queries are executed in work logic scripts. Such a way of constructing the server application makes the system difficult to maintain and even more difficult to reorganize if the database management system or the tools used in the business logic layer need to be changed. A good separation between the two layers occurs when the work logic, in the form of SQL queries, only calls stored functions and procedures (stored procedures) of the database management system. On the one hand, the syntax of requests in the intermediate layer becomes maximally simplified, on the other hand, a possible replacement of the database would lead to a single correction in the way stored functions and procedures are called. To satisfy the drive for maximum separation between layers, a group of stored functions and procedures have been added to the database structure.
+To achieve good separation, according to the three-layer architecture of the system, the raw data must be minimally bound to the working logic. A common practice is to mix the work with the raw data and the program code from the work logic. Such mixing easily occurs if complex SQL queries are executed in work logic scripts. Such a way of constructing the server application makes the system easier to maintain and even more challenging to reorganize if the database management system or the tools used in the business logic layer need to be changed. A good separation between the two layers occurs when the work logic, in the form of SQL queries, only calls the database management system's stored functions and procedures (stored procedures). On the one hand, the syntax of requests in the intermediate layer becomes maximally simplified. On the other hand, a possible replacement of the database would lead to a single correction in the way stored functions and procedures are called. A group of stored functions and procedures have been added to the database structure to satisfy the drive for maximum separation between layers.
 
 \begin{figure}[h]
 \centering
@@ -106,7 +106,7 @@ In order to achieve good separation, according to the three-layer architecture o
 \end{figure}
 \FloatBarrier
 
-When adding a new currency pair, the name of the currency pair and the time interval (in minutes), which interval should be compared to the intervals listed in the table of time intervals, are entered as input data. This necessitates the use of a stored procedure to handle the input information (Fig. \ref{fig:pic0104}).
+When adding a new currency pair, the name of the currency pair and the time interval (in minutes), which interval should be compared to the intervals listed in the table of time intervals, are entered as input data. This necessitates using a stored procedure to handle the input information (Fig. \ref{fig:pic0104}).
 
 \begin{figure}[h]
 \centering
@@ -116,7 +116,7 @@ When adding a new currency pair, the name of the currency pair and the time inte
 \end{figure}
 \FloatBarrier
 
-When saving an instance of an artificial neural network, the database receives information about the currency pair, the period of the time series, the number and types of neurons, adjacency matrices for the connections, and a live score of the instance (Fig. \ref{fig:pic0105}) . Before the instance is added to the instance table, it is checked whether the currency sucker is available and its identifier is determined. If the currency pair is not available, it is created. Next is a check for the existence of the network type. If it does not exist, it is created. The last instruction is to add the instance itself to the instance table. With the work strategy chosen in this way, the rules for observing referential integrity are observed as much as possible.
+When saving an instance of an artificial neural network, the database receives information about the currency pair, the period of the time series, the number and types of neurons, adjacency matrices for the connections, and a live score of the instance (Fig. \ref{fig:pic0105}). Before the instance is added to the instance table, it is checked whether the currency sucker is available and its identifier is determined. If the currency pair is not available, it is created. Next is a check for the existence of the network type. If it does not exist, it is created. The last instruction is to add the instance itself to the instance table. With the work strategy chosen this way, the rules for observing referential integrity are followed as much as possible.
 
 \begin{figure}[h]
 \centering
@@ -126,7 +126,7 @@ When saving an instance of an artificial neural network, the database receives i
 \end{figure}
 \FloatBarrier
 
-When recording training examples, a series of time series value parameters are fed to the database input (Fig. \ref{fig:pic0106}). In an analogous way, a check for the existence of the currency pair is carried out. This is followed by deletion of previous training examples if any are found. The final step is adding the received information.
+When recording training examples, a series of time series value parameters are fed to the database input (Fig. \ref{fig:pic0106}). Analogously, a check for the existence of the currency pair is carried out. This is followed by deleting previous training examples if any are found. The final step is adding the received information.
 
 \begin{figure}[h]
 \centering
@@ -146,7 +146,7 @@ A helper function determines the service identifier of the network type from the
 \end{figure}
 \FloatBarrier
 
-Similarly, a helper function serves to determine the service identifier for a currency pair, by means of a given symbol name and period (Fig. \ref{fig:pic0108}). If the currency pair is not found, a service zero is returned.
+Similarly, a helper function determines the service identifier for a currency pair through a given symbol name and period (Fig. \ref{fig:pic0108}). If the currency pair is not found, a service zero is returned.
 
 \begin{figure}[h]
 \centering
@@ -156,7 +156,7 @@ Similarly, a helper function serves to determine the service identifier for a cu
 \end{figure}
 \FloatBarrier
 
-According to a set description of the artificial neural network, the client mobile devices ask the server, at certain time intervals, what is the value of the most vital network. This query is essential because it decides whether the mobile device should report its results to the server. The processing is done in two steps - first all networks with identical topology are found and then the best liveness is determined (Fig. \ref{fig:pic0109}).
+According to a set description of the artificial neural network, the mobile client devices ask the server, at certain time intervals, what is the value of the most robust network. This query is essential because it decides whether the mobile device should report its results to the server. The processing is done in two steps - first, all networks with identical topology are found, and then the best liveness is determined (Fig. \ref{fig:pic0109}).
 
 \begin{figure}[h]
 \centering
@@ -170,7 +170,7 @@ A helper function also determines the number of neurons by a given ID of a netwo
 
 \section{Server Scripts}
 
-Direct access to the database (TCP connection) is often undesirable because it creates certain data security hazards. For this reason, it is accepted to use an intermediate layer to communicate with the database. For the purposes of this tutorial, these are a group of PHP scripts.
+Direct access to the database (TCP connection) is often undesirable because it creates specific data security hazards. For this reason, using an intermediate layer to communicate with the database is accepted. For this tutorial, these are a group of PHP scripts.
 
 \begin{figure}[h]
 \centering
@@ -180,7 +180,7 @@ Direct access to the database (TCP connection) is often undesirable because it c
 \end{figure}
 \FloatBarrier
 
-In a special file (db.php) set the following global variables for accessing the database - host on which the MySQL server is located, user in MySQL, password of the user, name of the database and connection (Fig. \ref{ fig:pic0111}).
+In a particular file (db.php), set the following global variables for accessing the database - host on which the MySQL server is located, the user in MySQL, password of the user, name of the database, and connection (Fig. \ref{fig:pic0111}).
 
 \begin{figure}[h]
 \centering
@@ -200,7 +200,7 @@ Two helper functions serve to open and close a connection to the database (Fig. 
 \end{figure}
 \FloatBarrier
 
-An additional helper function executes the queries to the database and returns the result of the execution in the form of a two-dimensional array (Fig. \ref{fig:pic0114}).
+An additional helper function executes the queries to the database and returns the execution result in a two-dimensional array (Fig. \ref{fig:pic0114}).
 
 \begin{figure}[h]
 \centering
@@ -210,7 +210,7 @@ An additional helper function executes the queries to the database and returns t
 \end{figure}
 \FloatBarrier
 
-At this stage in development, the client application sends its data in the form of a POST request, and the server responds with a JSON message. While saving additional work around composing JSON messages on the client side, this approach is not recommended and it is desirable that clients also send the information in JSON format so that the conventions of RESTful applications are respected.
+At this stage in development, the client application sends its data as a POST request, and the server responds with a JSON message. While saving additional work around composing JSON messages on the client side, this approach is not recommended, and it is desirable that clients also send the information in JSON format so that the conventions of RESTful applications are respected.
 
 \subsection{Load Grid by ID}
 
@@ -224,7 +224,7 @@ Each instance of an artificial neural network has a service identifier, which is
 \end{figure}
 \FloatBarrier
 
-Before actually loading the network, the database module is turned on and the input parameters are checked. In this case, the only parameter is an integer which is the identifier of the instance (Fig. \ref{fig:pic0115}).
+Before actually loading the network, the database module is turned on, and the input parameters are checked. In this case, the only parameter is an integer which is the identifier of the instance (Fig. \ref{fig:pic0115}).
 
 \begin{figure}[h]
 \centering
@@ -244,7 +244,7 @@ This is followed by opening a connection to the database, constructing a query (
 \end{figure}
 \FloatBarrier
 
-There are two possible exits from the execution of the query, depending on whether such an instance is present in the database or not. If the instance is found, it starts building a JSON message with a response to the client. The response contains a unit, per found instance, the name of the currency pair, the interval of the time series, the lifetime value of the instance, the number and types of neurons, a matrix of connections and a matrix of weights (Fig. \ref{fig:pic0117}-\ref{ fig:pic0120}).
+There are two possible exits from the execution of the query, depending on whether such an instance is present in the database. If the instance is found, it builds a JSON message with a response to the client. The response contains a unit per found instance, the name of the currency pair, the interval of the time series, the lifetime value of the instance, the number and types of neurons, a matrix of connections, and a matrix of weights (Fig. \ref{fig:pic0117}-\ref{fig:pic0120}).
 
 \begin{figure}[h]
 \centering
@@ -270,7 +270,7 @@ There are two possible exits from the execution of the query, depending on wheth
 \end{figure}
 \FloatBarrier
 
-In the situation when the instance is not found, a null flag is returned. In either case (discovered or not), the JSON message is completed, the database is closed, and the information is sent to the client (Fig. \ref{fig:pic0121}).
+When the instance is not found, a null flag is returned. In either case (discovered or not), the JSON message is completed, the database is closed, and the information is sent to the client (Fig. \ref{fig:pic0121}).
 
 \begin{figure}[h]
 \centering
@@ -282,7 +282,7 @@ In the situation when the instance is not found, a null flag is returned. In eit
 
 \subsection{Load a random grid}
 
-When computations are performed on the principle of donated computing power, it is logical that the selection of the network to be further trained should be random. For this purpose, the server-side script selects the network in a random manner.
+When computations are performed on the principle of donated computing power, it is logical that the network selection to be further trained should be random. For this purpose, the server-side script selects the network arbitrarily.
 
 \begin{figure}[h]
 \centering
@@ -292,11 +292,11 @@ When computations are performed on the principle of donated computing power, it 
 \end{figure}
 \FloatBarrier
 
-The only difference between loading a grid by identifiers and a random grid is in the SQL query that is executed by MySQL (Fig. \ref{fig:pic0157}).
+The only difference between loading a grid by identifiers and a random grid is in the SQL query executed by MySQL (Fig. \ref{fig:pic0157}).
 
 \subsection{Loading the best vitality from the global population}
 
-One of the main criteria by which client applications decide whether to report the results they find is the best liveness value in the global population (the population that is stored on the server). The script responsible for this check also includes the database module and performs a series of checks on the input parameters.
+One of the main criteria by which client applications decide whether to report the results they find is the best liveness value in the global population (the population stored on the server). The script responsible for this check also includes the database module and performs a series of checks on the input parameters.
 
 \begin{figure}[h]
 \centering
@@ -306,7 +306,7 @@ One of the main criteria by which client applications decide whether to report t
 \end{figure}
 \FloatBarrier
 
-The name of the currency pair, the period of the time series, the number and types of neurons, as well as the connections between them are checked (Fig. \ref{fig:pic0122}).
+The name of the currency pair, the time series period, the number and types of neurons, and the connections between them are checked (Fig. \ref{fig:pic0122}).
 
 \begin{figure}[h]
 \centering
@@ -316,7 +316,7 @@ The name of the currency pair, the period of the time series, the number and typ
 \end{figure}
 \FloatBarrier
 
-Since the neuron types are represented as an array, and the connections between the neurons themselves in an adjacency matrix, checking them requires a bit more complex processing in loops (Fig. \ref{fig:pic0123}).
+Since the neuron types are represented as an array, and the connections between the neurons themselves are in an adjacency matrix, checking them requires a bit more complex processing in loops (Fig. \ref{fig:pic0123}).
 
 \begin{figure}[h]
 \centering
@@ -326,7 +326,7 @@ Since the neuron types are represented as an array, and the connections between 
 \end{figure}
 \FloatBarrier
 
-This is followed by opening the database connection, executing the best liveness detection stored function, closing the database, and sending a JSON packed response to the client (Fig. \ref{fig:pic0124}).
+This is followed by opening the database connection, executing the best liveness detection stored function, closing the database, and sending a JSON-packed response to the client (Fig. \ref{fig:pic0124}).
 
 \subsection{Loading number of neurons by ID}
 
@@ -364,7 +364,7 @@ For the training of each artificial neural network, a training set is used, whic
 \end{figure}
 \FloatBarrier
 
-Booting begins in the classic way by turning on the database module, checking input information, and opening a connection to the database (Fig. \ref{fig:pic0127}).
+Booting begins traditionally by turning on the database module, checking input information, and opening a connection to the database (Fig. \ref{fig:pic0127}).
 
 \begin{figure}[h]
 \centering
@@ -374,12 +374,12 @@ Booting begins in the classic way by turning on the database module, checking in
 \end{figure}
 \FloatBarrier
 
-Next comes a query, retrieving the result, and closing the database connection (Fig. \ref{fig:pic0128}). Although not done, good layer separation style suggests calling a stored function instead of a query.
+Next comes a query, retrieving the result and closing the database connection (Fig. \ref{fig:pic0128}). Although not done, a good layer separation style suggests calling a stored function instead of a query.
 
 \begin{figure}[h]
 \centering
 \includegraphics[height=0.45\pdfpageheight]{pic0129}
-\caption{Number of examples, timestamps and opening levels}
+\caption{Number of examples, timestamps, and opening levels}
 \label{fig:pic0129}
 \end{figure}
 \FloatBarrier
@@ -410,7 +410,7 @@ If a training set is found for the specified currency pair and time interval, th
 \end{figure}
 \FloatBarrier
 
-If no training set is found, a message of zero size is sent for the data. Regardless of whether a set is found or not, the JSON message is sent to the client (Fig \ref{fig:pic0132}).
+If no training set is found, a message of zero sizes is sent for the data. Regardless of whether a set is found, the JSON message is sent to the client (Fig \ref{fig:pic0132}).
 
 \subsection{Load number of instances by identifier or currency pair information}
 
@@ -478,7 +478,7 @@ The script ends by closing the database connection, formatting, and sending the 
 
 \subsection{Loading number of training examples by currency pair information}
 
-Determining the number of training examples is approached in a similar way by turning on the database module, checking the input arguments, and opening a connection to the database (Fig. \ref{fig:pic0139}).
+Determining the number of training examples is approached similarly by turning on the database module, checking the input arguments, and opening a connection to the database (Fig. \ref{fig:pic0139}).
 
 \begin{figure}[h]
 \centering
@@ -498,7 +498,7 @@ Running the query may or may not find a suitable training set (Fig. \ref{fig:pic
 \end{figure}
 \FloatBarrier
 
-The script ends by closing the database connection, packaging and sending the response to the client (Fig. \ref{fig:pic0141}).
+The script ends by closing the database connection, packaging, and sending the response to the client (Fig. \ref{fig:pic0141}).
 
 \begin{figure}[h]
 \centering
@@ -510,12 +510,12 @@ The script ends by closing the database connection, packaging and sending the re
 
 \subsection{Storing an Artificial Neural Network Instance}
 
-Storing an instance of the artificial neural network does not return a result for the execution of the operation, and therefore JSON is not used. After the database module is included, a more complex check of the input arguments is required, as they are more numerous and more complex (Fig. \ref{fig:pic0142}-\ref{fig:pic0146}) .
+Storing an instance of the artificial neural network does not return a result for the execution of the operation, and therefore JSON is not used. After the database module is included, a more complex check of the input arguments is required, as they are more numerous and more complex (Fig. \ref{fig:pic0142}-\ref{fig:pic0146}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[height=0.45\pdfpageheight]{pic0142}
-\caption{Validation of input arguments for currency pair, period, liveness and number of neurons}
+\caption{Validation of input arguments for currency pair, period, liveness, and number of neurons}
 \label{fig:pic0142}
 \end{figure}
 \FloatBarrier
@@ -523,7 +523,7 @@ Storing an instance of the artificial neural network does not return a result fo
 \begin{figure}[h]
 \centering
 \includegraphics[height=0.45\pdfpageheight]{pic0143}
-\caption{Checking input arguments for neuron flags, connections and weights between neurons}
+\caption{Checking input arguments for neuron flags, connections, and weights between neurons}
 \label{fig:pic0143}
 \end{figure}
 \FloatBarrier
@@ -552,7 +552,7 @@ Storing an instance of the artificial neural network does not return a result fo
 \end{figure}
 \FloatBarrier
 
-With this script, the checks are significantly more complicated, because in addition to the availability of the arguments, the numeric values that arrive from the client application are monitored.
+With this script, the checks are significantly more complicated because, in addition to the availability of the arguments, the numeric values that arrive from the client application are monitored.
 
 \begin{figure}[h]
 \centering
@@ -566,7 +566,7 @@ The essence of the script is to open a connection to the database, execute a sto
 
 \subsection{Saving an artificial neural network instance after retraining}
 
-When a particular artificial neural network has undergone an additional training cycle and is sent to the remote server, it is reasonable to store the information only if it leads to an improvement in liveness.
+When a particular artificial neural network has undergone an additional training cycle and is sent to the remote server, it is reasonable to store the information only if it improves liveness.
 
 \begin{figure}[h]
 \centering
@@ -576,7 +576,7 @@ When a particular artificial neural network has undergone an additional training
 \end{figure}
 \FloatBarrier
 
-The difference between the general artificial neural network storage procedure and the storage after additional training is in the verification of the best lifetime value achieved (Fig. \ref{fig:pic0158}).
+The difference between the general artificial neural network storage procedure and the storage after additional training is in verifying the best lifetime value achieved (Fig. \ref{fig:pic0158}).
 
 \subsection{Storing training set}
 
@@ -585,7 +585,7 @@ Similarly, storing training examples does not return a JSON message, and the inp
 \begin{figure}[h]
 \centering
 \includegraphics[height=0.45\pdfpageheight]{pic0148}
-\caption{Checking arguments for currency pair, period, number of examples and timestamps}
+\caption{Checking arguments for currency pair, period, number of examples, and timestamps}
 \label{fig:pic0148}
 \end{figure}
 \FloatBarrier
@@ -593,7 +593,7 @@ Similarly, storing training examples does not return a JSON message, and the inp
 \begin{figure}[h]
 \centering
 \includegraphics[height=0.45\pdfpageheight]{pic0149}
-\caption{Checking arguments for open, low, high, close and traded volume}
+\caption{Checking arguments for open, low, high, close, and traded volume}
 \label{fig:pic0149}
 \end{figure}
 \FloatBarrier
@@ -624,7 +624,7 @@ Each of the arrays passes an additional check for the values it contains (Fig. \
 \end{figure}
 \FloatBarrier
 
-The script itself opens a connection to the database, executes a stored procedure, and closes the connection to the database (Fig. \ref{fig:pic0153}).
+The script opens a connection to the database, executes a stored procedure, and closes the connection to the database (Fig. \ref{fig:pic0153}).
 
 \begin{figure}[h]
 \centering
