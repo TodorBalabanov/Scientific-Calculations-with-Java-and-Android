@@ -2,7 +2,7 @@
 \chapter{Android Live Wallpaper}
 \label{chapter04}
 
-Android Live Wallpaper technology provides animated visual representation capabilities in virtual wallpaper. This type of application does not differ drastically from other Android applications and can perform almost all of its capabilities. Since the virtual wallpaper is always active, it is an ideal candidate for implementing background computing\index{distributed computing}. The following components are required to create an active wallpaper: 1. An XML file that describes the components of the wallpaper; 2. Background module (Android Service); 3. Appropriate flags to access device resources.
+Android Live Wallpaper technology provides animated visual representation capabilities in virtual wallpaper. This type of application does not differ drastically from other Android applications and can perform almost all of their capabilities. Since the virtual wallpaper is always active, it is an ideal candidate for implementing background computing\index{distributed computing}. The following components are required to create an active wallpaper: 1. An XML file that describes the components of the wallpaper; 2. Background module (Android Service); 3. Appropriate permissions to access device resources.
 
 \section{Mobile App Manifest File}
 
@@ -26,7 +26,7 @@ To define the application as an active wallpaper application, mark it explicitly
 \end{figure}
 \FloatBarrier
 
-When Android uses very long calculations that are not convenient to perform, it is common for a thread to export them to non-GUI modules called "services". The work of the active wallpaper is carried out in just such a module, and for this reason, one has been added to the project (Fig. \ref{fig:pic0012}).
+When an Android application uses very long calculations that are not convenient to perform on the main GUI thread, it is common for a thread to export them to non-GUI modules called "services". The work of the active wallpaper is carried out in just such a module, and for this reason, one has been added to the project (Fig. \ref{fig:pic0012}).
 
 \begin{figure}[h]
 \centering
@@ -100,7 +100,7 @@ As a visual representation, the simplest possible option has been chosen. Severa
 \end{figure}
 \FloatBarrier
 
-The live wallpaper settings provide position and size controls for the three visual areas. They also added initial settings for loading the device and whether to enable active wallpaper (Fig \ref{fig:pic0020}).
+The live wallpaper settings provide position and size controls for the three visual areas. They also added initial settings for device load level and whether to enable active wallpaper (Fig \ref{fig:pic0020}).
 
 \begin{figure}[h]
 \centering
@@ -152,7 +152,7 @@ A list of predefined values is used to load the device when performing the backg
 \end{figure}
 \FloatBarrier
 
-When designing the Android system, one of the main goals was to separate the graphical interface from the data as much as possible. This is precisely why the load values are exported in a separate resource (Fig. \ref{fig:pic0023}).
+When designing the Android system, one of the main goals was to separate the graphical interface from the data as much as possible. This is precisely why the load level values are exported in a separate resource (Fig. \ref{fig:pic0023}).
 
 \begin{figure}[h]
 \centering
@@ -172,7 +172,7 @@ The positioning of the visual representation areas is also adjusted by selecting
 \end{figure}
 \FloatBarrier
 
-Analogously to the load values, the list of possible positions of the visual representation areas is exported in a separate resource file (Fig. \ref{fig:pic0025}).
+Analogously to the load level values, the list of possible positions of the visual representation areas is exported in a separate resource file (Fig. \ref{fig:pic0025}).
 
 \begin{figure}[h]
 \centering
@@ -220,7 +220,7 @@ The pause event only decides whether the active wallpaper should be started or s
 
 \section{Background Calculation}
 
-Long-term calculations that do not require a graphical user interface are carried out in modules called "services". When it comes to active wallpaper, it is necessary to write its class that inherits from the WallpaperService class (Fig. \ref{fig:pic0030}).
+Long-running calculations that do not require a graphical user interface are carried out in modules called "services". When it comes to active wallpaper, it is necessary to write its class that inherits from the WallpaperService class (Fig. \ref{fig:pic0030}).
 
 \begin{figure}[h]
 \centering
@@ -302,7 +302,7 @@ Counting sorting efficiently determines the number of neurons and their types (F
 \end{figure}
 \FloatBarrier
 
-To illustrate the predictive capabilities of artificial neural networks, one of the most used structures is chosen, namely a three-layer neural network that is trained with error backpropagation (Fig. \ref{fig:pic0037}). The input layer has the sole task of receiving the signals from the external environment, so no activation function is set. The function $\tanh( x )$ (hyperbolic tangent) is chosen for the hidden and output layers since it is asymptotically convergent at infinity along the abscissa and, simultaneously, is symmetric along this same axis. Training is slightly faster with a hyperbolic tangent because the signal values in the hidden layers are more easily "skewed" in a positive or negative direction. In comparison, with the sigmoid function, the signals are only positive; if negative values are needed, this compensation must be obtained only through negative link weights. The input and hidden layers have a bias neuron that is not required in the output layer because the bias neuron constantly emits the high-level signal.
+To illustrate the predictive capabilities of artificial neural networks, one of the most used topologies is chosen, namely a three-layer neural network that is trained with error backpropagation (Fig. \ref{fig:pic0037}). The input layer has the sole task of receiving the signals from the external environment, so no activation function is set. The function $\tanh( x )$ (hyperbolic tangent) is chosen for the hidden and output layers since it is asymptotically convergent at infinity along the abscissa and, simultaneously, is symmetric along this same axis. Training is slightly faster with a hyperbolic tangent because the signal values in the hidden layers are more easily "skewed" in a positive or negative direction. In comparison, with the sigmoid function, the signals are only positive; if negative values are needed, this compensation must be obtained only through negative link weights. The input and hidden layers have a bias neuron that is not required in the output layer because the bias neuron constantly emits the high-level signal.
 
 \begin{figure}[h]
 \centering
@@ -332,7 +332,7 @@ In practice, the closing value series is most often used, and the purpose is to 
 \end{figure}
 \FloatBarrier
 
-Since the goal is to feed different financial time series to the forecasting system, the input information in the system inevitably needs to be pre-normalized, and the first step to this is to determine the most significant and most minor values in the time series ( Fig. \ref{fig:pic0039}). At the same time, the data must be matched to the range in which the activation functions of the artificial neural network work. This tutorial assumes that signals in the scope of the function used in the output layer will be applied to the input (Fig. \ref{fig:pic0040}). This decision is argued by the fact that the information fed by the neural network to the external environment will undergo a reverse resizing process to make sense of the particular financial time series.
+Since the goal is to feed different financial time series to the forecasting system, the input information in the system inevitably needs to be pre-normalized, and the first step to this is to determine the most significant and most minor values in the time series ( Fig. \ref{fig:pic0039}). At the same time, the data must be matched to the range in which the activation functions of the artificial neural network work. This tutorial assumes that signals in the scope of the function used in the output layer will be applied to the input (Fig. \ref{fig:pic0040}). This decision is explained by the fact that the information fed by the neural network to the external environment will undergo a reverse resizing process to make sense of the particular financial time series.
 
 \begin{figure}[h]
 \centering
@@ -386,7 +386,7 @@ The engine object creation event is redefined to return an object from our engin
 
 \section{Service Engine}
 
-The actual background computation work in the service is done by an object described with a private inner class of type "Engine".
+The actual background computation work in the service is done by an object described by a private inner class of type "Engine".
 
 \begin{figure}[h]
 \centering
@@ -406,7 +406,7 @@ Three internal variables are used in this engine (Fig \ref{fig:pic0046}). The ob
 \end{figure}
 \FloatBarrier
 
-For the actual operation of the engine, a separate thread (trainer) is defined to perform the operations of generating a prediction, drawing the active wallpaper, and completing one cycle of the training process of the artificial neural network\index{artificial neural networks} (Fig. \ref {fig:pic0047}). Effective thread management in Android is done using Handler objects. The holder object takes responsibility for starting the thread, stopping the thread, and implementing the timeout interval before the next wakeup of the thread occurs.
+For the actual operation of the engine, a separate thread (trainer) is defined to perform the operations of generating a prediction, drawing the active wallpaper, and completing one cycle of the training process of the artificial neural network\index{artificial neural networks} (Fig. \ref {fig:pic0047}). Effective thread management in Android is done using Handler objects. The Handler object takes responsibility for starting the thread, stopping the thread, and implementing the timeout interval before the next wakeup of the thread occurs.
 
 \begin{figure}[h]
 \centering
@@ -426,7 +426,7 @@ To calculate a prediction, according to the current level of training of the art
 \end{figure}
 \FloatBarrier
 
-To perform one training cycle of the artificial neural network\index{artificial neural networks}, it is enough to create a training object (in the case of elastic backpropagation of the error\index{backpropagation of the error}) to which the network is fed and the training examples (Fig. \ref{fig:pic0049}).
+To perform one training cycle of the artificial neural network\index{artificial neural networks}, it is enough to create a training object (in the case of elastic backpropagation of the error\index{backpropagation of the error}) to which the network and training examples are fed (Fig. \ref{fig:pic0049}).
 
 \begin{figure}[h]
 \centering
@@ -496,7 +496,7 @@ The visual representation of the prediction requires slightly more complex calcu
 \end{figure}
 \FloatBarrier
 
-To visualize the data, it is essential to define the minimum and maximum values for the input-output as well as the number of values to be visualized (Fig. \ref{fig:pic0056}). In this case, the number of values for visual representation coincides with the sum of the number of input impacts and the number of output signals.
+To visualize the data, it is essential to define the minimum and maximum values for the input-output as well as the number of values to be visualized (Fig. \ref{fig:pic0056}). In this case, the number of values for visual representation coincides with the sum of the number of input and the number of output signals.
 
 \begin{figure}[h]
 \centering
@@ -688,7 +688,7 @@ When a change occurs in the drawing area of the active wallpaper, a series of re
 \end{figure}
 \FloatBarrier
 
-The user can choose which part of the active wallpaper the visual presentation areas should be positioned. The horizontal options are left, center, and right, and the vertical options are top, center, and bottom.
+The user can choose the part of the active wallpaper where the visual presentation areas should be positioned. The horizontal options are left, center, and right, and the vertical options are top, center, and bottom.
 
 \begin{figure}[h]
 \centering
@@ -840,7 +840,7 @@ The constructor of the helper class for the database has the sole task of callin
 \end{figure}
 \FloatBarrier
 
-The second type of data listed is regarding the type of neurons. In general, neurons can be simple, input, output, and bias (Fig. \ref{fig:pic0090}).
+The second type of data listed is regarding the type of neurons. In general, neurons can be regular, input, output, and bias (Fig. \ref{fig:pic0090}).
 
 \begin{figure}[h]
 \centering
@@ -850,7 +850,7 @@ The second type of data listed is regarding the type of neurons. In general, neu
 \end{figure}
 \FloatBarrier
 
-Since different connections between neurons are possible, neurons with more functions appear, such as: simple-input, simple-output, input-output, and input-simple-output. All possible combinations are recorded in an integer variable, which can also serve as a bit field (Fig. \ref{fig:pic0092}).
+Since different connections between neurons are possible, neurons with more functions appear, such as: regular-input, regular-output, input-output, and input-regular-output. All possible combinations are recorded in an integer variable, which can also serve as a bit field (Fig. \ref{fig:pic0092}).
 
 \begin{figure}[h]
 \centering
@@ -870,4 +870,4 @@ Since the information from the server arrives mainly in the form of numbers, it 
 \end{figure}
 \FloatBarrier
 
-For convenience, accessor methods are often used when working with constants and the information hidden in them. In this case, a public getter but a setter with private access. It makes sense to make the setter private because it makes sense to preserve the property of enumerated constants to be constants (Fig \ref{fig:pic0094}).
+For convenience, accessor methods are often used when working with constants and the information hidden in them. In this case, a public getter but a setter with private access. It makes sense to make the setter private to preserve the property of enumerated constants to stay constants (Fig \ref{fig:pic0094}).
