@@ -2,7 +2,7 @@
 \chapter{Centralized Server}
 \label{chapter05}
 
-For distributed computing to be successful\index{distributed computing}, in addition to having multiple devices, it is essential to have a centralized location from which tasks can be issued and results collected. A client-server architecture would be highly suitable for a technical solution for not particularly intensive communication that does not require a constant connection between the nodes. The application running on the server consists of two components - database and work logic. The choice of the database management system and the scripting language of the server is mainly justified by the pursued high financial efficiency. At the moment, it is most profitable to use the combination of MySQL and PHP, as in the VitoshaTrade\cite{vtrade} project (Fig. \ref{fig:pic0095}).
+For distributed computing to be successful\index{distributed computing}, in addition to having multiple devices, it is essential to have a centralized location from which tasks can be issued and results collected. A client-server architecture would be highly suitable for a technical solution for not particularly intensive communication that does not require a constant connection between the nodes. The application running on the server consists of two components - database and work logic. The choice of the database management system and the scripting language of the server is mainly justified by the pursued high financial efficiency. At the moment, it is most economical to use the combination of MySQL and PHP, as in the VitoshaTrade\cite{vtrade} project (Fig. \ref{fig:pic0095}).
 
 \begin{figure}[h]
 \centering
@@ -34,7 +34,7 @@ Each financial time series has an interval at which level readings are done. Thi
 \end{figure}
 \FloatBarrier
 
-The most important table in the database is the table for describing the currency pairs (Fig. \ref{fig:pic0098}). It contains the following fields - service identifier, name of the currency pair, foreign key to the time interval, offset required to normalize the information, scaling factor also required for the normalization of the information, description of the currency pair, and time marker in which it is table entry made.
+The most important table in the database is the table for describing the currency pairs (Fig. \ref{fig:pic0098}). It contains the following fields - service identifier, name of the currency pair, foreign key to the time interval, offset required to normalize the information, scaling factor also required for the normalization of the information, description of the currency pair, and time marker at which the table entry was made.
 
 \begin{figure}[h]
 \centering
@@ -44,7 +44,7 @@ The most important table in the database is the table for describing the currenc
 \end{figure}
 \FloatBarrier
 
-The topology of each neural network is described only once in a table of network types (Fig. \ref{fig:pic0099}). This table contains the following fields - service identifier, foreign key to the currency pair to which the network refers, number of neurons, flags for the type of neurons, values for the connections between neurons (according to the adjacency matrix), and at what point in time the entry was made in the table.
+The topology of each neural network is described only once in a table of network types (Fig. \ref{fig:pic0099}). This table contains the following fields - service identifier, foreign key to the currency pair to which the network refers, number of neurons, flags for the type of neurons, values for the connections between neurons (according to the adjacency matrix), and at what point in time the entry in the table was made.
 
 \begin{figure}[h]
 \centering
@@ -54,7 +54,7 @@ The topology of each neural network is described only once in a table of network
 \end{figure}
 \FloatBarrier
 
-Each network topology may correspond to multiple instances of the artificial neural network type (Fig. \ref{fig:pic0100}). The information in the instance table is organized into the following columns - service identifier, foreign key to the network type to which the instance refers, lifetime value of the instance, weights of connections between neurons (by adjacency graph), and point in time when it was made the entry in the table.
+Each network topology may correspond to multiple instances of the artificial neural network type (Fig. \ref{fig:pic0100}). The information in the instance table is organized into the following columns - service identifier, foreign key to the network type to which the instance refers, fitness value of the instance, weights of connections between neurons (by adjacency graph), and point in time when the entry in the table was made.
 
 \begin{figure}[h]
 \centering
@@ -96,7 +96,7 @@ The last but critical table stores the training examples containing the financia
 
 \section{Algorithmic processing of raw data}
 
-To achieve good separation, according to the three-layer architecture of the system, the raw data must be minimally bound to the working logic. A common practice is to mix the work with the raw data and the program code from the work logic. Such mixing easily occurs if complex SQL queries are executed in work logic scripts. Such a way of constructing the server application makes the system easier to maintain and even more challenging to reorganize if the database management system or the tools used in the business logic layer need to be changed. A good separation between the two layers occurs when the work logic, in the form of SQL queries, only calls the database management system's stored functions and procedures (stored procedures). On the one hand, the syntax of requests in the intermediate layer becomes maximally simplified. On the other hand, a possible replacement of the database would lead to a single correction in the way stored functions and procedures are called. A group of stored functions and procedures have been added to the database structure to satisfy the drive for maximum separation between layers.
+To achieve good separation, according to the three-layer architecture of the system, the raw data must be minimally bound to the working logic. A common practice is to mix the work with the raw data and the program code from the work logic. Such mixing easily occurs if complex SQL queries are executed in work logic scripts. Such a way of constructing the server application makes the system hard to maintain and even more challenging to reorganize if the database management system or the tools used in the business logic layer need to be changed. A good separation between the two layers occurs when the work logic, in the form of SQL queries, only calls the database management system's stored functions and procedures (stored procedures). On the one hand, the syntax of requests in the intermediate layer becomes maximally simplified. On the other hand, a possible replacement of the database would only require changes in the way stored functions and procedures are called. A group of stored functions and procedures have been added to the database structure to satisfy the drive for maximum separation between layers.
 
 \begin{figure}[h]
 \centering
@@ -106,7 +106,7 @@ To achieve good separation, according to the three-layer architecture of the sys
 \end{figure}
 \FloatBarrier
 
-When adding a new currency pair, the name of the currency pair and the time interval (in minutes), which interval should be compared to the intervals listed in the table of time intervals, are entered as input data. This necessitates using a stored procedure to handle the input information (Fig. \ref{fig:pic0104}).
+When adding a new currency pair, the name of the currency pair and the time interval (in minutes), which should be compared to the intervals listed in the table of time intervals, are entered as input data. This necessitates using a stored procedure to handle the input information (Fig. \ref{fig:pic0104}).
 
 \begin{figure}[h]
 \centering
@@ -116,7 +116,7 @@ When adding a new currency pair, the name of the currency pair and the time inte
 \end{figure}
 \FloatBarrier
 
-When saving an instance of an artificial neural network, the database receives information about the currency pair, the period of the time series, the number and types of neurons, adjacency matrices for the connections, and a live score of the instance (Fig. \ref{fig:pic0105}). Before the instance is added to the instance table, it is checked whether the currency sucker is available and its identifier is determined. If the currency pair is not available, it is created. Next is a check for the existence of the network type. If it does not exist, it is created. The last instruction is to add the instance itself to the instance table. With the work strategy chosen this way, the rules for observing referential integrity are followed as much as possible.
+When saving an instance of an artificial neural network, the database receives information about the currency pair, the period of the time series, the number and types of neurons, adjacency matrices for the connections, and a fitness score of the instance (Fig. \ref{fig:pic0105}). Before the instance is added to the instance table, it is checked whether the currency ticker symbol is available and its identifier is determined. If the currency pair is not available, it is created. Next is a check for the existence of the network type. If it does not exist, it is created. The last instruction is to add the instance itself to the instance table. With the work strategy chosen this way, the rules for observing referential integrity are followed as much as possible.
 
 \begin{figure}[h]
 \centering
@@ -156,7 +156,7 @@ Similarly, a helper function determines the service identifier for a currency pa
 \end{figure}
 \FloatBarrier
 
-According to a set description of the artificial neural network, the mobile client devices ask the server, at certain time intervals, what is the value of the most robust network. This query is essential because it decides whether the mobile device should report its results to the server. The processing is done in two steps - first, all networks with identical topology are found, and then the best liveness is determined (Fig. \ref{fig:pic0109}).
+According to a set description of the artificial neural network, the mobile client devices ask the server, at certain time intervals, what is the value of the most robust network. This query is essential because it decides whether the mobile device should report its results to the server. The processing is done in two steps - first, all networks with identical topology are found, and then the best fitness is determined (Fig. \ref{fig:pic0109}).
 
 \begin{figure}[h]
 \centering
@@ -180,7 +180,7 @@ Direct access to the database (TCP connection) is often undesirable because it c
 \end{figure}
 \FloatBarrier
 
-In a particular file (db.php), set the following global variables for accessing the database - host on which the MySQL server is located, the user in MySQL, password of the user, name of the database, and connection (Fig. \ref{fig:pic0111}).
+In a particular file (db.php), are set the following global variables for accessing the database - host on which the MySQL server is located, the user in MySQL, password of the user, name of the database, and connection (Fig. \ref{fig:pic0111}).
 
 \begin{figure}[h]
 \centering
@@ -292,11 +292,11 @@ When computations are performed on the principle of donated computing power, it 
 \end{figure}
 \FloatBarrier
 
-The only difference between loading a grid by identifiers and a random grid is in the SQL query executed by MySQL (Fig. \ref{fig:pic0157}).
+The only difference between loading a network by identifiers and a random network is in the SQL query executed by MySQL (Fig. \ref{fig:pic0157}).
 
 \subsection{Loading the best vitality from the global population}
 
-One of the main criteria by which client applications decide whether to report the results they find is the best liveness value in the global population (the population stored on the server). The script responsible for this check also includes the database module and performs a series of checks on the input parameters.
+One of the main criteria by which client applications decide whether to report the results they find is the best fitness value in the global population (the population stored on the server). The script responsible for this check also includes the database module and performs a series of checks on the input parameters.
 
 \begin{figure}[h]
 \centering
@@ -326,7 +326,7 @@ Since the neuron types are represented as an array, and the connections between 
 \end{figure}
 \FloatBarrier
 
-This is followed by opening the database connection, executing the best liveness detection stored function, closing the database, and sending a JSON-packed response to the client (Fig. \ref{fig:pic0124}).
+This is followed by opening the database connection, executing the best fitness detection stored function, closing the database, and sending a JSON-packed response to the client (Fig. \ref{fig:pic0124}).
 
 \subsection{Loading number of neurons by ID}
 
@@ -354,7 +354,7 @@ The result of the stored function is packed into a JSON message and sent to the 
 
 \subsection{Loading Training Set by Currency Pair Information}
 
-For the training of each artificial neural network, a training set is used, which is different according to the name of the currency pair and the time interval of the order.
+For the training of each artificial neural network, a training set is used, which is different according to the name of the currency pair and the time interval of the series.
 
 \begin{figure}[h]
 \centering
@@ -562,11 +562,11 @@ With this script, the checks are significantly more complicated because, in addi
 \end{figure}
 \FloatBarrier
 
-The essence of the script is to open a connection to the database, execute a stored procedure, and close the connection to the database (Fig. \ref{fig:pic0147}).
+The goal of the script is to open a connection to the database, execute a stored procedure, and close the connection to the database (Fig. \ref{fig:pic0147}).
 
 \subsection{Saving an artificial neural network instance after retraining}
 
-When a particular artificial neural network has undergone an additional training cycle and is sent to the remote server, it is reasonable to store the information only if it improves liveness.
+When a particular artificial neural network has undergone an additional training cycle and is sent to the remote server, it is reasonable to store the information only if it improves fitness.
 
 \begin{figure}[h]
 \centering
