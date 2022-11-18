@@ -6,7 +6,7 @@ Training in classical multilayer artificial neural networks is related to optimi
 
 \section{Backpropagation of the error}
 
-In reverse error propagation, in operational mode, signals travel from the input of the network to its output. The training examples are applied randomly so that the network does not learn the feed pattern but develops its generalization abilities. The total error is calculated at the network's output and then fed back, from output to input, to estimate the error each neuron contributes. After determining the individual error for each neuron, a numerical correction (according to the gradient) is performed on the weights that connect the neurons. This back-calculation gives the method its name and places it in the group of exact numerical methods that rely on the gradient to correct the weights. Essential to error backpropagation learning is that the neuron's activation function must be differentiable. The Encog library provides a group of methods for optimizing network weights.
+In error back propagation, in operational mode, signals travel from the input of the network to its output. The training examples are applied randomly so that the network does not learn the feed pattern but develops its generalization abilities. The total error is calculated at the network's output and then fed back, from output to input, to estimate the error each neuron contributes. After determining the individual error for each neuron, a numerical correction (according to the gradient) is performed on the weights that connect the neurons. This back-calculation gives the method its name and places it in the group of exact numerical methods that rely on the gradient to correct the weights. Essential to error backpropagation learning is that the neuron's activation function must be differentiable. The Encog library provides a group of methods for optimizing network weights.
 
 \begin{figure}[h]
 \centering
@@ -80,7 +80,7 @@ With the addition of a genetic algorithm, a hybrid system for training artificia
 \end{figure}
 \FloatBarrier
 
-The genetic algorithm is tuned with a set of parameters (population size, percentage of elite in the population, crossover rate, mutation rate, number for the selection tournament, and the maximum number of seconds to perform optimization), which in this case are statically set. However, it is reasonably be controlled by a configuration file or a settings screen (Fig. \ref{fig:pic0179}).
+The genetic algorithm is tuned with a set of parameters (population size, percentage of elite in the population, crossover rate, mutation rate, number for the selection tournament, and the maximum number of seconds to perform optimization), which in this case are statically set. However, it is reasonable to be controlled by a configuration file or a settings screen (Fig. \ref{fig:pic0179}).
 
 \begin{figure}[h]
 \centering
@@ -122,7 +122,7 @@ An implementation of the genetic algorithm follows (Fig. \ref{fig:pic0182}). A u
 
 \subsection{Chromosome Coding}
 
-Since the network weights are a set of real numbers, they can ideally be represented in a chromosome containing a list of values (Fig. \ref{fig:pic0184}). Since the liveness estimation requires the weights to be loaded into the network and the straight-pass backpropagation training run over the network, the chromosome contains references to the network object and the training object.
+Since the network weights are a set of real numbers, they can ideally be represented in a chromosome containing a list of values (Fig. \ref{fig:pic0184}). Since the fitness estimation requires the weights to be loaded into the network and the straight-pass backpropagation training run over the network, the chromosome contains references to the network object and the training object.
 
 \begin{figure}[h]
 \centering
@@ -158,7 +158,7 @@ For flexibility in creating the chromosome objects, the three inherited construc
 \end{figure}
 \FloatBarrier
 
-Vitality determination begins by loading the fractional values as weights into the artificial neural network (Fig. \ref{fig:pic0188}).
+Fitness estimation begins by loading the fractional values as weights into the artificial neural network (Fig. \ref{fig:pic0188}).
 
 \begin{figure}[h]
 \centering
@@ -168,7 +168,7 @@ Vitality determination begins by loading the fractional values as weights into t
 \end{figure}
 \FloatBarrier
 
-The straight pass is performed, and the total error committed by the network is returned as a fitness value (Fig. \ref{fig:pic0189}).
+The forward pass is performed, and the total error committed by the network is returned as a fitness value (Fig. \ref{fig:pic0189}).
 
 \begin{figure}[h]
 \centering
