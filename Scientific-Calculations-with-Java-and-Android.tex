@@ -1,4 +1,4 @@
-\documentclass[book,12pt,twoside,openany]{memoir}
+\documentclass[book,a5paper,12pt,twoside,openany]{memoir}
 % Adds the possibility of sensitive hyperlinks in the document itself.
 \usepackage{hyperref}
 \usepackage{nameref}
@@ -15,12 +15,13 @@
 \usepackage{array}
 \usepackage{imakeidx}
 \usepackage{placeins}
+\usepackage{titling}
 
 % Title of the book.
-\title{Scientific Computing with Java and Android \\ practical guide}
+\title{Scientific Computing with\\Java and Android\\-\\Practical Guide}
 
 % Names of authors.
-\author{Todor Balabanov \\ Iliyan Zankinski \\ Petar Tomov}
+\author{Todor Balabanov, Iliyan Zankinski, Petar Tomov}
 
 % Automatically create an alphabetical index.
 \makeindex[columns=1, title=Index, intoc]
@@ -31,6 +32,9 @@
 
 % The title page does not match the layout of the rest of the document (no numbering).
 \thispagestyle{empty}
+
+\include{chapters/copyright}
+\include{chapters/acknowledgments}
 
 % Here is the table of contents generated from the chapters' titles.
 \newpage
